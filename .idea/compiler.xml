@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="common" />
+        <module name="inwentaryzator" />
+        <module name="kloc" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common" target="17" />
+      <module name="inwentaryzator" target="11" />
+      <module name="kloc" target="17" />
+      <module name="quiz" target="11" />
+      <module name="quiz-common" target="11" />
+      <module name="quiz-common (1)" target="11" />
+      <module name="quiz-common (2)" target="11" />
+      <module name="quiz-parent" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="inwentaryzator" options="-parameters" />
+      <module name="kloc" options="-parameters" />
+      <module name="quiz" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/kloc-common/common.iml" filepath="$PROJECT_DIR$/kloc-common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Inwentaryzator-dev/inwentaryzator.iml" filepath="$PROJECT_DIR$/../Inwentaryzator-dev/inwentaryzator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kloc/kloc.iml" filepath="$PROJECT_DIR$/kloc/kloc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/quiz-parent.iml" filepath="$PROJECT_DIR$/quiz-parent.iml" />
+    </modules>
+  </component>
+</project>

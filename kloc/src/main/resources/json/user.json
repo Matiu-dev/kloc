@@ -1,0 +1,83 @@
+{
+  "$id": "user",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A representation of a user",
+  "title": "User",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "login",
+    "password",
+    "userrole",
+    "userstatus"
+  ],
+  "definitions": {
+    "user_id": {
+      "$comment": "user id",
+      "type": "string",
+      "format": "guid"
+    },
+    "login": {
+      "$comment": "user login",
+      "type": "string"
+    },
+    "password": {
+      "$comment": "user password",
+      "type": "string"
+    },
+    "userrole": {
+      "type": "string",
+      "enum": ["ROLE_USER", "ROLE_ADMIN"]
+    },
+    "userstatus": {
+      "type": "string",
+      "enum": ["ACTIVE", "BANNED"]
+    },
+    "wins": {
+      "$comment": "number of user wins",
+      "type": "integer"
+    },
+    "loses": {
+      "$comment": "number of user loses",
+      "type": "integer"
+    },
+    "chesstitle": {
+      "type": "string",
+      "enum": ["GM","IM","FM","CM","WGM","WIM","WFM","WCM"]
+    },
+    "icon": {
+      "$comment": "user icon",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "user_id": {
+      "$ref": "#/definitions/user_id"
+    },
+    "login": {
+      "$ref": "#/definitions/login"
+    },
+    "password": {
+      "$ref": "#/definitions/password"
+    },
+    "userrole":{
+      "$ref": "#/definitions/userrole"
+    },
+    "userstatus":{
+      "$ref": "#/definitions/userstatus"
+    },
+    "wins":{
+      "$ref": "#/definitions/wins"
+    },
+    "loses":{
+      "$ref": "#/definitions/loses"
+    },
+    "chesstitle":{
+      "$ref": "#/definitions/chesstitle"
+    },
+    "icon":{
+      "$ref": "#/definitions/icon"
+    }
+  }
+}
