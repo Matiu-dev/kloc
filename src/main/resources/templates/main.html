@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome in the Game</title>
+    <link rel="stylesheet" href="css/game.css">
+    <script src="js/game.js"></script>
+    <script src="js/gameplay.js"></script>
+<!--    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+
+    <!--    libs for stomp and sockjs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <!--    end libs for stomp and sockjs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+<body>
+
+<p>Witaj:
+    <a id="playerId" th:text="${playerId}"></a>
+    <a id="login" th:text="${username}">Login</a>
+</p>
+
+<p>
+    <input id="boardId" placeholder="Paste board id">
+    <button onclick="connect_to_specific_game()">Connect by board id</button>
+</p>
+
+<button onclick="create_game()">Create a new game</button>
+
+<p>
+    Szachownica
+</p>
+<table class="chess-board" id="position">
+    <tbody>
+    <tr>
+        <th></th>
+        <th>a</th>
+        <th>b</th>
+        <th>c</th>
+        <th>d</th>
+        <th>e</th>
+        <th>f</th>
+        <th>g</th>
+        <th>h</th>
+    </tr>
+    <tr>
+        <th>8</th>
+        <td class="light" id="A8" onclick="runMe('A8')">&#x265C</td>
+        <td class="dark" id="B8" onclick="runMe('B8')">&#x265E</td>
+        <td class="light" id="C8" onclick="runMe('C8')">&#x265D</td>
+        <td class="dark" id="D8" onclick="runMe('D8')">&#x265B</td>
+        <td class="light" id="E8" onclick="runMe('E8')">&#x265A</td>
+        <td class="dark" id="F8" onclick="runMe('F8')">&#x265D</td>
+        <td class="light" id="G8" onclick="runMe('G8')">&#x265E</td>
+        <td class="dark" id="H8" onclick="runMe('H8')">&#x265C</td>
+    </tr>
+    <tr>
+        <th>7</th>
+        <td class="dark" id="A7" onclick="runMe('A7')">&#x265F</td>
+        <td class="light" id="B7" onclick="runMe('B7')">&#x265F</td>
+        <td class="dark" id="C7" onclick="runMe('C7')">&#x265F</td>
+        <td class="light" id="D7" onclick="runMe('D7')">&#x265F</td>
+        <td class="dark" id="E7" onclick="runMe('E7')">&#x265F</td>
+        <td class="light" id="F7" onclick="runMe('F7')">&#x265F</td>
+        <td class="dark" id="G7" onclick="runMe('G7')">&#x265F</td>
+        <td class="light" id="H7" onclick="runMe('H7')">&#x265F</td>
+    </tr>
+    <tr>
+        <th>6</th>
+        <td class="light" id="A6" onclick="runMe('A6')"></td>
+        <td class="dark" id="B6" onclick="runMe('B6')"></td>
+        <td class="light" id="C6" onclick="runMe('C6')"></td>
+        <td class="dark" id="D6" onclick="runMe('D6')"></td>
+        <td class="light" id="E6" onclick="runMe('E6')"></td>
+        <td class="dark" id="F6" onclick="runMe('F6')"></td>
+        <td class="light" id="G6" onclick="runMe('G6')"></td>
+        <td class="dark" id="H6" onclick="runMe('H6')"></td>
+    </tr>
+    <tr>
+        <th>5</th>
+        <td class="dark" id="A5" onclick="runMe('A5')"></td>
+        <td class="light" id="B5" onclick="runMe('B5')"></td>
+        <td class="dark" id="C5" onclick="runMe('C5')"></td>
+        <td class="light" id="D5" onclick="runMe('D5')"></td>
+        <td class="dark" id="E5" onclick="runMe('E5')"></td>
+        <td class="light" id="F5" onclick="runMe('F5')"></td>
+        <td class="dark" id="G5" onclick="runMe('G5')"></td>
+        <td class="light" id="H5" onclick="runMe('H5')"></td>
+    </tr>
+    <tr>
+        <th>4</th>
+        <td class="light" id="A4" onclick="runMe('A4')"></td>
+        <td class="dark" id="B4" onclick="runMe('B4')"></td>
+        <td class="light" id="C4" onclick="runMe('C4')"></td>
+        <td class="dark" id="D4" onclick="runMe('D4')"></td>
+        <td class="light" id="E4" onclick="runMe('E4')"></td>
+        <td class="dark" id="F4" onclick="runMe('F4')"></td>
+        <td class="light" id="G4" onclick="runMe('G4')"></td>
+        <td class="dark" id="H4" onclick="runMe('H4')"></td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <td class="dark" id="A3" onclick="runMe('A3')"></td>
+        <td class="light" id="B3" onclick="runMe('B3')"></td>
+        <td class="dark" id="C3" onclick="runMe('C3')"></td>
+        <td class="light" id="D3" onclick="runMe('D3')"></td>
+        <td class="dark" id="E3" onclick="runMe('E3')"></td>
+        <td class="light" id="F3" onclick="runMe('F3')"></td>
+        <td class="dark" id="G3" onclick="runMe('G3')"></td>
+        <td class="light" id="H3" onclick="runMe('H3')"></td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <td class="light" id="A2" onclick="runMe('A2')">&#x2659</td>
+        <td class="dark" id="B2" onclick="runMe('B2')">&#x2659</td>
+        <td class="light" id="C2" onclick="runMe('C2')">&#x2659</td>
+        <td class="dark" id="D2" onclick="runMe('D2')">&#x2659</td>
+        <td class="light" id="E2" onclick="runMe('E2')">&#x2659</td>
+        <td class="dark" id="F2" onclick="runMe('F2')">&#x2659</td>
+        <td class="light" id="G2" onclick="runMe('G2')">&#x2659</td>
+        <td class="dark" id="H2" onclick="runMe('H2')">&#x2659</td>
+    </tr>
+    <tr>
+        <th>1</th>
+        <td class="dark" id="A1" onclick="runMe('A1')">&#x2656</td>
+        <td class="light" id="B1" onclick="runMe('B1')">&#x2658</td>
+        <td class="dark" id="C1" onclick="runMe('C1')">&#x2657</td>
+        <td class="light" id="D1" onclick="runMe('D1')">&#x2655</td>
+        <td class="dark" id="E1" onclick="runMe('E1')">&#x2654</td>
+        <td class="light" id="F1" onclick="runMe('F1')">&#x2657</td>
+        <td class="dark" id="G1" onclick="runMe('G1')">&#x2658</td>
+        <td class="light" id="H1" onclick="runMe('H1')">&#x2656</td>
+    </tr>
+    </tbody>
+</table>
+
+<form name="f" th:action="@{/logout}" method="post">
+
+    <button type="submit" class="btn">Wyloguj</button>
+
+</form>
+
+</body>
+</html>

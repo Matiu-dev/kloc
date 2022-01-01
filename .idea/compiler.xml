@@ -6,27 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="common" />
-        <module name="inwentaryzator" />
-        <module name="kloc" />
+        <module name="manytomany" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="common" target="17" />
-      <module name="inwentaryzator" target="11" />
-      <module name="kloc" target="17" />
-      <module name="quiz" target="11" />
-      <module name="quiz-common" target="11" />
-      <module name="quiz-common (1)" target="11" />
-      <module name="quiz-common (2)" target="11" />
-      <module name="quiz-parent" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="inwentaryzator" options="-parameters" />
-      <module name="kloc" options="-parameters" />
-      <module name="quiz" options="-parameters" />
+      <module name="manytomany" options="-parameters" />
     </option>
   </component>
 </project>

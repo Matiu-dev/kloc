@@ -16,25 +16,5 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
-    <remote-repository>
-      <option name="id" value="snapshots" />
-      <option name="name" value="Archiva SmartOak Snapshot Repository" />
-      <option name="url" value="http://18.184.224.110:8080/repository/snapshots" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="internal" />
-      <option name="name" value="Archiva SmartOak Internal Repository" />
-      <option name="url" value="http://18.184.224.110:8080/repository/internal" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="dynamodb-local-frankfurt" />
-      <option name="name" value="AWS DynamoDB Local Release Repository" />
-      <option name="url" value="https://s3.eu-central-1.amazonaws.com/dynamodb-local-frankfurt/release" />
-    </remote-repository>
-    <remote-repository>
-      <option name="id" value="repository.spring.milestone" />
-      <option name="name" value="Spring Milestone Repository" />
-      <option name="url" value="https://repo.spring.io/milestone" />
-    </remote-repository>
   </component>
 </project>

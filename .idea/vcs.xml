@@ -2,10 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Quiz3.0" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Quiz3.0-common" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/kloc-common" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/quiz-front" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/quiz-frontend/quiz-front" vcs="Git" />
   </component>
 </project>
