@@ -1,6 +1,6 @@
 package com.test.manytomany.controller;
 
-import com.test.manytomany.model.Player;
+import com.test.manytomany.model.player.Player;
 import com.test.manytomany.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

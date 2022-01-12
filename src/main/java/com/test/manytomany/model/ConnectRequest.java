@@ -1,15 +1,17 @@
 package com.test.manytomany.model;
 
+import com.test.manytomany.model.player.Player;
+
 public class ConnectRequest {
-    private Player player;
+    private Long playerId;
     private Long boardId;
 
-    public Player getPlayer() {
-        return player;
+    public Long getPlayerId() {
+        return playerId;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setPlayerId(Long playerId) {
+        this.playerId = playerId;
     }
 
     public Long getBoardId() {

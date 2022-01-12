@@ -74,21 +74,15 @@ function connect_to_specific_game() {
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify({
-                        "id": boardId,
-                        "test": "board1",
-                        "players": [
-                            {
-                                "id": id,
-                                "playerName": login
-                            }
-                        ]
+                        "boardId": boardId,
+                        "playerId": id
                     }),
                     success: function (data) {
-                        boardId = data.id;
+                        boardId = data.boardId;
 //                        playerType = 'O';
                         reset(boardId);
                         connectToSocket(boardId);
-                        alert("Congrats you're playing with: " + data.id);
+                        alert("Congrats you're playing with: " + data.playerId);
                         console.log(boardId);
                     },
                     error: function (error) {

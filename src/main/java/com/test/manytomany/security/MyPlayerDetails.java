@@ -1,6 +1,6 @@
 package com.test.manytomany.security;
 
-import com.test.manytomany.model.Player;
+import com.test.manytomany.model.player.Player;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

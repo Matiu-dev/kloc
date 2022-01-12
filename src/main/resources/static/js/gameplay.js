@@ -1,39 +1,39 @@
 function reset(bId) {
-    document.getElementById("A8").innerHTML = "&#x265C";
-    document.getElementById("B8").innerHTML = "&#x265E";
-    document.getElementById("C8").innerHTML = "&#x265D";
-    document.getElementById("D8").innerHTML = "&#x265B";
-    document.getElementById("E8").innerHTML = "&#x265A";
-    document.getElementById("F8").innerHTML = "&#x265D";
-    document.getElementById("G8").innerHTML = "&#x265E";
-    document.getElementById("H8").innerHTML = "&#x265C";
+    document.getElementById("18").innerHTML = "&#x265C";
+    document.getElementById("28").innerHTML = "&#x265E";
+    document.getElementById("38").innerHTML = "&#x265D";
+    document.getElementById("48").innerHTML = "&#x265B";
+    document.getElementById("58").innerHTML = "&#x265A";
+    document.getElementById("68").innerHTML = "&#x265D";
+    document.getElementById("78").innerHTML = "&#x265E";
+    document.getElementById("88").innerHTML = "&#x265C";
 
-    document.getElementById("A7").innerHTML = "&#x265F";
-    document.getElementById("B7").innerHTML = "&#x265F";
-    document.getElementById("C7").innerHTML = "&#x265F";
-    document.getElementById("D7").innerHTML = "&#x265F";
-    document.getElementById("E7").innerHTML = "&#x265F";
-    document.getElementById("F7").innerHTML = "&#x265F";
-    document.getElementById("G7").innerHTML = "&#x265F";
-    document.getElementById("H7").innerHTML = "&#x265F";
+    document.getElementById("17").innerHTML = "&#x265F";
+    document.getElementById("27").innerHTML = "&#x265F";
+    document.getElementById("37").innerHTML = "&#x265F";
+    document.getElementById("47").innerHTML = "&#x265F";
+    document.getElementById("57").innerHTML = "&#x265F";
+    document.getElementById("67").innerHTML = "&#x265F";
+    document.getElementById("77").innerHTML = "&#x265F";
+    document.getElementById("87").innerHTML = "&#x265F";
 
-    document.getElementById("A2").innerHTML = "&#x2659";
-    document.getElementById("B2").innerHTML = "&#x2659";
-    document.getElementById("C2").innerHTML = "&#x2659";
-    document.getElementById("D2").innerHTML = "&#x2659";
-    document.getElementById("E2").innerHTML = "&#x2659";
-    document.getElementById("F2").innerHTML = "&#x2659";
-    document.getElementById("G2").innerHTML = "&#x2659";
-    document.getElementById("H2").innerHTML = "&#x2659";
+    document.getElementById("12").innerHTML = "&#x2659";
+    document.getElementById("22").innerHTML = "&#x2659";
+    document.getElementById("32").innerHTML = "&#x2659";
+    document.getElementById("42").innerHTML = "&#x2659";
+    document.getElementById("52").innerHTML = "&#x2659";
+    document.getElementById("62").innerHTML = "&#x2659";
+    document.getElementById("72").innerHTML = "&#x2659";
+    document.getElementById("82").innerHTML = "&#x2659";
 
-    document.getElementById("A1").innerHTML = "&#x2656";
-    document.getElementById("B1").innerHTML = "&#x2658";
-    document.getElementById("C1").innerHTML = "&#x2657";
-    document.getElementById("D1").innerHTML = "&#x2655";
-    document.getElementById("E1").innerHTML = "&#x2654";
-    document.getElementById("F1").innerHTML = "&#x2657";
-    document.getElementById("G1").innerHTML = "&#x2658";
-    document.getElementById("H1").innerHTML = "&#x2656";
+    document.getElementById("11").innerHTML = "&#x2656";
+    document.getElementById("21").innerHTML = "&#x2658";
+    document.getElementById("31").innerHTML = "&#x2657";
+    document.getElementById("41").innerHTML = "&#x2655";
+    document.getElementById("51").innerHTML = "&#x2654";
+    document.getElementById("61").innerHTML = "&#x2657";
+    document.getElementById("71").innerHTML = "&#x2658";
+    document.getElementById("81").innerHTML = "&#x2656";
 
 boardId = bId;
 }
@@ -56,6 +56,15 @@ function runMe(position){
 
 function makeAMove() {
     let id = document.getElementById("playerId").innerHTML;
+
+    var figuresOnBoard = [];
+    for(let i = 1; i < 9; i++) {
+        figuresOnBoard[i]=[]
+        for(let j = 1; j < 9; j++) {
+            figuresOnBoard[i][j]=document.getElementById(i.toString()+j.toString()).innerHTML;
+        }
+    }
+
     $.ajax({
         url: url + "/game/gameplay",
         type: 'POST',
@@ -67,7 +76,8 @@ function makeAMove() {
             "coordinateOld": coordinateOld,
             "figureNameOld": figureNameOld,
             "coordinateNew": coordinateNew,
-            "figureNameNew": figureNameNew
+            "figureNameNew": figureNameNew,
+            "figuresOnBoard": figuresOnBoard
         }),
         success: function (data) {
 //            gameOn = false;
@@ -81,10 +91,12 @@ function makeAMove() {
 
 function displayResponse(data) {
 
+    if(data.coordinateNew !=="" && data.moveStatus === "OK") {
+//        console.log("old " + data.figureNameOld);
+//        console.log("new " + data.figureNameNew);
 
-    if(data.coordinateNew !=="") {
-        document.getElementById(data.coordinateNew).innerHTML = data.figureNameOld;
-        document.getElementById(data.coordinateOld).innerHTML = data.figureNameNew;
+        document.getElementById(data.coordinateNew).innerHTML = data.figureNameNew;
+        document.getElementById(data.coordinateOld).innerHTML = data.figureNameOld;
     }
 
     figureNameOld="";

@@ -1,6 +1,6 @@
 package com.test.manytomany.security;
 
-import com.test.manytomany.model.Player;
+import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

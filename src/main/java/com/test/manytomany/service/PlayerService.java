@@ -1,14 +1,9 @@
 package com.test.manytomany.service;
 
-import com.test.manytomany.model.Player;
-import com.test.manytomany.model.Board;
+import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {

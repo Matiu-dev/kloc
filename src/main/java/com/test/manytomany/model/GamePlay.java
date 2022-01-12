@@ -1,5 +1,10 @@
 package com.test.manytomany.model;
 
+import com.test.manytomany.model.player.PlayerRole;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 public class GamePlay {
 
     private String boardId;
@@ -11,10 +16,31 @@ public class GamePlay {
     private String coordinateNew;
     private String figureNameNew;
 
+    @Enumerated(EnumType.STRING)
+    private MoveStatus moveStatus;
+
     private boolean boardStatus;
+
+    private String[][] figuresOnBoard;
+
+    public MoveStatus getMoveStatus() {
+        return moveStatus;
+    }
+
+    public void setMoveStatus(MoveStatus moveStatus) {
+        this.moveStatus = moveStatus;
+    }
 
     public String getBoardId() {
         return boardId;
+    }
+
+    public String[][] getFiguresOnBoard() {
+        return figuresOnBoard;
+    }
+
+    public void setFiguresOnBoard(String[][] figuresOnBoard) {
+        this.figuresOnBoard = figuresOnBoard;
     }
 
     public void setBoardId(String boardId) {
@@ -67,5 +93,33 @@ public class GamePlay {
 
     public void setBoardStatus(boolean boardStatus) {
         this.boardStatus = boardStatus;
+    }
+
+    public boolean checkWhite(String piece) {
+        if(piece.equals(Pieces.WHITEPAWN.getPiece())
+                || piece.equals(Pieces.WHITEROOK.getPiece())
+                || piece.equals(Pieces.WHITEBISHOP.getPiece())
+                || piece.equals(Pieces.WHITEKING.getPiece())
+                || piece.equals(Pieces.WHITEQUEEN.getPiece())){
+            System.out.println("jest bialy");
+            return true;
+        }else {
+            System.out.println("nie jest bialy");
+            return false;
+        }
+    }
+
+    public boolean checkBlack(String piece) {
+        if(piece.equals(Pieces.BLACKPAWN.getPiece())
+                || piece.equals(Pieces.BLACKROOK.getPiece())
+                || piece.equals(Pieces.BLACKBISHOP.getPiece())
+                || piece.equals(Pieces.BLACKKING.getPiece())
+                || piece.equals(Pieces.BLACKQUEEN.getPiece())){
+            System.out.println("jest czarny");
+            return true;
+        }else {
+            System.out.println(" nie jest czarny");
+            return false;
+        }
     }
 }

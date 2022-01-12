@@ -9,5 +9,4 @@ public class ManytomanyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ManytomanyApplication.class, args);
 	}
-
 }
