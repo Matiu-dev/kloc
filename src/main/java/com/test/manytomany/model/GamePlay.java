@@ -100,11 +100,10 @@ public class GamePlay {
                 || piece.equals(Pieces.WHITEROOK.getPiece())
                 || piece.equals(Pieces.WHITEBISHOP.getPiece())
                 || piece.equals(Pieces.WHITEKING.getPiece())
-                || piece.equals(Pieces.WHITEQUEEN.getPiece())){
-            System.out.println("jest bialy");
+                || piece.equals(Pieces.WHITEQUEEN.getPiece())
+                || piece.equals(Pieces.WHITEKNIGHT.getPiece())){
             return true;
         }else {
-            System.out.println("nie jest bialy");
             return false;
         }
     }
@@ -114,11 +113,10 @@ public class GamePlay {
                 || piece.equals(Pieces.BLACKROOK.getPiece())
                 || piece.equals(Pieces.BLACKBISHOP.getPiece())
                 || piece.equals(Pieces.BLACKKING.getPiece())
-                || piece.equals(Pieces.BLACKQUEEN.getPiece())){
-            System.out.println("jest czarny");
+                || piece.equals(Pieces.BLACKQUEEN.getPiece())
+                || piece.equals(Pieces.BLACKKNIGHT.getPiece())){
             return true;
         }else {
-            System.out.println(" nie jest czarny");
             return false;
         }
     }

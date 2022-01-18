@@ -35,7 +35,14 @@ function reset(bId) {
     document.getElementById("71").innerHTML = "&#x2658";
     document.getElementById("81").innerHTML = "&#x2656";
 
-boardId = bId;
+    for(let i = 1; i < 9; i++) {
+            figuresOnBoard[i]=[]
+            for(let j = 1; j < 9; j++) {
+                figuresOnBoard[i][j]=document.getElementById(i.toString()+j.toString()).innerHTML;
+            }
+        }
+
+    boardId = bId;
 }
 
 var figureNameOld="";

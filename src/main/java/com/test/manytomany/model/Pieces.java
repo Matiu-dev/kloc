@@ -34,5 +34,4 @@ public enum Pieces implements PiecesInterface{
     public String getPiece() {
         return piece;
     }
-
 }

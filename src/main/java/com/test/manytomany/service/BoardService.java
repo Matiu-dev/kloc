@@ -1,7 +1,6 @@
 package com.test.manytomany.service;
 
-import com.test.manytomany.chesspiecerules.Pawn;
-import com.test.manytomany.chesspiecerules.Rook;
+import com.test.manytomany.chesspiecerules.*;
 import com.test.manytomany.exception.InvalidGameException;
 import com.test.manytomany.exception.InvalidParamException;
 import com.test.manytomany.model.ConnectRequest;
@@ -107,10 +106,61 @@ public class BoardService {
             return new Rook().checkMoveBlack(gamePlay);
         }
 
-        //ruch hetmana
-        //ruch wiezy
-        //ruch skoczka
-        //ruch
+        //bialy goniec
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEBISHOP.getPiece())
+                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
+            return new Bishop().checkMoveWhite(gamePlay);
+        }
+
+        //czarny gonec
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKBISHOP.getPiece())
+                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
+            return new Bishop().checkMoveBlack(gamePlay);
+        }
+
+        //bialy hetman
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEQUEEN.getPiece())
+                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
+            return new Queen().checkMoveWhite(gamePlay);
+        }
+
+        //black hetman
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKQUEEN.getPiece())
+                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
+            return new Queen().checkMoveBlack(gamePlay);
+        }
+
+        //bialy skoczek
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEKNIGHT.getPiece())
+                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
+            return new Knight().checkMoveWhite(gamePlay);
+        }
+
+        //czarny skoczek
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKNIGHT.getPiece())
+                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
+            return new Knight().checkMoveBlack(gamePlay);
+        }
+
+        //biały krol
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEKING.getPiece())
+                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
+            return new King().checkMoveWhite(gamePlay);
+        }
+
+        //czarny krol
+
+        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKING.getPiece())
+                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
+            return new King().checkMoveBlack(gamePlay);
+        }
 
         //roszada
 
@@ -118,7 +168,7 @@ public class BoardService {
 
         //szach
 
-        //szach mat
+        //szach mat - zapis
 
         //awans
 
