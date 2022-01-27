@@ -23,6 +23,16 @@ public class GamePlay {
 
     private String[][] figuresOnBoard;
 
+    private String boardName;//A B
+
+    public String getBoardName() {
+        return boardName;
+    }
+
+    public void setBoardName(String boardName) {
+        this.boardName = boardName;
+    }
+
     public MoveStatus getMoveStatus() {
         return moveStatus;
     }

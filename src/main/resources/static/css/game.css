@@ -1,5 +1,7 @@
 .chess-board {
-     border-spacing: 0; border-collapse: collapse;
+     border-spacing: 0;
+     border-collapse: collapse;
+
 }
 .chess-board th { 
     padding: .5em; 
@@ -20,3 +22,26 @@
 td {
      text-align: center;
  }
+
+* {
+  box-sizing: border-box;
+}
+
+.row {
+  margin-left:-5px;
+  margin-right:-5px;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
