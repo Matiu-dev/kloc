@@ -31,6 +31,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white queen right corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -46,6 +47,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white queen left bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -66,6 +68,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white queen left up corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -84,6 +87,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white queen right bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -102,6 +106,7 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white queen up");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -122,15 +127,12 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white queen down");
                 gamePlay.setMoveStatus(MoveStatus.OK);
-
-
             }else {
                 log.info("bad move white queen up");
                 gamePlay.setMoveStatus(MoveStatus.BAD);
-
-
             }
             return gamePlay;
         }
@@ -142,10 +144,9 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white queen right");
                 gamePlay.setMoveStatus(MoveStatus.OK);
-
-
             }else {
                 log.info("bad move white queen up");
                 gamePlay.setMoveStatus(MoveStatus.BAD);
@@ -161,10 +162,9 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white queen left");
                 gamePlay.setMoveStatus(MoveStatus.OK);
-
-
             }else {
                 log.info("bad move white queen up");
                 gamePlay.setMoveStatus(MoveStatus.BAD);
@@ -193,6 +193,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black queen right corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -208,6 +209,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black queen left bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -228,6 +230,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black queen left up corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -244,6 +247,7 @@ public class Queen {
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black queen right bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -262,6 +266,7 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black queen up");
                 gamePlay.setMoveStatus(MoveStatus.OK);
             }else {
@@ -278,6 +283,7 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black queen down");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -295,6 +301,7 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black queen right");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -312,6 +319,7 @@ public class Queen {
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black queen left");
                 gamePlay.setMoveStatus(MoveStatus.OK);
             }else {

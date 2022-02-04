@@ -1,34 +1,39 @@
 package com.test.manytomany.model.board;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.test.manytomany.model.PlayerBoard.Color;
+import com.test.manytomany.model.PlayerBoard.PlayerBoard;
 import com.test.manytomany.model.game.Game;
 import com.test.manytomany.model.player.Player;
 
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
+
+@Entity(name = "Board")
+@Table(name = "board")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String test;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "player_board",
-            joinColumns = @JoinColumn(name = "board_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id")
-    )
     @JsonIgnore
-    private Set<Player> players = new HashSet<>();
+    @OneToMany(
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            mappedBy = "board",
+            orphanRemoval = true)
+    private Set<PlayerBoard> players = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
 
-    public void addPlayer(Player player) {
-        this.players.add(player);
-        player.getBoards().add(this);
+    public void addPlayer(Player player, Color color) {
+        PlayerBoard playerBoard = new PlayerBoard(player, this);
+        playerBoard.setColor(color);
+        this.players.add(playerBoard);
+
     }
 
     public void removePlayer(Player player) {
@@ -52,11 +57,11 @@ public class Board {
         this.id = id;
     }
 
-    public Set<Player> getPlayers() {
+    public Set<PlayerBoard> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Set<Player> players) {
+    public void setPlayers(Set<PlayerBoard> players) {
         this.players = players;
     }
 

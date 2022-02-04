@@ -1,10 +1,11 @@
-package com.test.manytomany.model;
+package com.test.manytomany.model.connect;
 
 import com.test.manytomany.model.player.Player;
 
 public class ConnectRequest {
+
     private Long playerId;
-    private Long boardId;
+    private Long gameId;
 
     public Long getPlayerId() {
         return playerId;
@@ -14,11 +15,11 @@ public class ConnectRequest {
         this.playerId = playerId;
     }
 
-    public Long getBoardId() {
-        return boardId;
+    public Long getGameId() {
+        return gameId;
     }
 
-    public void setBoardId(Long boardId) {
-        this.boardId = boardId;
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
     }
 }

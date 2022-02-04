@@ -1,13 +1,18 @@
 package com.test.manytomany.model.player;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.test.manytomany.model.PlayerBoard.PlayerBoard;
 import com.test.manytomany.model.board.Board;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalIdCache;
 
 import javax.persistence.Entity;
 
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
+@Entity(name = "Player")
+@Table(name = "player")
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +33,11 @@ public class Player {
 
     private String icon;
 
-    @ManyToMany(mappedBy = "players", cascade = CascadeType.ALL)
-    private Set<Board> boards = new HashSet<>();
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "player",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            orphanRemoval = true)
+    private Set<PlayerBoard> boards = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,11 +103,11 @@ public class Player {
         this.icon = icon;
     }
 
-    public Set<Board> getBoards() {
+    public Set<PlayerBoard> getBoards() {
         return boards;
     }
 
-    public void setBoards(Set<Board> boards) {
+    public void setBoards(Set<PlayerBoard> boards) {
         this.boards = boards;
     }
 }

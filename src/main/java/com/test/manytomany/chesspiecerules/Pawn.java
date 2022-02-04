@@ -13,6 +13,12 @@ public class Pawn {
     private static final char STARTINGROWWHITE = '2';
     private static final char STARTINGROWBLACK = '7';
 
+    private CheckSpaceBetween checkSpaceBetween;
+
+    public Pawn(){
+        checkSpaceBetween = new CheckSpaceBetween();
+    }
+
     public GamePlay checkMoveWhite(GamePlay gamePlay) {
 
         char[] oldF = gamePlay.getCoordinateOld().toCharArray();
@@ -26,6 +32,7 @@ public class Pawn {
                         && oldF[ROW] + 1 == newF[ROW]
                         && !gamePlay.getFigureNameNew().isEmpty()) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white pawn bias");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew("♙");
@@ -39,6 +46,7 @@ public class Pawn {
                         && oldF[ROW] == STARTINGROWWHITE
                         && gamePlay.getFigureNameNew().isEmpty()) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white pawn forward");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew("♙");
@@ -65,6 +73,7 @@ public class Pawn {
                         && oldF[ROW] - 1 == newF[ROW]
                         && !gamePlay.getFigureNameNew().isEmpty()) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black pawn bias");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew("♟");
@@ -77,6 +86,7 @@ public class Pawn {
                         && oldF[ROW] == STARTINGROWBLACK
                         && gamePlay.getFigureNameNew().isEmpty()) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black pawn forward");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew("♟");

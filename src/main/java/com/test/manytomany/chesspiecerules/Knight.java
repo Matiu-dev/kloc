@@ -12,6 +12,12 @@ public class Knight {
     private static final int COLUMN = 0;
     private static final int ROW = 1;
 
+    private CheckSpaceBetween checkSpaceBetween;
+
+    public Knight(){
+        checkSpaceBetween = new CheckSpaceBetween();
+    }
+
     public GamePlay checkMoveWhite(GamePlay gamePlay) {
 
         char[] oldF = gamePlay.getCoordinateOld().toCharArray();
@@ -36,6 +42,7 @@ public class Knight {
         //bicie
         if (checkUp || checkDown || checkRight || checkLeft) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white knight");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew(Pieces.WHITEKNIGHT.getPiece());
@@ -72,6 +79,7 @@ public class Knight {
 
         if (checkUp || checkDown || checkRight || checkLeft) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black knight");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew(Pieces.BLACKKNIGHT.getPiece());

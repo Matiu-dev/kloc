@@ -11,6 +11,12 @@ public class King {
     private static final int COLUMN = 0;
     private static final int ROW = 1;
 
+    private CheckSpaceBetween checkSpaceBetween;
+
+    public King(){
+        checkSpaceBetween = new CheckSpaceBetween();
+    }
+
     public GamePlay checkMoveWhite(GamePlay gamePlay) {
 
         char[] oldF = gamePlay.getCoordinateOld().toCharArray();
@@ -45,6 +51,7 @@ public class King {
         if (checkUp || checkDown || checkRight || checkLeft
         || checkUpRight || checkUpLeft || checkDownRight || checkDownLeft) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white king");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew(Pieces.WHITEKING.getPiece());
@@ -90,6 +97,7 @@ public class King {
         if (checkUp || checkDown || checkRight || checkLeft
                 || checkUpRight || checkUpLeft || checkDownRight || checkDownLeft) {
 
+            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black king");
             gamePlay.setMoveStatus(MoveStatus.OK);
             gamePlay.setFigureNameNew(Pieces.BLACKKING.getPiece());

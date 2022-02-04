@@ -1,4 +1,4 @@
-function reset(bId) {
+function reset(bId, bIdA) {
     document.getElementById("A18").innerHTML = "&#x265C";
     document.getElementById("A28").innerHTML = "&#x265E";
     document.getElementById("A38").innerHTML = "&#x265D";
@@ -43,6 +43,12 @@ function reset(bId) {
     }
 
     boardId = bId;
+    boardIdAdditional = bIdA
+
+    // console.log("Testuje: " + boardId);
+    // console.log("testuje 2: " + boardIdAdditional);
+    // document.getElementById(boardId).innerHTML = boardId;
+    // document.getElementById(boardIdAdditional).innerHTML = boardIdAdditional;
 }
 
 var figureNameOld="";
@@ -53,19 +59,63 @@ var figuresOnBoard=[];
 var boardName = "";
 
 function runMe(position){
-    if(figureNameOld=== "" ){//po kliknieciu 1
-        figureNameOld=document.getElementById(position).innerHTML;
-        coordinateOld = position.substring(1);
-        boardName = position[0];
-    }else if(figureNameOld!=="" && boardName === position[0]) {//po kliknieciu 2
-        figureNameNew=document.getElementById(position).innerHTML;
-        coordinateNew = position.substring(1);
-        makeAMove();
-     }
+    
+    //sprawdzic czy wszyscy gracze dolaczyli do gry
+
+
+    // console.log(playerIdMove);
+
+    //do sprawdzenia czy kliknietio w odpowiednia szachownice
+    var outside  = document.getElementById(boardId);
+    var inside = document.getElementById(position);
+
+    //console.log(outside.contains(inside)); sprawdza czy jest kliknieta dobra plansza
+
+    //do sprawdzenia czy kliknieto w odpowiedni kolor
+    // checkColor(inside.innerHTML.toString())===color; - po 1 kliknieciu
+    //checkColor(inside.innerHTML.toString())!==color; - po 2 kliknieciu
+
+    //sprawdza czy jest teraz ruch gracza
+    // console.log(playerIdMove);
+    // console.log(playerId);
+    // console.log(playerIdMove.toString()===playerId.toString());
+
+
+    //sprawdzenie czy kolejny ruch jest bialy
+    //if(playerIdMove.toString()===playerId.toString()){
+
+    //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
+    //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
+    if(color===nextMoveColor){
+        if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
+            figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
+            coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
+            boardName = position[0];
+        }else if(figureNameOld!=="" && outside.contains(inside)) {//po kliknieciu 2
+            figureNameNew=document.getElementById(position).innerHTML;//pobiera nazwe figury
+            coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
+            makeAMove();
+    
+            boardName = "";
+        }
+   }else {
+       console.log("to nie twoja kolej na ruch");
+    }
+}
+
+function checkColor(name) {
+    if(name === "♜" || name === "♞" || name === "♝" ||
+    name === "♛" || name === "♚" || name === "♟" ){
+        return "BLACK";
+    }else if(name === "♖" || name === "♘" || name === "♗" ||
+    name === "♕" || name === "♔" || name === "♙" ){
+        return "WHITE";
+    }
+
 }
 
 function makeAMove() {
-    let id = document.getElementById("playerId").innerHTML;
+    // var playerId = document.getElementById("playerId").innerHTML;
 
     var figuresOnBoard = [];
     for(let i = 1; i < 9; i++) {
@@ -75,24 +125,29 @@ function makeAMove() {
         }
     }
 
+    
+
     $.ajax({
         url: url + "/game/gameplay",
         type: 'POST',
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
+            "gameId": gameId,
             "boardId": boardId,
-            "playerId": id,
+            "playerId": playerId,
             "coordinateOld": coordinateOld,
             "figureNameOld": figureNameOld,
             "coordinateNew": coordinateNew,
             "figureNameNew": figureNameNew,
             "figuresOnBoard": figuresOnBoard,
-            "boardName": boardName
+            "boardName": boardName,
+            "nextMoveColor": color
         }),
         success: function (data) {
 //            gameOn = false;
             displayResponse(data);
+            // playerIdMove = data.playerIdMove;
         },
         error: function (error) {
             console.log(error);

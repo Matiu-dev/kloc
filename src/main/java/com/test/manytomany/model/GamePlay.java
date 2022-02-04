@@ -1,5 +1,6 @@
 package com.test.manytomany.model;
 
+import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.player.PlayerRole;
 
 import javax.persistence.EnumType;
@@ -7,23 +8,48 @@ import javax.persistence.Enumerated;
 
 public class GamePlay {
 
+    private String gameId;
+
     private String boardId;
     private String playerId;
 
+    //nazwa figury i koordynaty stare
     private String coordinateOld;
     private String figureNameOld;
 
+    //nazwa figury i koordynaty nowe
     private String coordinateNew;
     private String figureNameNew;
 
+    //status ruchu po sprawdzeniu czy nic nie blokuje przejscia
     @Enumerated(EnumType.STRING)
     private MoveStatus moveStatus;
 
+    //status planszy czyli czy zakonczono czy jest w trakcie
     private boolean boardStatus;
 
+    //figury na szachownicy
     private String[][] figuresOnBoard;
 
-    private String boardName;//A B
+    private Color nextMoveColor;
+
+    public Color getNextMoveColor() {
+        return nextMoveColor;
+    }
+
+    public void setNextMoveColor(Color nextMoveColor) {
+        this.nextMoveColor = nextMoveColor;
+    }
+
+    private String boardName;//A B - do usuniecia pewnie bo to na froncie jest sprawdzane
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
 
     public String getBoardName() {
         return boardName;

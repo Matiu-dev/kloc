@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <title>Welcome in the Game</title>
     <link rel="stylesheet" href="css/game.css">
+<!--    my scripts-->
     <script src="js/game.js"></script>
     <script src="js/gameplay.js"></script>
+    <script src="js/figure.js"></script>
     <!--    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
 
     <!--    libs for stomp and sockjs-->
@@ -24,7 +26,7 @@
 
 <p>
     <input id="boardId" placeholder="Paste board id">
-    <button onclick="connect_to_specific_game()">Connect by board id</button>
+    <button onclick="connect_to_specific_game()">Connect by game id</button>
 </p>
 
 <button onclick="create_game()">Create a new game</button>
@@ -35,7 +37,11 @@
 
 <div class="row">
     <div class="column">
+
+    
+
         <table class="chess-board" id="board1">
+         
             <tbody>
             <tr>
                 <th></th>
@@ -164,8 +170,8 @@
         </table>
     </div>
     <div class="column">
-
         <table class="chess-board" id="board2">
+            
             <tbody>
             <tr>
                 <th></th>

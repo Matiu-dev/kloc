@@ -28,6 +28,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white rook up");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -48,6 +49,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white rook down");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -68,6 +70,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white rook right");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -87,6 +90,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move white rook left");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -114,6 +118,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black rook up");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -132,6 +137,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black rook down");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -149,6 +155,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black rook right");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -166,6 +173,7 @@ public class Rook {
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                 log.info("good move black rook left");
                 gamePlay.setMoveStatus(MoveStatus.OK);
             }else {

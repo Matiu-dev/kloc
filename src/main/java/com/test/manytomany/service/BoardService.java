@@ -1,24 +1,22 @@
 package com.test.manytomany.service;
 
 import com.test.manytomany.chesspiecerules.*;
-import com.test.manytomany.exception.InvalidGameException;
-import com.test.manytomany.exception.InvalidParamException;
-import com.test.manytomany.model.ConnectRequest;
+import com.test.manytomany.model.connect.ConnectRequest;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
+import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.connect.ConnectResponse;
 import com.test.manytomany.model.game.Game;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -40,45 +38,97 @@ public class BoardService {
     @Autowired
     private GameService gameService;
 
-    public Board saveBoard(Board board) {
+    public ConnectResponse createAndAddPlayerToBoard(Player player) {
 
+        //response
+        ConnectResponse connectResponse = new ConnectResponse();
+
+        //?
+        Color color;
+
+        //tworzy i zapisuje gre
         Game game = new Game();
         gameService.createGame(game);
 
-        Board nBoard = new Board();
-        nBoard.setGame(game);
-        board.setTest(board.getTest());
+        //tworzy , dodaje gracza i zapisuje plansze
+        Board boardFirst = new Board();
+        boardFirst.setGame(game);
 
-        board.getPlayers().stream().forEach(v -> {
-            nBoard.addPlayer(playerService.findPlayerById(v.getId()));
-
-        });
-        boardRepository.save(nBoard);
-
-
-         return nBoard;
-    }
-
-    public ConnectRequest connectToBoard(ConnectRequest request) throws InvalidParamException, InvalidGameException {
-
-        Board nBoard = findBoardById(request.getBoardId());
-
-        //sprawdzanie czy do boarda przypisanych jest 2 graczy
-
-        if(nBoard.getPlayers().size()<2) {
-            nBoard.addPlayer(playerService.findPlayerById(request.getPlayerId()));
-            boardRepository.save(nBoard);
+        Random random = new Random();
+        if(random.nextInt(2) == 0) {
+            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK);
+            color = Color.BLACK;
+            connectResponse.setPlayerIdMove(-1L);
         }else {
-            log.info("Board has 2 players");
+            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE);
+            color = Color.WHITE;
+            connectResponse.setPlayerIdMove(player.getId());
         }
 
-        return request;
+        //tworzenie drugiej planszy
+        Board boardSecond = new Board();
+        boardSecond.setGame(game);
+
+        boardRepository.save(boardFirst);
+        boardRepository.save(boardSecond);
+
+        connectResponse.setBoardId(boardFirst.getId());
+        connectResponse.setGameId(game.getId());
+        connectResponse.setBoardIdAdditional(boardSecond.getId());
+        connectResponse.setColor(color);
+        connectResponse.setPlayerId(player.getId());
+
+        return connectResponse;
+    }
+
+    public ConnectResponse connectToGame(ConnectRequest request) {
+
+        ConnectResponse connectResponse = new ConnectResponse();
+
+        Game game = gameService.findGameById(request.getGameId());
+        Player player = playerService.findPlayerById(request.getPlayerId());
+
+        connectResponse.setGameId(game.getId());
+        connectResponse.setPlayerId(player.getId());
+
+        Set<Board> boardList = game.getBoards();
+
+        for(Board b: boardList) {
+            if(b.getPlayers().size() == 1) {
+                //sprawdzanie koloru gracza na szachownicy
+                connectResponse.setBoardId(b.getId());
+                b.getPlayers().stream().forEach(v -> {
+                    if(v.getColor().equals(Color.WHITE)){
+                        b.addPlayer(player, Color.BLACK);
+                        connectResponse.setColor(Color.BLACK);
+                    }else if(v.getColor().equals(Color.BLACK)){
+                        b.addPlayer(player, Color.WHITE);
+                        connectResponse.setColor(Color.WHITE);
+                        connectResponse.setPlayerIdMove(player.getId());
+                    }
+                });
+
+                boardRepository.save(b);
+               // return new ConnectResponse(game.getId(), b.getId(), 2L, player.getId(), Color.WHITE);
+                return connectResponse;
+            }
+        }
+
+        return connectResponse;
+
     }
 
     public GamePlay makeAMove(GamePlay gamePlay) throws Exception {
-        //sprawdzanie czy ktos juz wygral przy aktualnym polozeniu i zapis do bazy
+        //sprawdzanie czy ktos juz wygral przy aktualnym polozeniu i zapis do bazy TODO
+        //sprawdzenie czy gamId istnieje TODO
+
+        //zmiana nastepnego koloru ruchu
+
+
+
         //----ruchy----------
         //ruch piona i ruch piona z biciem
+
 
         //biały pionek
         if(gamePlay.getFigureNameOld().equals(Pieces.WHITEPAWN.getPiece())

@@ -31,6 +31,7 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white bishop right corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -46,6 +47,7 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white bishop left bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -66,10 +68,9 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white bishop left up corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
-
-
                 }else {
                     log.info("bad move white bishop left up corner");
                     gamePlay.setMoveStatus(MoveStatus.BAD);
@@ -84,6 +85,7 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move white bishop right bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -113,6 +115,7 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black bishop right corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -128,6 +131,7 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black bishop left bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {
@@ -148,10 +152,9 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black bishop left up corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
-
-
                 }else {
                     log.info("bad move black bishop left up corner");
                     gamePlay.setMoveStatus(MoveStatus.BAD);
@@ -166,6 +169,7 @@ public class Bishop {
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
+                    gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
                     log.info("good move black bishop right bottom corner");
                     gamePlay.setMoveStatus(MoveStatus.OK);
                 }else {

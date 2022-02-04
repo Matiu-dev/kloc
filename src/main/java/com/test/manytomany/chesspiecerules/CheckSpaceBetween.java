@@ -1,6 +1,8 @@
 package com.test.manytomany.chesspiecerules;
 
 import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.PlayerBoard.Color;
+import com.test.manytomany.model.game.Game;
 
 public class CheckSpaceBetween {
 
@@ -137,5 +139,15 @@ public class CheckSpaceBetween {
         }
 
         return check;
+    }
+
+    public Color changeTextMoveColor(GamePlay gamePlay) {
+        if(gamePlay.getNextMoveColor().equals(Color.BLACK)){
+            return Color.WHITE;
+        }else if(gamePlay.getNextMoveColor().equals(Color.WHITE)){
+            return Color.BLACK;
+        }
+
+        return gamePlay.getNextMoveColor();
     }
 }
