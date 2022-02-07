@@ -15,9 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -93,8 +91,13 @@ public class BoardService {
 
         Set<Board> boardList = game.getBoards();
 
+        List<Board> newListBoard = new ArrayList<>();
+        for(Board board : boardList){
+            newListBoard.add(board);
+        }
+
         for(Board b: boardList) {
-            if(b.getPlayers().size() == 1) {
+            if(b.getPlayers().size() == 1) {//1 gracz
                 //sprawdzanie koloru gracza na szachownicy
                 connectResponse.setBoardId(b.getId());
                 b.getPlayers().stream().forEach(v -> {
@@ -110,8 +113,43 @@ public class BoardService {
 
                 boardRepository.save(b);
                // return new ConnectResponse(game.getId(), b.getId(), 2L, player.getId(), Color.WHITE);
+
+                //ustawienie drugiej szachownicy bo
+                //w pierwszej jest wolne miejsce
+                if(connectResponse.getBoardIdAdditional() == null){
+                    connectResponse.setBoardIdAdditional(newListBoard.get(1).getId());
+                }
+
                 return connectResponse;
             }
+
+            if(b.getPlayers().size() == 0) { // 0 graczy
+                System.out.println("proba dolaczenia do bordu: " + b.getId());
+
+                connectResponse.setBoardId(b.getId());
+
+                Random random = new Random();
+                if(random.nextInt(2) == 0) {
+                    b.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK);
+                    connectResponse.setColor(Color.BLACK);
+                }else {
+                    b.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE);
+                    connectResponse.setColor(Color.WHITE);
+                }
+
+                boardRepository.save(b);
+
+                //ustawienie drugiej szachownicy bo
+                //w pierwszej jest wolne miejsce
+                if(connectResponse.getBoardIdAdditional()== null){
+                    System.out.println("nie");
+                    connectResponse.setBoardIdAdditional(newListBoard.get(1).getId());
+                }
+
+                return connectResponse;
+            }
+
+            connectResponse.setBoardIdAdditional(b.getId());//ustawienie dodatkowego boardu id
         }
 
         return connectResponse;

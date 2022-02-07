@@ -98,7 +98,8 @@ function runMe(position){
     
             boardName = "";
         }
-   }else {
+   }
+   else {
        console.log("to nie twoja kolej na ruch");
     }
 }
@@ -157,10 +158,32 @@ function makeAMove() {
 
 function displayResponse(data) {
 
-    if(data.coordinateNew !=="" && data.moveStatus === "OK") {
-        document.getElementById(data.boardName +data.coordinateNew).innerHTML = data.figureNameNew;
+    // var outside  = document.getElementById(data.boardId);
+    // var inside = document.getElementById(data.coordinateNew);
+    
+    // console.log(data.boardId == boardId);
+    if(data.boardId == boardId){
+        var help = "A";
+        document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(data.boardName + data.coordinateOld).innerHTML = data.figureNameOld;
+
+        console.log(help + data.coordinateNew);
+        console.log(data.boardName + data.coordinateOld);
     }
+
+    if(data.boardId == boardIdAdditional) {
+        var help = "B";
+        document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
+        document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;
+
+        console.log(help + data.coordinateNew);
+        console.log(data.boardName + data.coordinateOld);
+    }
+
+    // if(data.coordinateNew !=="" && data.moveStatus === "OK" ) {
+    //     document.getElementById(data.boardName + data.coordinateNew).innerHTML = data.figureNameNew;
+    //     document.getElementById(data.boardName + data.coordinateOld).innerHTML = data.figureNameOld;
+    // }
 
     figureNameOld="";
     positionOld="";

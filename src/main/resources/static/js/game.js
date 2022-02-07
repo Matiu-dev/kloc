@@ -15,16 +15,20 @@ function connectToSocket(gameId) {
     let socket = new SockJS(url + "/gameplay");
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        console.log("connected to the frame: " + frame);
-        console.log("board id to: " + boardId);
+        // console.log("connected to the frame: " + frame);
+        // console.log("board id to: " + boardId);
         console.log("kolor to: " + color);
 
         stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
             let data = JSON.parse(response.body);
             console.log(data);
-            console.log(data.nextMoveColor)
+            // console.log(data.nextMoveColor)
 
-            nextMoveColor = data.nextMoveColor;
+            if(data.boardId == boardId) {
+                nextMoveColor = data.nextMoveColor;
+            }
+            console.log(nextMoveColor);
+            // nextMoveColor = data.nextMoveColor;
             displayResponse(data);
         })
     })
@@ -55,6 +59,7 @@ function create_game() {
                 playerId=data.playerId;
                 //ustawia id dla szachownic
                 setBoardsId(boardId, boardIdAdditional);
+                setColorOnBoard(color);
 
                 nextMoveColor="WHITE";
                 reset(boardId, boardIdAdditional);
@@ -68,12 +73,6 @@ function create_game() {
         })
     }
 }
-
-function setBoardsId(myBoard, boardAdditional) {
-    document.getElementById("board1").setAttribute('id',myBoard);
-    document.getElementById("board2").setAttribute('id', boardAdditional);
-}
-
 
 function connect_to_specific_game() {
     let login = document.getElementById("login").innerHTML;
@@ -106,6 +105,7 @@ function connect_to_specific_game() {
                         playerId=data.playerId;
                         //ustawia id dla szachownic
                         setBoardsId(boardId, boardIdAdditional);
+                        setColorOnBoard(color);
 
                         nextMoveColor="WHITE";
                         reset(boardId, boardIdAdditional);
@@ -120,5 +120,17 @@ function connect_to_specific_game() {
         })
      }
 
+
+}
+
+function setColorOnBoard(color) {
+    document.getElementById("colorOnBoard").innerHTML =  color;
+}
+
+function setBoardsId(myBoard, boardAdditional) {
+    document.getElementById("board1").setAttribute('id',myBoard);
+    document.getElementById("board2").setAttribute('id', boardAdditional);
+    document.getElementById("boardName1").innerHTML = myBoard;
+    document.getElementById("boardName2").innerHTML = boardAdditional;
 
 }
