@@ -25,6 +25,10 @@ public class GamePlay {
     @Enumerated(EnumType.STRING)
     private MoveStatus moveStatus;
 
+    //typ ruchu np ruch pionka/zbicie , dodanie figury z rezerwy
+    @Enumerated(EnumType.STRING)
+    private MoveType moveType;
+
     //status planszy czyli czy zakonczono czy jest w trakcie
     private boolean boardStatus;
 
@@ -32,6 +36,14 @@ public class GamePlay {
     private String[][] figuresOnBoard;
 
     private Color nextMoveColor;
+
+    public MoveType getMoveType() {
+        return moveType;
+    }
+
+    public void setMoveType(MoveType moveType) {
+        this.moveType = moveType;
+    }
 
     public Color getNextMoveColor() {
         return nextMoveColor;

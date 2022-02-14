@@ -32,21 +32,21 @@
 <button onclick="create_game()">Create a new game</button>
 
 <p>
-    Szachownica
+    <p>Twoj kolor to: </p>
+    <p id = "colorOnBoard"></p>
 </p>
 
 <div class="row">
     <div class="column">
 
         <p id = "boardName1"></p>
-        <p id = "colorOnBoard"></p>
-
+        
         <!-- gorna pomoc -->
-        <table  class="chess-board">
+        <!-- <table  class="chess-board">
             <tbody>
                 <tr>
                     <th>H</th>
-                    <td class="light" id="HA01" onclick="runMe('HA01')"></td>
+                    <td class="light" id="BA01" onclick="runMe('HA01')"></td>
                     <td class="dark" id="HA02" onclick="runMe('HA02')"></td>
                     <td class="light" id="HA03" onclick="runMe('HA03')"></td>
                     <td class="dark" id="HA04" onclick="runMe('HA04')"></td>
@@ -68,7 +68,7 @@
                     <td class="dark" id="HA16" onclick="runMe('HA88')"></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
 
         <table class="chess-board" id="board1">
          
@@ -83,6 +83,31 @@
                 <th>f</th>
                 <th>g</th>
                 <th>h</th>
+            </tr>
+
+            <tr>
+                <!-- AB01 - A szachownica / B - black -->
+                <th>H</th>
+                <td class="dark" id="AB00" onclick="runMeTwo('AB00')"></td>
+                <td class="light" id="AB01" onclick="runMeTwo('AB01')"></td>
+                <td class="dark" id="AB02" onclick="runMeTwo('AB02')"></td>
+                <td class="light" id="AB03" onclick="runMeTwo('AB03')"></td>
+                <td class="dark" id="AB04" onclick="runMeTwo('AB04')"></td>
+                <td class="light" id="AB05" onclick="runMeTwo('AB05')"></td>
+                <td class="dark" id="AB06" onclick="runMeTwo('AB06')"></td>
+                <td class="light" id="AB07" onclick="runMeTwo('AB07')"></td>
+            </tr>
+
+            <tr>
+                <th>H</th>
+                <td class="dark" id="AB08" onclick="runMeTwo('AB08')"></td>
+                <td class="light" id="AB09" onclick="runMeTwo('AB09')"></td>
+                <td class="dark" id="AB10" onclick="runMeTwo('AB10')"></td>
+                <td class="light" id="AB11" onclick="runMeTwo('AB11')"></td>
+                <td class="dark" id="AB12" onclick="runMeTwo('AB12')"></td>
+                <td class="light" id="AB13" onclick="runMeTwo('AB13')"></td>
+                <td class="dark" id="AB14" onclick="runMeTwo('AB14')"></td>
+                <td class="light" id="AB15" onclick="runMeTwo('AB15')"></td>
             </tr>
             <tr>
                 <th>8</th>
@@ -172,13 +197,36 @@
                 <td class="dark" id="A71" onclick="runMe('A71')">&#x2658</td>
                 <td class="light" id="A81" onclick="runMe('A81')">&#x2656</td>
             </tr>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="AW00" onclick="runMeTwo('AW00')"></td>
+                <td class="light" id="AW01" onclick="runMeTwo('AW01')"></td>
+                <td class="dark" id="AW02" onclick="runMeTwo('AW02')"></td>
+                <td class="light" id="AW03" onclick="runMeTwo('AW03')"></td>
+                <td class="dark" id="AW04" onclick="runMeTwo('AW04')"></td>
+                <td class="light" id="AW05" onclick="runMeTwo('AW05')"></td>
+                <td class="dark" id="AW06" onclick="runMeTwo('AW06')"></td>
+                <td class="light" id="AW07" onclick="runMeTwo('AW07')"></td>
+            </tr>
+
+            <tr>
+                <th>H</th>
+                <td class="dark" id="AW08" onclick="runMeTwo('AW08')"></td>
+                <td class="light" id="AW09" onclick="runMeTwo('AW09')"></td>
+                <td class="dark" id="AW10" onclick="runMeTwo('AW10')"></td>
+                <td class="light" id="AW11" onclick="runMeTwo('AW11')"></td>
+                <td class="dark" id="AW12" onclick="runMeTwo('AW12')"></td>
+                <td class="light" id="AW13" onclick="runMeTwo('AW13')"></td>
+                <td class="dark" id="AW14" onclick="runMeTwo('AW14')"></td>
+                <td class="light" id="AW15" onclick="runMeTwo('AW15')"></td>
+            </tr>
         </tbody>
         </table>
 
         <br>
 
         <!-- dolna pomoc -->
-        <table  class="chess-board">
+        <!-- <table  class="chess-board">
             <tbody>
                 <tr>
                     <th>H</th>
@@ -204,14 +252,14 @@
                     <td class="dark" id="HA16" onclick="runMe('HA88')"></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
 
     <div class="column">
         <p id = "boardName2"></p>
 
         <!-- GORNA pomoc -->
-        <table  class="chess-board">
+        <!-- <table  class="chess-board">
             <tbody>
                 <tr>
                     <th>H</th>
@@ -237,7 +285,7 @@
                     <td class="dark" id="HB16" onclick="runMe('HB16')"></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
 
         <table class="chess-board" id="board2">
             
@@ -252,6 +300,28 @@
                 <th>f</th>
                 <th>g</th>
                 <th>h</th>
+            </tr>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="BB00" onclick="runMeTwo('BB00')"></td>
+                <td class="light" id="BB01" onclick="runMeTwo('BB01')"></td>
+                <td class="dark" id="BB02" onclick="runMeTwo('BB02')"></td>
+                <td class="light" id="BB03" onclick="runMeTwo('BB03')"></td>
+                <td class="dark" id="BB04" onclick="runMeTwo('BB04')"></td>
+                <td class="light" id="BB05" onclick="runMeTwo('BB05')"></td>
+                <td class="dark" id="BB06" onclick="runMeTwo('BB06')"></td>
+                <td class="light" id="BB07" onclick="runMeTwo('BB07')"></td>
+            </tr>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="BB08" onclick="runMeTwo('BB08')"></td>
+                <td class="light" id="BB09" onclick="runMeTwo('BB09')"></td>
+                <td class="dark" id="BB10" onclick="runMeTwo('BB10')"></td>
+                <td class="light" id="BB11" onclick="runMeTwo('BB11')"></td>
+                <td class="dark" id="BB12" onclick="runMeTwo('BB12')"></td>
+                <td class="light" id="BB13" onclick="runMeTwo('BB13')"></td>
+                <td class="dark" id="BB14" onclick="runMeTwo('BB14')"></td>
+                <td class="light" id="BB15" onclick="runMeTwo('BB15')"></td> 
             </tr>
             <tr>
                 <th>8</th>
@@ -341,7 +411,28 @@
                 <td class="dark" id="B71" onclick="runMe('B71')">&#x2658</td>
                 <td class="light" id="B81" onclick="runMe('B81')">&#x2656</td>
             </tr>
-
+            <tr>
+                <th>H</th>
+                <td class="dark" id="BW00" onclick="runMeTwo('BW00')"></td>
+                <td class="light" id="BW01" onclick="runMeTwo('BW01')"></td>
+                <td class="dark" id="BW02" onclick="runMeTwo('BW02')"></td>
+                <td class="light" id="BW03" onclick="runMeTwo('BW03')"></td>
+                <td class="dark" id="BW04" onclick="runMeTwo('BW04')"></td>
+                <td class="light" id="BW05" onclick="runMeTwo('BW05')"></td>
+                <td class="dark" id="BW06" onclick="runMeTwo('BW06')"></td>
+                <td class="light" id="BW07" onclick="runMeTwo('BW07')"></td>
+            </tr>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="BW08" onclick="runMeTwo('BW08')"></td>
+                <td class="light" id="BW09" onclick="runMeTwo('BW09')"></td>
+                <td class="dark" id="BW10" onclick="runMeTwo('BW10')"></td>
+                <td class="light" id="BW11" onclick="runMeTwo('BW11')"></td>
+                <td class="dark" id="BW12" onclick="runMeTwo('BW12')"></td>
+                <td class="light" id="BW13" onclick="runMeTwo('BW13')"></td>
+                <td class="dark" id="BW14" onclick="runMeTwo('BW14')"></td>
+                <td class="light" id="BW15" onclick="runMeTwo('BW15')"></td>
+            </tr>
     
             </tbody>
         </table>
@@ -349,7 +440,7 @@
         <br>
 
          <!-- dolna pomoc -->
-        <table  class="chess-board">
+        <!-- <table  class="chess-board">
             <tbody>
                 <tr>
                     <th>H</th>
@@ -375,7 +466,7 @@
                     <td class="dark" id="HB16" onclick="runMe('HB16')"></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
 </div>
 

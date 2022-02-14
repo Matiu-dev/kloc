@@ -19,17 +19,28 @@ function connectToSocket(gameId) {
         // console.log("board id to: " + boardId);
         console.log("kolor to: " + color);
 
+
         stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
             let data = JSON.parse(response.body);
             console.log(data);
             // console.log(data.nextMoveColor)
 
+            //ustawienie nastepnego ruchu dla odpowiedniej planszy
             if(data.boardId == boardId) {
                 nextMoveColor = data.nextMoveColor;
             }
-            console.log(nextMoveColor);
+            // console.log(nextMoveColor);
             // nextMoveColor = data.nextMoveColor;
-            displayResponse(data);
+
+            // console.log("hello from: " + data.playerId);
+
+            if(data.moveType==="BASIC"){
+                displayResponse(data);
+            }
+            
+            if(data.moveType==="RESERVE") {
+                displayResponseTwo(data);
+            }
         })
     })
 }

@@ -55,42 +55,23 @@ var figureNameOld="";
 var coordinateOld="";
 var figureNameNew="";
 var coordinateNew = "";
-var figuresOnBoard=[];
 var boardName = "";
+var moveType = "";
+var figuresOnBoard=[];
 
 function runMe(position){
     
-    //sprawdzic czy wszyscy gracze dolaczyli do gry
-
-
-    // console.log(playerIdMove);
-
-    //do sprawdzenia czy kliknietio w odpowiednia szachownice
     var outside  = document.getElementById(boardId);
     var inside = document.getElementById(position);
 
-    //console.log(outside.contains(inside)); sprawdza czy jest kliknieta dobra plansza
-
-    //do sprawdzenia czy kliknieto w odpowiedni kolor
-    // checkColor(inside.innerHTML.toString())===color; - po 1 kliknieciu
-    //checkColor(inside.innerHTML.toString())!==color; - po 2 kliknieciu
-
-    //sprawdza czy jest teraz ruch gracza
-    // console.log(playerIdMove);
-    // console.log(playerId);
-    // console.log(playerIdMove.toString()===playerId.toString());
-
-
-    //sprawdzenie czy kolejny ruch jest bialy
-    //if(playerIdMove.toString()===playerId.toString()){
-
     //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
     //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
-    if(color===nextMoveColor){
+    // if(color===nextMoveColor){
         if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
             figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
             coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
             boardName = position[0];
+            moveType = "BASIC";
         }else if(figureNameOld!=="" && outside.contains(inside)) {//po kliknieciu 2
             figureNameNew=document.getElementById(position).innerHTML;//pobiera nazwe figury
             coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
@@ -98,10 +79,24 @@ function runMe(position){
     
             boardName = "";
         }
-   }
-   else {
-       console.log("to nie twoja kolej na ruch");
+//    }
+//    else {
+//        console.log("to nie twoja kolej na ruch");
+//     }
+}
+
+function runMeTwo(position) {
+    var outside  = document.getElementById(boardId);
+    var inside = document.getElementById(position);
+
+    if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
+        figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
+        coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
+        boardName = position[0];
+        moveType = "RESERVE";
     }
+    console.log(document.getElementById(position).innerHTML);
+    console.log(position.substring(2));
 }
 
 function checkColor(name) {
@@ -143,11 +138,12 @@ function makeAMove() {
             "figureNameNew": figureNameNew,
             "figuresOnBoard": figuresOnBoard,
             "boardName": boardName,
-            "nextMoveColor": color
+            "nextMoveColor": color,
+            "moveType": moveType
         }),
         success: function (data) {
 //            gameOn = false;
-            displayResponse(data);
+            // displayResponse(data);
             // playerIdMove = data.playerIdMove;
         },
         error: function (error) {
@@ -158,36 +154,134 @@ function makeAMove() {
 
 function displayResponse(data) {
 
-    // var outside  = document.getElementById(data.boardId);
-    // var inside = document.getElementById(data.coordinateNew);
+    //sprawdzanie czy ruch jest bijacy i odpowiednie ustawienie zbitego pionki na dodatkowym polu
+
+
+   
+    if(data.boardId == boardId && data.moveStatus === "OK") {
+        var help = "A";
+        var helpTwo = "B";
+        var field = "";
+        var figure = document.getElementById(help + data.coordinateNew).innerHTML;
+        // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
+
+        if(figure !== ""){
+            console.log("jest bicie");
+            // console.log(helpTwo);
+            // console.log(checkColor(figure).charAt(0));
+            // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
+            
+            for(var i = 15; i >= 0; i--) {
+               
+                if(i > 9){
+                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML===""){
+                        field =i.toString();
+                    }
+                }
+
+                if(i < 10){
+                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML===""){
+                        field = "0" + i.toString();
+                    }
+                }  
+            }
+
+            // console.log(helpTwo + checkColor(figure).charAt(0) + field);
+            document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
+        }
+        
+        
+    }
+
+    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+        var help = "B";
+        var helpTwo = "A";
+        var figure = document.getElementById(help + data.coordinateNew).innerHTML;
+        // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
+
+        if(figure !== ""){
+            console.log("jest bicie");
+            // console.log(helpTwo);
+            // console.log(checkColor(figure).charAt(0));
+            // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
+            
+            for(var i = 15; i >= 0; i--) {
+               
+                if(i > 9){
+                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML===""){
+                        field =i.toString();
+                    }
+                }
+
+                if(i < 10){
+                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML===""){
+                        field = "0" + i.toString();
+                    }
+                }  
+            }
+
+            // console.log(helpTwo + checkColor(figure).charAt(0) + field);
+            document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
+        }
+        
+    }
     
-    // console.log(data.boardId == boardId);
-    if(data.boardId == boardId){
+
+    // ustawianie szachownicy
+    if(data.boardId == boardId && data.moveStatus === "OK"){
         var help = "A";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(data.boardName + data.coordinateOld).innerHTML = data.figureNameOld;
 
-        console.log(help + data.coordinateNew);
-        console.log(data.boardName + data.coordinateOld);
+        // console.log(help + data.coordinateNew);
+        // console.log(data.boardName + data.coordinateOld);
     }
 
-    if(data.boardId == boardIdAdditional) {
+    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
         var help = "B";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;
 
-        console.log(help + data.coordinateNew);
-        console.log(data.boardName + data.coordinateOld);
+        // console.log(help + data.coordinateNew);
+        // console.log(data.boardName + data.coordinateOld);
     }
 
-    // if(data.coordinateNew !=="" && data.moveStatus === "OK" ) {
-    //     document.getElementById(data.boardName + data.coordinateNew).innerHTML = data.figureNameNew;
-    //     document.getElementById(data.boardName + data.coordinateOld).innerHTML = data.figureNameOld;
-    // }
+    
+    figureNameOld="";
+    positionOld="";
+    figureNameNew="";
+    positionNew = "";
+    boardName = "";
+    moveType = "";
+}
+
+function displayResponseTwo(data) {
+
+
+    // ustawianie szachownicy
+    if(data.boardId == boardId && data.moveStatus === "OK"){
+        var help = "A";
+        document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
+        document.getElementById(help + checkColor(data.figureNameNew)[0] + data.coordinateOld).innerHTML = data.figureNameOld;
+
+        // console.log(help + data.coordinateNew);
+        // console.log(help + checkColor(data.figureNameNew)[0] + data.coordinateOld);
+    }
+
+    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+        var help = "B";
+        document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
+        document.getElementById(help + checkColor(data.figureNameNew)[0] + data.coordinateOld).innerHTML = data.figureNameOld;
+
+        // console.log(help + data.coordinateNew);
+        // console.log(help + checkColor(data.figureNameNew)[0] + data.coordinateOld);
+    }
+
 
     figureNameOld="";
     positionOld="";
     figureNameNew="";
     positionNew = "";
     boardName = "";
+    moveType = "";
 }

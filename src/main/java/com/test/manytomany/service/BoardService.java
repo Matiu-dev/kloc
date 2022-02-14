@@ -1,6 +1,7 @@
 package com.test.manytomany.service;
 
 import com.test.manytomany.chesspiecerules.*;
+import com.test.manytomany.model.MoveType;
 import com.test.manytomany.model.connect.ConnectRequest;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
@@ -163,6 +164,15 @@ public class BoardService {
         //zmiana nastepnego koloru ruchu
 
 
+        //dodanie figury z pola dodatkowego - do rozbudowania TODO
+        if(gamePlay.getMoveType().equals(MoveType.RESERVE)){
+            if(gamePlay.getFigureNameNew().equals("")){
+                gamePlay.setMoveStatus(MoveStatus.OK);
+                gamePlay.setFigureNameNew(gamePlay.getFigureNameOld());
+                gamePlay.setFigureNameOld("");
+                return gamePlay;
+            }
+        }
 
         //----ruchy----------
         //ruch piona i ruch piona z biciem
@@ -250,6 +260,7 @@ public class BoardService {
             return new King().checkMoveBlack(gamePlay);
         }
 
+
         //roszada
 
         //bicie w przelocie
@@ -259,6 +270,10 @@ public class BoardService {
         //szach mat - zapis
 
         //awans
+
+        //sprawdzanie czy ktos juz wygral TODO
+
+
 
         gamePlay.setMoveStatus(MoveStatus.BAD);
         return gamePlay;
