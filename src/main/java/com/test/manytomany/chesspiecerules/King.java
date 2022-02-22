@@ -51,6 +51,12 @@ public class King {
         if (checkUp || checkDown || checkRight || checkLeft
         || checkUpRight || checkUpLeft || checkDownRight || checkDownLeft) {
 
+            boolean[] castling = new boolean[3];
+            castling[0] = false;
+            castling[1] = gamePlay.getCastling()[1];
+            castling[2] = gamePlay.getCastling()[2];
+            gamePlay.setCastling(castling);
+
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white king");
             gamePlay.setMoveStatus(MoveStatus.OK);
@@ -96,6 +102,12 @@ public class King {
 
         if (checkUp || checkDown || checkRight || checkLeft
                 || checkUpRight || checkUpLeft || checkDownRight || checkDownLeft) {
+
+            boolean[] castling = new boolean[3];
+            castling[0] = false;
+            castling[1] = gamePlay.getCastling()[1];
+            castling[2] = gamePlay.getCastling()[2];
+            gamePlay.setCastling(castling);
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black king");

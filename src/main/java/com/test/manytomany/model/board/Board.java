@@ -3,6 +3,7 @@ package com.test.manytomany.model.board;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.PlayerBoard.PlayerBoard;
+import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.game.Game;
 import com.test.manytomany.model.player.Player;
 
@@ -29,9 +30,10 @@ public class Board {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    public void addPlayer(Player player, Color color) {
+    public void addPlayer(Player player, Color color, Team team) {
         PlayerBoard playerBoard = new PlayerBoard(player, this);
         playerBoard.setColor(color);
+        playerBoard.setTeam(team);
         this.players.add(playerBoard);
 
     }

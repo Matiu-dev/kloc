@@ -1,6 +1,7 @@
 package com.test.manytomany.model.connect;
 
 import com.test.manytomany.model.PlayerBoard.Color;
+import com.test.manytomany.model.PlayerBoard.Team;
 
 public class ConnectResponse {
 
@@ -12,6 +13,7 @@ public class ConnectResponse {
     private Long playerIdMove;
 
     private Color color;
+    private Team team;
 
     public Long getPlayerIdMove() {
         return playerIdMove;
@@ -51,6 +53,14 @@ public class ConnectResponse {
 
     public void setBoardIdAdditional(Long boardIdAdditional) {
         this.boardIdAdditional = boardIdAdditional;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public Long getPlayerId() {

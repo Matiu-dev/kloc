@@ -57,6 +57,9 @@ var figureNameNew="";
 var coordinateNew = "";
 var boardName = "";
 var moveType = "";
+var gameResult = "";
+var color;
+var castling = [true, true, true];
 var figuresOnBoard=[];
 
 function runMe(position){
@@ -66,7 +69,9 @@ function runMe(position){
 
     //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
     //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
+
     // if(color===nextMoveColor){
+    if(gameResult !== "CHECKMATE"){
         if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
             figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
             coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
@@ -79,6 +84,9 @@ function runMe(position){
     
             boardName = "";
         }
+    }else{
+        console.log("koniec gry");
+    }
 //    }
 //    else {
 //        console.log("to nie twoja kolej na ruch");
@@ -89,12 +97,22 @@ function runMeTwo(position) {
     var outside  = document.getElementById(boardId);
     var inside = document.getElementById(position);
 
-    if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
-        figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
-        coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
-        boardName = position[0];
-        moveType = "RESERVE";
+    // if(color===nextMoveColor){
+    if(gameResult !== "CHECKMATE"){
+        if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
+            figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
+            coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
+            boardName = position[0];
+            moveType = "RESERVE";
+        }
+    }else {
+        console.log("koniec gry");
     }
+//    }
+//    else {
+//        console.log("to nie twoja kolej na ruch");
+//     }
+
     console.log(document.getElementById(position).innerHTML);
     console.log(position.substring(2));
 }
@@ -121,8 +139,6 @@ function makeAMove() {
         }
     }
 
-    
-
     $.ajax({
         url: url + "/game/gameplay",
         type: 'POST',
@@ -139,7 +155,11 @@ function makeAMove() {
             "figuresOnBoard": figuresOnBoard,
             "boardName": boardName,
             "nextMoveColor": color,
-            "moveType": moveType
+            "moveType": moveType,
+            "team": team,
+            "castling": castling,
+            "castlingMove": false
+
         }),
         success: function (data) {
 //            gameOn = false;
@@ -152,7 +172,7 @@ function makeAMove() {
     })
 }
 
-function displayResponse(data) {
+function displayResponseBasic(data) {
 
     //sprawdzanie czy ruch jest bijacy i odpowiednie ustawienie zbitego pionki na dodatkowym polu
 
@@ -165,7 +185,7 @@ function displayResponse(data) {
         var figure = document.getElementById(help + data.coordinateNew).innerHTML;
         // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
 
-        if(figure !== ""){
+        if(figure !== "" && data.castlingMove == false){
             console.log("jest bicie");
             // console.log(helpTwo);
             // console.log(checkColor(figure).charAt(0));
@@ -199,7 +219,7 @@ function displayResponse(data) {
         var figure = document.getElementById(help + data.coordinateNew).innerHTML;
         // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
 
-        if(figure !== ""){
+        if(figure !== "" && data.castlingMove == false){
             console.log("jest bicie");
             // console.log(helpTwo);
             // console.log(checkColor(figure).charAt(0));
@@ -235,6 +255,38 @@ function displayResponse(data) {
 
         // console.log(help + data.coordinateNew);
         // console.log(data.boardName + data.coordinateOld);
+
+        //prawo castling biale
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
+            if(data.coordinateOld === "61" && data.coordinateNew === "71") {
+                document.getElementById(help+"51").innerHTML = "";
+                document.getElementById(help+"81").innerHTML = "";
+            }
+        }
+
+        //lewo castling biale
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
+            if(data.coordinateOld === "41" && data.coordinateNew === "31") {
+                document.getElementById(help+"51").innerHTML = "";
+                document.getElementById(help+"11").innerHTML = "";
+            }
+        }
+
+        //prawo castling czarne
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
+            if(data.coordinateOld === "68" && data.coordinateNew === "78") {
+                document.getElementById(help+"58").innerHTML = "";
+                document.getElementById(help+"88").innerHTML = "";
+            }
+        }
+
+        //lewo castling czarne
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
+            if(data.coordinateOld === "48" && data.coordinateNew === "38") {
+                document.getElementById(help+"58").innerHTML = "";
+                document.getElementById(help+"18").innerHTML = "";
+            }
+        }
     }
 
     if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
@@ -244,6 +296,38 @@ function displayResponse(data) {
 
         // console.log(help + data.coordinateNew);
         // console.log(data.boardName + data.coordinateOld);
+
+        //prawo castling biale
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
+            if(data.coordinateOld === "61" && data.coordinateNew === "71") {
+                document.getElementById(help+"51").innerHTML = "";
+                document.getElementById(help+"81").innerHTML = "";
+            }
+        }
+
+        //lewo castling biale
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
+            if(data.coordinateOld === "41" && data.coordinateNew === "31") {
+                document.getElementById(help+"51").innerHTML = "";
+                document.getElementById(help+"11").innerHTML = "";
+            }
+        }
+
+        //prawo castling czarne
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
+            if(data.coordinateOld === "68" && data.coordinateNew === "78") {
+                document.getElementById(help+"58").innerHTML = "";
+                document.getElementById(help+"88").innerHTML = "";
+            }
+        }
+
+        //lewo castling czarne
+        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
+            if(data.coordinateOld === "48" && data.coordinateNew === "38") {
+                document.getElementById(help+"58").innerHTML = "";
+                document.getElementById(help+"18").innerHTML = "";
+            }
+        }
     }
 
     
@@ -255,7 +339,7 @@ function displayResponse(data) {
     moveType = "";
 }
 
-function displayResponseTwo(data) {
+function displayResponseReserve(data) {
 
 
     // ustawianie szachownicy

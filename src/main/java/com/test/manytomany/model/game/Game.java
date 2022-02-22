@@ -1,5 +1,6 @@
 package com.test.manytomany.model.game;
 
+import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.board.Board;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private Set<Board> boards;
 
-    private String gameWinner;
+    @Enumerated(EnumType.STRING)
+    private WinnerTeam winnerTeam;
 
     public Long getId() {
         return id;
@@ -33,11 +35,11 @@ public class Game {
         this.boards = boards;
     }
 
-    public String getGameWinner() {
-        return gameWinner;
+    public WinnerTeam getWinnerTeam() {
+        return winnerTeam;
     }
 
-    public void setGameWinner(String gameWinner) {
-        this.gameWinner = gameWinner;
+    public void setWinnerTeam(WinnerTeam winnerTeam) {
+        this.winnerTeam = winnerTeam;
     }
 }

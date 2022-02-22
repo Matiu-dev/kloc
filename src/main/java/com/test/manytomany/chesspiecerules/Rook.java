@@ -25,6 +25,23 @@ public class Rook {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] < newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenUp(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("11")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("81")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -46,6 +63,23 @@ public class Rook {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] > newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenDown(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("11")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("81")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -67,6 +101,23 @@ public class Rook {
 
         if(oldF[ROW] == newF[ROW] && oldF[COLUMN] < newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenRight(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("11")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("81")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -87,6 +138,23 @@ public class Rook {
 
         if(oldF[ROW] == newF[ROW]  && oldF[COLUMN] > newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenLeft(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("11")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("81")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -115,6 +183,24 @@ public class Rook {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] < newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenUp(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("18")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("88")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
+
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -134,6 +220,23 @@ public class Rook {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] > newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenDown(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("18")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("88")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -152,6 +255,23 @@ public class Rook {
 
         if(oldF[ROW] == newF[ROW] && oldF[COLUMN] < newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenRight(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("18")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("88")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -170,6 +290,23 @@ public class Rook {
 
         if(oldF[ROW] == newF[ROW]  && oldF[COLUMN] > newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenLeft(oldF, newF, gamePlay)){
+
+                if(gamePlay.getCoordinateOld().equals("18")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = false;
+                    castling[2] = gamePlay.getCastling()[2];
+                    gamePlay.setCastling(castling);
+                }
+
+                if(gamePlay.getCoordinateOld().equals("88")){
+                    boolean[] castling = new boolean[3];
+                    castling[0] = gamePlay.getCastling()[0];
+                    castling[1] = gamePlay.getCastling()[1];
+                    castling[2] = false;
+                    gamePlay.setCastling(castling);
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 

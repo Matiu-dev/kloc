@@ -4,6 +4,8 @@ package com.test.manytomany.controller;
 import com.google.gson.Gson;
 import com.test.manytomany.exception.InvalidGameException;
 import com.test.manytomany.exception.InvalidParamException;
+import com.test.manytomany.model.GameResult;
+import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.connect.ConnectRequest;
 import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.GamePlay;
@@ -64,6 +66,11 @@ public class BoardController {
 
         log.info("gameplay" + request);
         GamePlay gamePlay = boardService.makeAMove(request);
+
+        if(gamePlay.getGameResult().equals(GameResult.CHECKMATE)){
+            gameService.updateGameWinners(gamePlay);
+        }
+
         simpMessagingTemplate.convertAndSend("/topic/game-progress/" + gamePlay.getGameId(), gamePlay);
 
         return ResponseEntity.ok(gamePlay);

@@ -24,6 +24,9 @@ public class PlayerBoard {
     @Enumerated(EnumType.STRING)
     private Color color;
 
+    @Enumerated(EnumType.STRING)
+    private Team team;
+
     public PlayerBoard() {
 
     }
@@ -64,5 +67,13 @@ public class PlayerBoard {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

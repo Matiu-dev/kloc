@@ -1,13 +1,11 @@
 package com.test.manytomany.service;
 
 import com.test.manytomany.chesspiecerules.*;
-import com.test.manytomany.model.MoveType;
+import com.test.manytomany.model.*;
+import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.connect.ConnectRequest;
-import com.test.manytomany.model.MoveStatus;
-import com.test.manytomany.model.Pieces;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.board.Board;
-import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.connect.ConnectResponse;
 import com.test.manytomany.model.game.Game;
 import com.test.manytomany.model.player.Player;
@@ -44,6 +42,7 @@ public class BoardService {
 
         //?
         Color color;
+        Team team;
 
         //tworzy i zapisuje gre
         Game game = new Game();
@@ -53,14 +52,17 @@ public class BoardService {
         Board boardFirst = new Board();
         boardFirst.setGame(game);
 
+
         Random random = new Random();
         if(random.nextInt(2) == 0) {
-            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK);
+            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK, Team.B);
             color = Color.BLACK;
+            team = Team.B;
             connectResponse.setPlayerIdMove(-1L);
         }else {
-            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE);
+            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE, Team.A);
             color = Color.WHITE;
+            team = Team.A;
             connectResponse.setPlayerIdMove(player.getId());
         }
 
@@ -75,6 +77,7 @@ public class BoardService {
         connectResponse.setGameId(game.getId());
         connectResponse.setBoardIdAdditional(boardSecond.getId());
         connectResponse.setColor(color);
+        connectResponse.setTeam(team);
         connectResponse.setPlayerId(player.getId());
 
         return connectResponse;
@@ -103,12 +106,33 @@ public class BoardService {
                 connectResponse.setBoardId(b.getId());
                 b.getPlayers().stream().forEach(v -> {
                     if(v.getColor().equals(Color.WHITE)){
-                        b.addPlayer(player, Color.BLACK);
-                        connectResponse.setColor(Color.BLACK);
+                        if(v.getTeam().equals(Team.A)){
+                            b.addPlayer(player, Color.BLACK, Team.B);
+                            connectResponse.setColor(Color.BLACK);
+                            connectResponse.setTeam(Team.B);
+                        }
+
+                        if(v.getTeam().equals(Team.B)){
+                            b.addPlayer(player, Color.BLACK, Team.A);
+                            connectResponse.setColor(Color.BLACK);
+                            connectResponse.setTeam(Team.A);
+                        }
+
                     }else if(v.getColor().equals(Color.BLACK)){
-                        b.addPlayer(player, Color.WHITE);
-                        connectResponse.setColor(Color.WHITE);
-                        connectResponse.setPlayerIdMove(player.getId());
+                        if(v.getTeam().equals(Team.A)){
+                            b.addPlayer(player, Color.WHITE, Team.B);
+                            connectResponse.setColor(Color.WHITE);
+                            connectResponse.setTeam(Team.B);
+                            connectResponse.setPlayerIdMove(player.getId());
+                        }
+
+                        if(v.getTeam().equals(Team.B)){
+                            b.addPlayer(player, Color.WHITE, Team.A);
+                            connectResponse.setColor(Color.WHITE);
+                            connectResponse.setTeam(Team.A);
+                            connectResponse.setPlayerIdMove(player.getId());
+                        }
+
                     }
                 });
 
@@ -131,10 +155,10 @@ public class BoardService {
 
                 Random random = new Random();
                 if(random.nextInt(2) == 0) {
-                    b.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK);
+                    b.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK, Team.A);
                     connectResponse.setColor(Color.BLACK);
                 }else {
-                    b.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE);
+                    b.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE, Team.B);
                     connectResponse.setColor(Color.WHITE);
                 }
 
@@ -162,120 +186,42 @@ public class BoardService {
         //sprawdzenie czy gamId istnieje TODO
 
         //zmiana nastepnego koloru ruchu
+        //sprawdzic czy jestes szachowany
 
 
-        //dodanie figury z pola dodatkowego - do rozbudowania TODO
-        if(gamePlay.getMoveType().equals(MoveType.RESERVE)){
-            if(gamePlay.getFigureNameNew().equals("")){
-                gamePlay.setMoveStatus(MoveStatus.OK);
-                gamePlay.setFigureNameNew(gamePlay.getFigureNameOld());
-                gamePlay.setFigureNameOld("");
-                return gamePlay;
-            }
+        boolean isKing = false;
+
+        if(gamePlay.getFigureNameNew().equals(Pieces.BLACKKING.getPiece())
+        || gamePlay.getFigureNameNew().equals(Pieces.WHITEKING.getPiece())){
+            isKing = true;
         }
 
-        //----ruchy----------
-        //ruch piona i ruch piona z biciem
+        //wszystkie ruchy
+        MainRules mainRules = new MainRules();
+        gamePlay = mainRules.checkRules(gamePlay);
 
 
-        //biały pionek
-        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEPAWN.getPiece())
-        && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
-            return new Pawn().checkMoveWhite(gamePlay);
-        }
-
-        //czarny pionek
-        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKPAWN.getPiece())
-        && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-            return new Pawn().checkMoveBlack(gamePlay);
-        }
-
-        //biała wieża
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEROOK.getPiece())
-        && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
-            return new Rook().checkMoveWhite(gamePlay);
-        }
-
-        //czarna wieza
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKROOK.getPiece())
-                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-            return new Rook().checkMoveBlack(gamePlay);
-        }
-
-        //bialy goniec
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEBISHOP.getPiece())
-                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
-            return new Bishop().checkMoveWhite(gamePlay);
-        }
-
-        //czarny gonec
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKBISHOP.getPiece())
-                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-            return new Bishop().checkMoveBlack(gamePlay);
-        }
-
-        //bialy hetman
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEQUEEN.getPiece())
-                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
-            return new Queen().checkMoveWhite(gamePlay);
-        }
-
-        //black hetman
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKQUEEN.getPiece())
-                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-            return new Queen().checkMoveBlack(gamePlay);
-        }
-
-        //bialy skoczek
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEKNIGHT.getPiece())
-                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
-            return new Knight().checkMoveWhite(gamePlay);
-        }
-
-        //czarny skoczek
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKNIGHT.getPiece())
-                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-            return new Knight().checkMoveBlack(gamePlay);
-        }
-
-        //biały krol
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.WHITEKING.getPiece())
-                && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
-            return new King().checkMoveWhite(gamePlay);
-        }
-
-        //czarny krol
-
-        if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKING.getPiece())
-                && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-            return new King().checkMoveBlack(gamePlay);
-        }
-
-
-        //roszada
-
-        //bicie w przelocie
-
-        //szach
-
-        //szach mat - zapis
+        //bicie w przelocie - dla pionka
 
         //awans
 
-        //sprawdzanie czy ktos juz wygral TODO
+        //pat - remis
+
+        //szach TODO
+
+        //sprawdzanie czy ktos juz wygral czyli  mat TODO
+
+        //sprawdzic czy po ruchu ktorys pionek moze zbic krola
+        //zmiana game resultu
 
 
+        //tylko zbicie króla - bez zbednych dodatków
+        if(isKing && gamePlay.getMoveStatus().equals(MoveStatus.OK) && !gamePlay.isCastlingMove()) {
+            gamePlay.setGameResult(GameResult.CHECKMATE);
+        }else {
+            gamePlay.setGameResult(GameResult.EMPTY);
+        }
 
-        gamePlay.setMoveStatus(MoveStatus.BAD);
         return gamePlay;
     }
 }

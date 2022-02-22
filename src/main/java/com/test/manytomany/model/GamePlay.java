@@ -1,7 +1,8 @@
 package com.test.manytomany.model;
 
 import com.test.manytomany.model.PlayerBoard.Color;
-import com.test.manytomany.model.player.PlayerRole;
+import com.test.manytomany.model.PlayerBoard.Team;
+import com.test.manytomany.model.game.WinnerTeam;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,13 +30,38 @@ public class GamePlay {
     @Enumerated(EnumType.STRING)
     private MoveType moveType;
 
-    //status planszy czyli czy zakonczono czy jest w trakcie
-    private boolean boardStatus;
+    //status planszy czyli czy jesz szachmat
+    @Enumerated(EnumType.STRING)
+    private GameResult gameResult;
+
+    @Enumerated(EnumType.STRING)
+    private Team team;
 
     //figury na szachownicy
     private String[][] figuresOnBoard;
 
     private Color nextMoveColor;
+
+    //roszada krol/lewa wieza/prawa wieza
+    private boolean[] castling;
+
+    private boolean castlingMove;
+
+    public boolean isCastlingMove() {
+        return castlingMove;
+    }
+
+    public void setCastlingMove(boolean castlingMove) {
+        this.castlingMove = castlingMove;
+    }
+
+    public boolean[] getCastling() {
+        return castling;
+    }
+
+    public void setCastling(boolean[] castling) {
+        this.castling = castling;
+    }
 
     public MoveType getMoveType() {
         return moveType;
@@ -135,12 +161,12 @@ public class GamePlay {
         this.figureNameNew = figureNameNew;
     }
 
-    public boolean isBoardStatus() {
-        return boardStatus;
+    public GameResult getGameResult() {
+        return gameResult;
     }
 
-    public void setBoardStatus(boolean boardStatus) {
-        this.boardStatus = boardStatus;
+    public void setGameResult(GameResult gameResult) {
+        this.gameResult = gameResult;
     }
 
     public boolean checkWhite(String piece) {
@@ -167,5 +193,13 @@ public class GamePlay {
         }else {
             return false;
         }
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

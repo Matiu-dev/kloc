@@ -3,10 +3,10 @@ let gameId;
 let playerId;
 let boardId;
 let boardIdAdditional;
-let color;
 let stompClient;
 let playerIdMove;
 let nextMoveColor;
+let team;
 
 
 function connectToSocket(gameId) {
@@ -29,18 +29,23 @@ function connectToSocket(gameId) {
             if(data.boardId == boardId) {
                 nextMoveColor = data.nextMoveColor;
             }
-            // console.log(nextMoveColor);
-            // nextMoveColor = data.nextMoveColor;
 
-            // console.log("hello from: " + data.playerId);
+            //do roszady
+            if(data.playerId==playerId) {
+                castling=data.castling;
+            }
 
             if(data.moveType==="BASIC"){
-                displayResponse(data);
+                displayResponseBasic(data);
             }
             
             if(data.moveType==="RESERVE") {
-                displayResponseTwo(data);
+                displayResponseReserve(data);
             }
+
+            // console.log(castling[0] + " " + castling[1] + " " + castling[2]);
+
+            gameResult = data.gameResult;
         })
     })
 }
@@ -68,6 +73,7 @@ function create_game() {
                 boardIdAdditional = data.boardIdAdditional;
                 playerIdMove = data.playerIdMove;
                 playerId=data.playerId;
+                team = data.team;
                 //ustawia id dla szachownic
                 setBoardsId(boardId, boardIdAdditional);
                 setColorOnBoard(color);
@@ -114,6 +120,7 @@ function connect_to_specific_game() {
                         boardIdAdditional = data.boardIdAdditional;
                         playerIdMove = data.playerIdMove;
                         playerId=data.playerId;
+                        team = data.team;
                         //ustawia id dla szachownic
                         setBoardsId(boardId, boardIdAdditional);
                         setColorOnBoard(color);
