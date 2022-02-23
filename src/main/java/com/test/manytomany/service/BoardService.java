@@ -201,8 +201,6 @@ public class BoardService {
         gamePlay = mainRules.checkRules(gamePlay);
 
 
-        //bicie w przelocie - dla pionka
-
         //awans
 
         //pat - remis
@@ -210,10 +208,6 @@ public class BoardService {
         //szach TODO
 
         //sprawdzanie czy ktos juz wygral czyli  mat TODO
-
-        //sprawdzic czy po ruchu ktorys pionek moze zbic krola
-        //zmiana game resultu
-
 
         //tylko zbicie króla - bez zbednych dodatków
         if(isKing && gamePlay.getMoveStatus().equals(MoveStatus.OK) && !gamePlay.isCastlingMove()) {

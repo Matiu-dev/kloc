@@ -40,6 +40,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.WHITEROOK.getPiece())
                 && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Rook().checkMoveWhite(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Rook().checkMoveWhite(gamePlay);
         }
 
@@ -48,6 +49,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKROOK.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Rook().checkMoveBlack(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Rook().checkMoveBlack(gamePlay);
         }
 
@@ -56,6 +58,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.WHITEBISHOP.getPiece())
                 && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Bishop().checkMoveWhite(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Bishop().checkMoveWhite(gamePlay);
         }
 
@@ -64,6 +67,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKBISHOP.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Bishop().checkMoveBlack(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Bishop().checkMoveBlack(gamePlay);
         }
 
@@ -72,6 +76,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.WHITEQUEEN.getPiece())
                 && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Queen().checkMoveWhite(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Queen().checkMoveWhite(gamePlay);
         }
 
@@ -79,7 +84,8 @@ public class MainRules {
 
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKQUEEN.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
-//            gamePlay = new Queen().checkMoveBlack(gamePlay);
+//            gamePlay = new Queen().checkMoveBlack(gamePlay);\
+            gamePlay.setEnPassantCord("");
             return new Queen().checkMoveBlack(gamePlay);
         }
 
@@ -88,6 +94,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.WHITEKNIGHT.getPiece())
                 && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Knight().checkMoveWhite(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Knight().checkMoveWhite(gamePlay);
         }
 
@@ -96,6 +103,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKNIGHT.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
 //            gamePlay = new Knight().checkMoveBlack(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new Knight().checkMoveBlack(gamePlay);
         }
 
@@ -104,6 +112,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.WHITEKING.getPiece())
                 && !gamePlay.checkWhite(gamePlay.getFigureNameNew())) {
 //            gamePlay = new King().checkMoveWhite(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new King().checkMoveWhite(gamePlay);
         }
 
@@ -112,6 +121,7 @@ public class MainRules {
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKING.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
 //            gamePlay =  new King().checkMoveBlack(gamePlay);
+            gamePlay.setEnPassantCord("");
             return new King().checkMoveBlack(gamePlay);
         }
 
@@ -121,6 +131,7 @@ public class MainRules {
                 && gamePlay.getFigureNameNew().equals(Pieces.WHITEROOK.getPiece())
                 || (gamePlay.getFigureNameOld().equals(Pieces.WHITEROOK.getPiece())
                 && gamePlay.getFigureNameNew().equals(Pieces.WHITEKING.getPiece()))) {
+            gamePlay.setEnPassantCord("");
             return new Castling().checkMoveWhite(gamePlay);
         }
 
@@ -130,6 +141,7 @@ public class MainRules {
                 && gamePlay.getFigureNameNew().equals(Pieces.BLACKROOK.getPiece())
                 || gamePlay.getFigureNameOld().equals(Pieces.BLACKROOK.getPiece())
                 && gamePlay.getFigureNameNew().equals(Pieces.BLACKKING.getPiece())) {
+            gamePlay.setEnPassantCord("");
             return new Castling().checkMoveBlack(gamePlay);
         }
 

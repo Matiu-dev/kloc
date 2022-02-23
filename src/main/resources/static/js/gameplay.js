@@ -60,6 +60,7 @@ var moveType = "";
 var gameResult = "";
 var color;
 var castling = [true, true, true];
+var enPassantCord = "";
 var figuresOnBoard=[];
 
 function runMe(position){
@@ -113,8 +114,8 @@ function runMeTwo(position) {
 //        console.log("to nie twoja kolej na ruch");
 //     }
 
-    console.log(document.getElementById(position).innerHTML);
-    console.log(position.substring(2));
+    // console.log(document.getElementById(position).innerHTML);
+    // console.log(position.substring(2));
 }
 
 function checkColor(name) {
@@ -158,7 +159,9 @@ function makeAMove() {
             "moveType": moveType,
             "team": team,
             "castling": castling,
-            "castlingMove": false
+            "castlingMove": false,
+            "enPassantCord": enPassantCord,
+            "enPassantMove": false
 
         }),
         success: function (data) {
@@ -176,14 +179,101 @@ function displayResponseBasic(data) {
 
     //sprawdzanie czy ruch jest bijacy i odpowiednie ustawienie zbitego pionki na dodatkowym polu
 
-
-   
     if(data.boardId == boardId && data.moveStatus === "OK") {
         var help = "A";
         var helpTwo = "B";
         var field = "";
         var figure = document.getElementById(help + data.coordinateNew).innerHTML;
+        var figureOld = document.getElementById(help + data.coordinateOld).innerHTML;
+        var figureTwo = "";
+
+        // console.log("kord " + data.enPassantCord);
+        //dla bialego bicie w przelocie koordynaty do przeniesienia pionka na 2 szachownice
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="BLACK"){//kolor przeciwny
+            console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) + 1))
+            figureTwo = document.getElementById(help +
+                 data.coordinateNew[0] + 
+                 (parseInt(data.coordinateNew[1]) + 1)).innerHTML;
+        }
+        
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="WHITE") {
+            console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) - 1))
+            figureTwo = document.getElementById(help +
+                 data.coordinateNew[0] + 
+                  (parseInt(data.coordinateNew[1]) - 1)).innerHTML;
+        }
+       
         // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
+
+        if(figure !== "" && data.castlingMove == false){
+            console.log("jest bicie");
+            // console.log(helpTwo);
+            // console.log(checkColor(figure).charAt(0));
+            // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
+            
+            for(var i = 15; i >= 0; i--) {
+               
+                if(i > 9){
+                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML===""){
+                        field =i.toString();
+                    }
+                }
+
+                if(i < 10){
+                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML===""){
+                        field = "0" + i.toString();
+                    }
+                }  
+            }
+
+            // console.log(helpTwo + checkColor(figure).charAt(0) + field);
+            document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
+        } 
+
+        if(data.enPassantMove == true &&  data.castlingMove == false && figureTwo !== ""){
+            console.log("bicie w przelocie");
+
+            for(var i = 15; i >= 0; i--) {
+               
+                if(i > 9){
+                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + i.toString()).innerHTML===""){
+                        field =i.toString();
+                    }
+                }
+
+                if(i < 10){
+                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + "0" + i.toString()).innerHTML===""){
+                        field = "0" + i.toString();
+                    }
+                }  
+            }
+
+            // console.log(helpTwo + checkColor(figure).charAt(0) + field);
+            document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + field).innerHTML = figureTwo;
+        }
+    }
+
+    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+        var help = "B";
+        var helpTwo = "A";
+        var figure = document.getElementById(help + data.coordinateNew).innerHTML;
+        var figureTwo;
+
+        // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
+        // console.log("kord " + data.enPassantCord);
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="BLACK"){//kolor przeciwny
+            console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) + 1))
+            figureTwo = document.getElementById(help +
+                 data.coordinateNew[0] + 
+                 (parseInt(data.coordinateNew[1]) + 1)).innerHTML;
+        }
+        
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="WHITE") {
+            console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) - 1))
+            figureTwo = document.getElementById(help +
+                 data.coordinateNew[0] + 
+                  (parseInt(data.coordinateNew[1]) - 1)).innerHTML;
+        }
 
         if(figure !== "" && data.castlingMove == false){
             console.log("jest bicie");
@@ -209,39 +299,27 @@ function displayResponseBasic(data) {
             // console.log(helpTwo + checkColor(figure).charAt(0) + field);
             document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
         }
-        
-        
-    }
 
-    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
-        var help = "B";
-        var helpTwo = "A";
-        var figure = document.getElementById(help + data.coordinateNew).innerHTML;
-        // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
+        if(data.enPassantMove == true &&  data.castlingMove == false && figureTwo !== ""){
+            console.log("bicie w przelocie");
 
-        if(figure !== "" && data.castlingMove == false){
-            console.log("jest bicie");
-            // console.log(helpTwo);
-            // console.log(checkColor(figure).charAt(0));
-            // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
-            
             for(var i = 15; i >= 0; i--) {
                
                 if(i > 9){
-                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML===""){
+                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + i.toString()).innerHTML===""){
                         field =i.toString();
                     }
                 }
 
                 if(i < 10){
-                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML===""){
+                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + "0" + i.toString()).innerHTML===""){
                         field = "0" + i.toString();
                     }
                 }  
             }
 
             // console.log(helpTwo + checkColor(figure).charAt(0) + field);
-            document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
+            document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + field).innerHTML = figureTwo;
         }
         
     }
@@ -287,6 +365,14 @@ function displayResponseBasic(data) {
                 document.getElementById(help+"18").innerHTML = "";
             }
         }
+
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "WHITE") {
+            document.getElementById(help+(data.coordinateNew -1)).innerHTML="";
+        }
+
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "BLACK") {
+            document.getElementById(help+(parseInt(data.coordinateNew) +1)).innerHTML="";
+        }
     }
 
     if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
@@ -328,6 +414,19 @@ function displayResponseBasic(data) {
                 document.getElementById(help+"18").innerHTML = "";
             }
         }
+
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "WHITE") {
+            document.getElementById(help+(data.coordinateNew -1)).innerHTML="";
+        }
+
+        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "BLACK") {
+            document.getElementById(help+(data.coordinateNew +1)).innerHTML="";
+        }
+    }
+
+    //awans pionka
+    if(data.figureNameNew === ""){
+        
     }
 
     

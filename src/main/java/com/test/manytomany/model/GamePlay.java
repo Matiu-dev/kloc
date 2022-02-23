@@ -47,6 +47,27 @@ public class GamePlay {
 
     private boolean castlingMove;
 
+    //bicie w przelocie
+    private String enPassantCord;
+
+    private boolean enPassantMove;
+
+    public boolean isEnPassantMove() {
+        return enPassantMove;
+    }
+
+    public void setEnPassantMove(boolean enPassantMove) {
+        this.enPassantMove = enPassantMove;
+    }
+
+    public String getEnPassantCord() {
+        return enPassantCord;
+    }
+
+    public void setEnPassantCord(String enPassantCord) {
+        this.enPassantCord = enPassantCord;
+    }
+
     public boolean isCastlingMove() {
         return castlingMove;
     }

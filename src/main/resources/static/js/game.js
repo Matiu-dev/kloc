@@ -28,7 +28,10 @@ function connectToSocket(gameId) {
             //ustawienie nastepnego ruchu dla odpowiedniej planszy
             if(data.boardId == boardId) {
                 nextMoveColor = data.nextMoveColor;
+                enPassantCord = data.enPassantCord;
             }
+
+            console.log(enPassantCord);
 
             //do roszady
             if(data.playerId==playerId) {
