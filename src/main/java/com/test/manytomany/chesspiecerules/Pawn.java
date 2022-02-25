@@ -41,7 +41,13 @@ public class Pawn {
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white pawn bias");
             gamePlay.setMoveStatus(MoveStatus.OK);
-            gamePlay.setFigureNameNew("♙");
+
+            if(gamePlay.getCoordinateNew().toCharArray()[1]=='8') {
+                gamePlay.setFigureNameNew(gamePlay.getPromoFigure());
+            } else {
+                gamePlay.setFigureNameNew("♙");
+            }
+
             gamePlay.setFigureNameOld("");
 
             gamePlay.setEnPassantCord("");
@@ -95,7 +101,13 @@ public class Pawn {
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white pawn one step forward");
             gamePlay.setMoveStatus(MoveStatus.OK);
-            gamePlay.setFigureNameNew("♙");
+
+            if(gamePlay.getCoordinateNew().toCharArray()[1]=='8') {
+                gamePlay.setFigureNameNew(gamePlay.getPromoFigure());
+            } else {
+                gamePlay.setFigureNameNew("♙");
+            }
+
             gamePlay.setFigureNameOld("");
 
             gamePlay.setEnPassantCord("");
@@ -138,7 +150,7 @@ public class Pawn {
         char[] newF = gamePlay.getCoordinateNew().toCharArray();
 
         char[] enPassand;
-        if(gamePlay.getEnPassantCord()!=""){
+        if(gamePlay.getEnPassantCord()!="" && gamePlay.getEnPassantCord()!=null){
             enPassand = gamePlay.getEnPassantCord().toCharArray();
         }else {
             enPassand = "".toCharArray();
@@ -156,7 +168,13 @@ public class Pawn {
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black pawn bias");
             gamePlay.setMoveStatus(MoveStatus.OK);
-            gamePlay.setFigureNameNew("♟");
+
+            if(gamePlay.getCoordinateNew().toCharArray()[1]=='1') {
+                gamePlay.setFigureNameNew(gamePlay.getPromoFigure());
+            } else {
+                gamePlay.setFigureNameNew("♟");
+            }
+
             gamePlay.setFigureNameOld("");
 
             gamePlay.setEnPassantCord("");
@@ -209,7 +227,13 @@ public class Pawn {
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black pawn one step forward");
             gamePlay.setMoveStatus(MoveStatus.OK);
-            gamePlay.setFigureNameNew("♟");
+
+            if(gamePlay.getCoordinateNew().toCharArray()[1]=='1') {
+                gamePlay.setFigureNameNew(gamePlay.getPromoFigure());
+            } else {
+                gamePlay.setFigureNameNew("♟");
+            }
+
             gamePlay.setFigureNameOld("");
 
             gamePlay.setEnPassantCord("");

@@ -52,6 +52,17 @@ public class GamePlay {
 
     private boolean enPassantMove;
 
+//    do promocji pionka
+    private String promoFigure;
+
+    public String getPromoFigure() {
+        return promoFigure;
+    }
+
+    public void setPromoFigure(String promoFigure) {
+        this.promoFigure = promoFigure;
+    }
+
     public boolean isEnPassantMove() {
         return enPassantMove;
     }

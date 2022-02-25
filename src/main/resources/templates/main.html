@@ -41,34 +41,15 @@
 
         <p id = "boardName1"></p>
         
-        <!-- gorna pomoc -->
-        <!-- <table  class="chess-board">
-            <tbody>
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="BA01" onclick="runMe('HA01')"></td>
-                    <td class="dark" id="HA02" onclick="runMe('HA02')"></td>
-                    <td class="light" id="HA03" onclick="runMe('HA03')"></td>
-                    <td class="dark" id="HA04" onclick="runMe('HA04')"></td>
-                    <td class="light" id="HA05" onclick="runMe('HA05')"></td>
-                    <td class="dark" id="HA06" onclick="runMe('HA06')"></td>
-                    <td class="light" id="HA07" onclick="runMe('HA07')"></td>
-                    <td class="dark" id="HA08" onclick="runMe('HA08')"></td>
-                </tr>
-    
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HA09" onclick="runMe('HA18')"></td>
-                    <td class="dark" id="HA10" onclick="runMe('HA28')"></td>
-                    <td class="light" id="HA11" onclick="runMe('HA38')"></td>
-                    <td class="dark" id="HA12" onclick="runMe('HA48')"></td>
-                    <td class="light" id="HA13" onclick="runMe('HA58')"></td>
-                    <td class="dark" id="HA14" onclick="runMe('HA68')"></td>
-                    <td class="light" id="HA15" onclick="runMe('HA78')"></td>
-                    <td class="dark" id="HA16" onclick="runMe('HA88')"></td>
-                </tr>
-            </tbody>
-        </table> -->
+        <!-- wybor figury po zmianie z pionka -->
+        <table class="chess-board">
+            <tr>
+                <td class="dark" id="promoQueen" onclick="getPromoFigures(this)">Queen</td>
+                <td class="light" id="promoBishop" onclick="getPromoFigures(this)">Bishop</td>
+                <td class="dark" id="promoKnight" onclick="getPromoFigures(this)">Knight</td>
+                <td class="light" id="promoRook" onclick="getPromoFigures(this)">Rook</td>
+            </tr>
+        </table>
 
         <table class="chess-board" id="board1">
          
@@ -224,68 +205,10 @@
         </table>
 
         <br>
-
-        <!-- dolna pomoc -->
-        <!-- <table  class="chess-board">
-            <tbody>
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HA01" onclick="runMe('HA01')"></td>
-                    <td class="dark" id="HA02" onclick="runMe('HA02')"></td>
-                    <td class="light" id="HA03" onclick="runMe('HA03')"></td>
-                    <td class="dark" id="HA04" onclick="runMe('HA04')"></td>
-                    <td class="light" id="HA05" onclick="runMe('HA05')"></td>
-                    <td class="dark" id="HA06" onclick="runMe('HA06')"></td>
-                    <td class="light" id="HA07" onclick="runMe('HA07')"></td>
-                    <td class="dark" id="HA08" onclick="runMe('HA08')"></td>
-                </tr>
-    
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HA09" onclick="runMe('HA18')"></td>
-                    <td class="dark" id="HA10" onclick="runMe('HA28')"></td>
-                    <td class="light" id="HA11" onclick="runMe('HA38')"></td>
-                    <td class="dark" id="HA12" onclick="runMe('HA48')"></td>
-                    <td class="light" id="HA13" onclick="runMe('HA58')"></td>
-                    <td class="dark" id="HA14" onclick="runMe('HA68')"></td>
-                    <td class="light" id="HA15" onclick="runMe('HA78')"></td>
-                    <td class="dark" id="HA16" onclick="runMe('HA88')"></td>
-                </tr>
-            </tbody>
-        </table> -->
     </div>
 
     <div class="column">
         <p id = "boardName2"></p>
-
-        <!-- GORNA pomoc -->
-        <!-- <table  class="chess-board">
-            <tbody>
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HB01" onclick="runMe('HB01')"></td>
-                    <td class="dark" id="HB02" onclick="runMe('HB02')"></td>
-                    <td class="light" id="HB03" onclick="runMe('HB03')"></td>
-                    <td class="dark" id="HB04" onclick="runMe('HB04')"></td>
-                    <td class="light" id="HB05" onclick="runMe('HB05')"></td>
-                    <td class="dark" id="HB06" onclick="runMe('HB06')"></td>
-                    <td class="light" id="HB07" onclick="runMe('HB07')"></td>
-                    <td class="dark" id="HB08" onclick="runMe('HB08')"></td>
-                </tr>
-    
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HB09" onclick="runMe('HB09')"></td>
-                    <td class="dark" id="HB10" onclick="runMe('HB10')"></td>
-                    <td class="light" id="HB11" onclick="runMe('HB11')"></td>
-                    <td class="dark" id="HB12" onclick="runMe('HB12')"></td>
-                    <td class="light" id="HB13" onclick="runMe('HB13')"></td>
-                    <td class="dark" id="HB14" onclick="runMe('HB14')"></td>
-                    <td class="light" id="HB15" onclick="runMe('HB15')"></td>
-                    <td class="dark" id="HB16" onclick="runMe('HB16')"></td>
-                </tr>
-            </tbody>
-        </table> -->
 
         <table class="chess-board" id="board2">
             
@@ -438,35 +361,6 @@
         </table>
 
         <br>
-
-         <!-- dolna pomoc -->
-        <!-- <table  class="chess-board">
-            <tbody>
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HB01" onclick="runMe('HB01')"></td>
-                    <td class="dark" id="HB02" onclick="runMe('HB02')"></td>
-                    <td class="light" id="HB03" onclick="runMe('HB03')"></td>
-                    <td class="dark" id="HB04" onclick="runMe('HB04')"></td>
-                    <td class="light" id="HB05" onclick="runMe('HB05')"></td>
-                    <td class="dark" id="HB06" onclick="runMe('HB06')"></td>
-                    <td class="light" id="HB07" onclick="runMe('HB07')"></td>
-                    <td class="dark" id="HB08" onclick="runMe('HB08')"></td>
-                </tr>
-    
-                <tr>
-                    <th>H</th>
-                    <td class="light" id="HB09" onclick="runMe('HB09')"></td>
-                    <td class="dark" id="HB10" onclick="runMe('HB10')"></td>
-                    <td class="light" id="HB11" onclick="runMe('HB11')"></td>
-                    <td class="dark" id="HB12" onclick="runMe('HB12')"></td>
-                    <td class="light" id="HB13" onclick="runMe('HB13')"></td>
-                    <td class="dark" id="HB14" onclick="runMe('HB14')"></td>
-                    <td class="light" id="HB15" onclick="runMe('HB15')"></td>
-                    <td class="dark" id="HB16" onclick="runMe('HB16')"></td>
-                </tr>
-            </tbody>
-        </table> -->
     </div>
 </div>
 

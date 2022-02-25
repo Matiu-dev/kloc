@@ -62,6 +62,7 @@ var color;
 var castling = [true, true, true];
 var enPassantCord = "";
 var figuresOnBoard=[];
+var promoFigure = "";
 
 function runMe(position){
     
@@ -161,7 +162,8 @@ function makeAMove() {
             "castling": castling,
             "castlingMove": false,
             "enPassantCord": enPassantCord,
-            "enPassantMove": false
+            "enPassantMove": false,
+            "promoFigure": promoFigure
 
         }),
         success: function (data) {
@@ -467,4 +469,8 @@ function displayResponseReserve(data) {
     positionNew = "";
     boardName = "";
     moveType = "";
+}
+
+function getPromoFigures(name) {
+    promoFigure = name.innerHTML;
 }

@@ -81,6 +81,9 @@ function create_game() {
                 setBoardsId(boardId, boardIdAdditional);
                 setColorOnBoard(color);
 
+                //ustawia figury do awansu
+                setPromoFigures(color);
+
                 nextMoveColor="WHITE";
                 reset(boardId, boardIdAdditional);
                 connectToSocket(gameId);
@@ -128,6 +131,9 @@ function connect_to_specific_game() {
                         setBoardsId(boardId, boardIdAdditional);
                         setColorOnBoard(color);
 
+                        //ustawia figury do awansu
+                        setPromoFigures(color);
+
                         nextMoveColor="WHITE";
                         reset(boardId, boardIdAdditional);
                         connectToSocket(gameId);
@@ -154,4 +160,20 @@ function setBoardsId(myBoard, boardAdditional) {
     document.getElementById("boardName1").innerHTML = myBoard;
     document.getElementById("boardName2").innerHTML = boardAdditional;
 
+}
+
+function setPromoFigures(color) {
+    if(color==="WHITE") {
+        document.getElementById("promoQueen").innerHTML = "♕";
+        document.getElementById("promoBishop").innerHTML = "♗";
+        document.getElementById("promoKnight").innerHTML = "♘";
+        document.getElementById("promoRook").innerHTML = "♖";
+    }
+
+    if(color==="BLACK") {
+        document.getElementById("promoQueen").innerHTML = "♛";
+        document.getElementById("promoBishop").innerHTML = "♝";
+        document.getElementById("promoKnight").innerHTML = "♞";
+        document.getElementById("promoRook").innerHTML = "♜";
+    }
 }
