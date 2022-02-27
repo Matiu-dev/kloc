@@ -8,7 +8,6 @@ let playerIdMove;
 let nextMoveColor;
 let team;
 
-
 function connectToSocket(gameId) {
 
     console.log("connecting to the game");
