@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+
+<p>Zarejestruj sie</p>
+
+<form name="f" th:action="@{/createPlayer}" th:object="${player}" method="post" >
+
+        <label for="login">Username</label>
+        <input type="text" id="login" name="login">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+
+        <div class="form-actions">
+            <button type="submit" class="btn">Zarejestruj</button>
+        </div>
+</form>
 
 </body>
 </html>
