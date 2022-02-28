@@ -35,6 +35,7 @@ public class BoardController {
     @Autowired
     private GameService gameService;
 
+    @CrossOrigin
     @PostMapping("/create")
     public ResponseEntity<ConnectResponse> createAndAddPlayerToBoard(HttpEntity<String> httpEntity) {
 
@@ -49,6 +50,7 @@ public class BoardController {
         return ResponseEntity.ok(boardService.createAndAddPlayerToBoard(request));
     }
 
+    @CrossOrigin
     @PostMapping("/connect")
     public ResponseEntity<ConnectResponse> connect(HttpEntity<String> httpEntity) throws InvalidParamException, InvalidGameException {
 
@@ -61,6 +63,7 @@ public class BoardController {
         return ResponseEntity.ok(boardService.connectToGame(request));
     }
 
+    @CrossOrigin
     @PostMapping("/gameplay")
     public ResponseEntity<GamePlay> makeMove(@RequestBody GamePlay request) throws Exception {
 
