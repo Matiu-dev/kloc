@@ -72,7 +72,7 @@ function runMe(position){
     //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
     //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
 
-    if(color===nextMoveColor){
+     if(color===nextMoveColor){
     if(gameResult !== "CHECKMATE"){
         if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
             figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
@@ -89,17 +89,17 @@ function runMe(position){
     }else{
         console.log("koniec gry");
     }
-   }
-   else {
-       console.log("to nie twoja kolej na ruch");
     }
+    else {
+        console.log("to nie twoja kolej na ruch");
+     }
 }
 
 function runMeTwo(position) {
     var outside  = document.getElementById(boardId);
     var inside = document.getElementById(position);
 
-    if(color===nextMoveColor){
+     if(color===nextMoveColor){
     if(gameResult !== "CHECKMATE"){
         if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
             figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
@@ -110,10 +110,10 @@ function runMeTwo(position) {
     }else {
         console.log("koniec gry");
     }
-   }
-   else {
-       console.log("to nie twoja kolej na ruch");
     }
+    else {
+        console.log("to nie twoja kolej na ruch");
+     }
 
     // console.log(document.getElementById(position).innerHTML);
     // console.log(position.substring(2));
