@@ -1,4 +1,4 @@
-const url = 'https://klocuwb.herokuapp.com/';//'http://192.168.1.245:8080';//sprawdzic to zmienajac na https://klocuwb.herokuapp.com/
+const url = 'https://klocuwb.herokuapp.com';//'http://192.168.1.245:8080';//sprawdzic to zmienajac na https://klocuwb.herokuapp.com/
 let gameId;
 let playerId;
 let boardId;
