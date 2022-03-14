@@ -3,6 +3,7 @@ package com.test.manytomany.model.player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.test.manytomany.model.PlayerBoard.PlayerBoard;
 import com.test.manytomany.model.board.Board;
+import com.test.manytomany.model.chat.Chat;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
 
@@ -38,6 +39,10 @@ public class Player {
             cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true)
     private Set<PlayerBoard> boards = new HashSet<>();
+
+    @ManyToMany(mappedBy = "players",
+            cascade = {CascadeType.MERGE})
+    Set<Chat> chats = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -109,5 +114,13 @@ public class Player {
 
     public void setBoards(Set<PlayerBoard> boards) {
         this.boards = boards;
+    }
+
+    public Set<Chat> getChats() {
+        return chats;
+    }
+
+    public void setChats(Set<Chat> chats) {
+        this.chats = chats;
     }
 }

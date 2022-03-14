@@ -1,4 +1,5 @@
 const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com'
+let login;
 let gameId;
 let playerId;
 let boardId;
@@ -7,6 +8,7 @@ let stompClient;
 let playerIdMove;
 let nextMoveColor;
 let team;
+let chatId;
 
 function connectToSocket(gameId) {
 
@@ -17,6 +19,7 @@ function connectToSocket(gameId) {
         // console.log("connected to the frame: " + frame);
         // console.log("board id to: " + boardId);
         console.log("kolor to: " + color);
+        console.log("chat id to: " + chatId);
 
 
         stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
@@ -24,36 +27,42 @@ function connectToSocket(gameId) {
             console.log(data);
             // console.log(data.nextMoveColor)
 
-            //ustawienie nastepnego ruchu dla odpowiedniej planszy
-            if(data.boardId == boardId) {
-                nextMoveColor = data.nextMoveColor;
-                enPassantCord = data.enPassantCord;
+            if(data.type==="gameplay"){
+                //ustawienie nastepnego ruchu dla odpowiedniej planszy
+                if(data.boardId == boardId) {
+                    nextMoveColor = data.nextMoveColor;
+                    enPassantCord = data.enPassantCord;
+                }
+
+                console.log(enPassantCord);
+
+                //do roszady
+                if(data.playerId==playerId) {
+                    castling=data.castling;
+                }
+
+                if(data.moveType==="BASIC"){
+                    displayResponseBasic(data);
+                }
+
+                if(data.moveType==="RESERVE") {
+                    displayResponseReserve(data);
+                }
+
+                // console.log(castling[0] + " " + castling[1] + " " + castling[2]);
+
+                gameResult = data.gameResult;
             }
 
-            console.log(enPassantCord);
-
-            //do roszady
-            if(data.playerId==playerId) {
-                castling=data.castling;
+            if(data.type==="message") {
+                displayResponseMessage(data);
             }
-
-            if(data.moveType==="BASIC"){
-                displayResponseBasic(data);
-            }
-            
-            if(data.moveType==="RESERVE") {
-                displayResponseReserve(data);
-            }
-
-            // console.log(castling[0] + " " + castling[1] + " " + castling[2]);
-
-            gameResult = data.gameResult;
         })
     })
 }
 
 function create_game() {
-    let login = document.getElementById("login").innerHTML;//sprawdzic czy z sesji da sie to wyciagnac
+    login = document.getElementById("login").innerHTML;//sprawdzic czy z sesji da sie to wyciagnac
     let id = document.getElementById("playerId").innerHTML;//i to
 
     if (login == null || login === '') {
@@ -76,6 +85,7 @@ function create_game() {
                 playerIdMove = data.playerIdMove;
                 playerId=data.playerId;
                 team = data.team;
+                chatId = data.chatId;
                 //ustawia id dla szachownic
                 setBoardsId(boardId, boardIdAdditional);
                 setColorOnBoard(color);
@@ -148,6 +158,31 @@ function connect_to_specific_game() {
 
 
 }
+
+// function connectToChat(id, login) {
+
+//     $.ajax({
+//         url: url + "/chat/create",
+//         type: 'POST',
+//         dataType: "json",
+//         contentType: "application/json",
+//         data: JSON.stringify({
+//             player: {
+//                     "id": id,
+//                     "login": login,
+//                     "playerRole": "ROLE_USER"
+//                 },
+//             "gameId": gameId,
+//         }),
+//         success: function (data) {
+//             chatId = data.chatId;
+//             connectToSocketChat(chatId);
+//         },
+//         error: function (error) {
+//             console.log(error);
+//         }
+//     })
+// }
 
 function setColorOnBoard(color) {
     document.getElementById("colorOnBoard").innerHTML =  color;

@@ -1,0 +1,21 @@
+{
+  "type": "gameplay",
+  "gameId": 172,
+  "boardId": 343,
+  "playerId": 1,
+  "coordinateOld": "52",
+  "figureNameOld": "",
+  "coordinateNew": "53",
+  "figureNameNew": "♙",
+  "figuresOnBoard": [null,[null,"♖","♙","","","","","♟","♜"],[null,"♘","♙","","","","","♟","♞"],[null,"♗","♙","","","","","♟","♝"],[null,"♕","♙","","","","","♟","♛"],[null,"♔","♙","","","","","♟","♚"],[null,"♗","♙","","","","","♟","♝"],[null,"♘","♙","","","","","♟","♞"],[null,"♖","♙","","","","","♟","♜"]],
+  "boardName": "A",
+  "nextMoveColor": "BLACK",
+  "moveType": "BASIC",
+  "team": "A",
+  "castling": [true,true,true],
+  "castlingMove": false,
+  "enPassantCord": "",
+  "enPassantMove": false,
+  "promoFigure": ""
+
+}

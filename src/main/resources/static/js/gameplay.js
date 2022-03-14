@@ -147,6 +147,7 @@ function makeAMove() {
         dataType: "json",
         contentType: "application/json",
         data: JSON.stringify({
+            "type": "gameplay",
             "gameId": gameId,
             "boardId": boardId,
             "playerId": playerId,

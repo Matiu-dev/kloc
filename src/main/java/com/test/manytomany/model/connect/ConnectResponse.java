@@ -7,6 +7,7 @@ public class ConnectResponse {
 
     private Long gameId;
     private Long playerId;
+    private Long chatId;
     private Long boardId;
     private Long boardIdAdditional;
     //aktualny ruch gracza
@@ -14,6 +15,14 @@ public class ConnectResponse {
 
     private Color color;
     private Team team;
+
+    public Long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Long chatId) {
+        this.chatId = chatId;
+    }
 
     public Long getPlayerIdMove() {
         return playerIdMove;

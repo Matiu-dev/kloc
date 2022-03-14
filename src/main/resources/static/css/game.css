@@ -34,7 +34,13 @@ td {
 
 .column {
   float: left;
-  width: 33.3%;
+  width: 25.0%;
+  padding: 5px;
+}
+
+.columnTwo {
+  float: left;
+  width: 10%;
   padding: 5px;
 }
 

@@ -14,16 +14,18 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        super.afterConnectionEstablished(session);
+        webSocketSessions.add(session);
     }
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        super.handleMessage(session, message);
+        for(WebSocketSession webSocketSession: webSocketSessions) {
+            webSocketSession.sendMessage(message);
+        }
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        super.afterConnectionClosed(session, status);
+        webSocketSessions.remove(session);
     }
 }

@@ -52,7 +52,17 @@ public class GamePlay {
 
     private boolean enPassantMove;
 
-//    do promocji pionka
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    //    do promocji pionka
     private String promoFigure;
 
     public String getPromoFigure() {

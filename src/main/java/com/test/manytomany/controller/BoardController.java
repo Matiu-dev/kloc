@@ -2,16 +2,19 @@ package com.test.manytomany.controller;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.test.manytomany.exception.InvalidGameException;
 import com.test.manytomany.exception.InvalidParamException;
+import com.test.manytomany.model.ChatMessage;
 import com.test.manytomany.model.GameResult;
-import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.connect.ConnectRequest;
-import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.connect.ConnectResponse;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.service.BoardService;
+import com.test.manytomany.service.ChatService;
 import com.test.manytomany.service.GameService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.lang.reflect.Type;
 
 @RestController
 @RequestMapping("/game")
@@ -34,6 +39,9 @@ public class BoardController {
 
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private ChatService chatService;
 
     @CrossOrigin
     @PostMapping("/create")
@@ -65,17 +73,38 @@ public class BoardController {
 
     @CrossOrigin
     @PostMapping("/gameplay")
-    public ResponseEntity<GamePlay> makeMove(@RequestBody GamePlay request) throws Exception {
+    public ResponseEntity<Object> makeMove(HttpEntity<String> httpEntity) throws Exception {
 
-        log.info("gameplay" + request);
-        GamePlay gamePlay = boardService.makeAMove(request);
+        String json = httpEntity.getBody();
+        Gson gson = new Gson();
 
-        if(gamePlay.getGameResult().equals(GameResult.CHECKMATE)){
-            gameService.updateGameWinners(gamePlay);
+        GsonBuilder builder = new GsonBuilder();
+        Foo o = builder.create().fromJson(json, Foo.class);
+
+        //jesli obiekt gameplay
+        if(o.getType().equals("gameplay")) {
+            GamePlay request = gson.fromJson(json, GamePlay.class);
+
+            log.info("gameplay" + request);
+            GamePlay gamePlay = boardService.makeAMove(request);
+
+            if(gamePlay.getGameResult().equals(GameResult.CHECKMATE)){
+                gameService.updateGameWinners(gamePlay);
+            }
+
+            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + gamePlay.getGameId(), gamePlay);
+            return ResponseEntity.ok(gamePlay);
         }
 
-        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + gamePlay.getGameId(), gamePlay);
+        //jestli obiekt chatMessage
+       if(o.getType().equals("message")) {
+           ChatMessage request = gson.fromJson(json, ChatMessage.class);
 
-        return ResponseEntity.ok(gamePlay);
+           log.info("ChatMessage " + request);
+           simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
+           return ResponseEntity.ok(request);
+       }
+
+        return ResponseEntity.ok(o);
     }
 }

@@ -20,11 +20,11 @@ public class PlayerUrlAuthenticationSuccessHandler implements AuthenticationSucc
 
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_USER")) {
-            response.sendRedirect("/");
+            response.sendRedirect("/index");
         }
 
         if (roles.contains("ROLE_ADMIN")) {
-            response.sendRedirect("/");
+            response.sendRedirect("/index");
         }
 
     }

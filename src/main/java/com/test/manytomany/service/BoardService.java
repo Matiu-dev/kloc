@@ -3,6 +3,7 @@ package com.test.manytomany.service;
 import com.test.manytomany.chesspiecerules.*;
 import com.test.manytomany.model.*;
 import com.test.manytomany.model.PlayerBoard.Team;
+import com.test.manytomany.model.connect.ChatConnectRequest;
 import com.test.manytomany.model.connect.ConnectRequest;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.board.Board;
@@ -34,6 +35,9 @@ public class BoardService {
 
     @Autowired
     private GameService gameService;
+
+    @Autowired
+    private ChatService chatService;
 
     public ConnectResponse createAndAddPlayerToBoard(Player player) {
 
@@ -79,6 +83,11 @@ public class BoardService {
         connectResponse.setColor(color);
         connectResponse.setTeam(team);
         connectResponse.setPlayerId(player.getId());
+
+        //laczenie z chatem
+        connectResponse.setChatId(chatService.createAndAddPlayerToChat(
+                new ChatConnectRequest(player, connectResponse.getGameId()))
+                .getChatId());
 
         return connectResponse;
     }
@@ -176,6 +185,10 @@ public class BoardService {
 
             connectResponse.setBoardIdAdditional(b.getId());//ustawienie dodatkowego boardu id
         }
+
+        connectResponse.setChatId(chatService.connectToChat(
+                        new ChatConnectRequest(player, connectResponse.getGameId()))
+                .getChatId());
 
         return connectResponse;
 
