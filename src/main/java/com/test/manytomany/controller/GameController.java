@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
+
 @Controller
 public class GameController {
 
@@ -24,7 +26,11 @@ public class GameController {
 
 
     @GetMapping("/")
-    public String game(Model model) {//@RequestParam String submit
+    public String createGame(@RequestParam String submit,
+                             @RequestParam(required=false) String gameJoinId,
+                             @RequestParam(required = false) String gameTime,
+                             @RequestParam(required = false) String additionalTime,
+                             Model model) {//@RequestParam String submit Model model
 
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(user instanceof UserDetails){
@@ -36,18 +42,48 @@ public class GameController {
             //To-Do
         }
 
-//        if(submit.equals("create")) {
-//            ConnectResponse connectResponse = boardService.createAndAddPlayerToBoard
-//                    (playerService.findPlayerById
-//                            (playerService.getUserByLogin(((UserDetails) user).getUsername())));
-//            //przekazac wszystkie parametry na htmla jak wyzej
-//            model.addAttribute("color", connectResponse.getColor());
-//            model.addAttribute("boardIdFirst", connectResponse.getBoardId());
-//        }
-//        System.out.println("submit " + submit);
+        System.out.println("gameTime " + gameTime);
+        System.out.println("additionalTime " + additionalTime);
+        System.out.println("submit " + submit);
+        System.out.println("gameId " + gameJoinId);
+
+        if(submit.equals("create")) {
+            //przekazac wszystkie parametry na htmla jak wyzej
+//            model.addAttribute("submit", submit);
+            model.addAttribute("submit", submit);
+            model.addAttribute("gameTime", gameTime);
+            model.addAttribute("additionalTime", additionalTime);
+        }
+
+        if(submit.equals("join")) {
+            model.addAttribute("submit", submit);
+            model.addAttribute("gameJoinId", gameJoinId);
+        }
 
         return "main";
     }
 
+//    @GetMapping("/")
+//    public String joinGame(@RequestParam String submit, @RequestParam String boardId, Model model) {//@RequestParam String submit Model model
+//
+//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if(user instanceof UserDetails){
+//            String name = ((UserDetails) user).getUsername();
+//            model.addAttribute("username", name);
+//            model.addAttribute("playerId",
+//                    playerService.getUserByLogin(((UserDetails) user).getUsername()));
+//        }else {
+//            //To-Do
+//        }
+//
+//        if(submit.equals("create")) {
+//            //przekazac wszystkie parametry na htmla jak wyzej
+////            model.addAttribute("submit", submit);
+//            model.addAttribute("submit", submit);
+//        }
+//        System.out.println("submit " + submit);
+//
+//        return "main";
+//    }
 
 }

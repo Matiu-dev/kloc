@@ -1,3 +1,7 @@
+body {
+  background-image: url("../img/login.jpg");
+}
+
 .chess-board {
      border-spacing: 0;
      border-collapse: collapse;
@@ -16,7 +20,7 @@
      background: #eee; 
 }
 .chess-board .dark { 
-    background: #bf4040; 
+    background: #A0522D; 
 }
 
 td {
@@ -27,14 +31,14 @@ td {
   box-sizing: border-box;
 }
 
-.row {
-  margin-left:-5px;
-  margin-right:-5px;
-}
+/* .row {
+  margin-left:5px;
+  margin-right:5px;
+} */
 
 .column {
   float: left;
-  width: 25.0%;
+  width: 30.0%;
   padding: 5px;
 }
 
@@ -42,6 +46,8 @@ td {
   float: left;
   width: 10%;
   padding: 5px;
+  padding-top: 20%;
+
 }
 
 /* Clearfix (clear floats) */
@@ -49,5 +55,11 @@ td {
   content: "";
   clear: both;
   display: table;
+}
+
+.loginTimerData p{
+  display: inline-block;
+  vertical-align: top;
+  padding: 5px;
 }
 

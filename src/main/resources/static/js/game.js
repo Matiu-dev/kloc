@@ -9,6 +9,9 @@ let playerIdMove;
 let nextMoveColor;
 let team;
 let chatId;
+let submit;
+let gameTime;
+let additionalTime;
 
 function connectToSocket(gameId) {
 
@@ -88,7 +91,10 @@ function create_game() {
                 chatId = data.chatId;
                 //ustawia id dla szachownic
                 setBoardsId(boardId, boardIdAdditional);
-                setColorOnBoard(color);
+                
+                //ustawia czas
+                setTime();
+                
 
                 //ustawia figury do awansu
                 setPromoFigures(color);
@@ -106,6 +112,17 @@ function create_game() {
     }
 }
 
+window.onload = function() {
+
+    if(submit === "create"){
+        create_game();
+    }
+
+    if(submit === "join") {
+        connect_to_specific_game();
+    }
+}
+
 function connect_to_specific_game() {
     let login = document.getElementById("login").innerHTML;
     let id = document.getElementById("playerId").innerHTML;
@@ -114,9 +131,9 @@ function connect_to_specific_game() {
      if (login == null || login === '') {
             alert("Please enter login");
      } else {
-        let boardId = document.getElementById("boardId").value;
+        // let boardId = document.getElementById("boardId").value;
 //        console.log(boardId);
-        if (boardId == null || boardId === '') {
+        if (gameId == null || gameId === '') {
                     alert("Please enter board id");
         }
         $.ajax({
@@ -125,7 +142,7 @@ function connect_to_specific_game() {
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify({
-                        "gameId": boardId,
+                        "gameId": gameId,
                         "playerId": id
                     }),
                     success: function (data) {
@@ -138,7 +155,7 @@ function connect_to_specific_game() {
                         team = data.team;
                         //ustawia id dla szachownic
                         setBoardsId(boardId, boardIdAdditional);
-                        setColorOnBoard(color);
+                        // setColorOnBoard(color);
 
                         //ustawia figury do awansu
                         setPromoFigures(color);
@@ -159,31 +176,6 @@ function connect_to_specific_game() {
 
 }
 
-// function connectToChat(id, login) {
-
-//     $.ajax({
-//         url: url + "/chat/create",
-//         type: 'POST',
-//         dataType: "json",
-//         contentType: "application/json",
-//         data: JSON.stringify({
-//             player: {
-//                     "id": id,
-//                     "login": login,
-//                     "playerRole": "ROLE_USER"
-//                 },
-//             "gameId": gameId,
-//         }),
-//         success: function (data) {
-//             chatId = data.chatId;
-//             connectToSocketChat(chatId);
-//         },
-//         error: function (error) {
-//             console.log(error);
-//         }
-//     })
-// }
-
 function setColorOnBoard(color) {
     document.getElementById("colorOnBoard").innerHTML =  color;
 }
@@ -191,9 +183,16 @@ function setColorOnBoard(color) {
 function setBoardsId(myBoard, boardAdditional) {
     document.getElementById("board1").setAttribute('id',myBoard);
     document.getElementById("board2").setAttribute('id', boardAdditional);
-    document.getElementById("boardName1").innerHTML = myBoard;
-    document.getElementById("boardName2").innerHTML = boardAdditional;
+    // document.getElementById("boardName1").innerHTML = myBoard;
+    // document.getElementById("boardName2").innerHTML = boardAdditional;
 
+}
+
+function setTime() {
+    document.getElementById("gameTimeOne").innerHTML += gameTime;
+    document.getElementById("gameTimeTwo").innerHTML += gameTime;
+    document.getElementById("gameTimeThree").innerHTML += gameTime;
+    document.getElementById("gameTimeFour").innerHTML += gameTime;
 }
 
 function setPromoFigures(color) {

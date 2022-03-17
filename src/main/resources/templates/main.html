@@ -26,6 +26,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+        <script>
+            submit = "[[${submit}]]";
+            // console.log("submit to: " +submit);
+
+            if(submit === "create") {
+                gameTime = "[[${gameTime}]]";
+                additionalTime = "[[${additionalTime}]]";
+            }
+
+            if(submit==="join"){
+                gameId = "[[${gameJoinId}]]";
+                console.log(gameId);
+            }
+        </script>
 </head>
 
 <body>
@@ -50,6 +64,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/ranking">Ranking</a>
                 </li>
+                <li class="nav-item">
+                    <form name="f" th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn">Wyloguj</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
@@ -59,25 +78,27 @@
         <a id="login" th:text="${username}">Login</a>
     </p> -->
 
-    <p>
+    <!-- <p>
         <input id="boardId" placeholder="Paste board id">
         <button onclick="connect_to_specific_game()">Connect by game id</button>
     </p>
 
-    <button onclick="create_game()">Create a new game</button>
+    <button onclick="create_game()">Create a new game</button> -->
 
-    <p>
-    <p>Twoj kolor to: </p>
-    <p th:text="${color}"></p>
-    <p id="colorOnBoard"></p>
-    </p>
+    <!-- <p>
+        <p>Twoj kolor to: </p>
+        <p th:text="${color}"></p>
+        <p id="colorOnBoard"></p>
+    </p> -->
 
-    <div class="row">
+    <!-- <div class="row"> -->
         <div class="column">
 
-            <p id="boardName1" ></p>
-            
-
+            <!-- <p id="boardName1"></p> -->
+            <div class="loginTimerData">
+                <!-- <p id="playerOne">Player:</p> -->
+                <p id="gameTimeOne">Czas:</p>
+            </div>
 
             <table class="chess-board" id="board1">
 
@@ -232,7 +253,10 @@
                 </tbody>
             </table>
 
-            <br>
+            <div class="loginTimerData">
+                <!-- <p id="playerOne">Player:</p> -->
+                <p id="gameTimeTwo">Czas</p>
+            </div>
         </div>
 
         <div class="columnTwo">
@@ -254,24 +278,14 @@
         </div>
 
         <div class="column">
-            <p>chat</p>
             <div class="chat">
                 <div class="container">
                     <div class="chat-content">
                         <div class="card" id="addMessage">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <strong>John:</strong>
-                                    <span>Hello!</span>
-                                </li>
-                                <li class="list-group-item">
-                                    <strong>Will:</strong>
-                                    <span>Hi!</span>
-                                </li>
                             </ul>
                         </div>
                     </div>
-                    <!-- <form method="post"> -->
                     <div class="chat-send row">
                         <div class="col-8">
                             <input type="text" class="form-control" name="message" id="input-message">
@@ -281,13 +295,17 @@
                                 onclick="sendMessage()">Wyślij</button>
                         </div>
                     </div>
-                    <!-- </form> -->
                 </div>
             </div>
+            
         </div>
 
         <div class="column">
-            <p id="boardName2"></p>
+            
+            <div class="loginTimerData">
+                <!-- <p id="playerOne">Player:</p> -->
+                <p id="gameTimeThree">Czas</p>
+            </div>
 
             <table class="chess-board" id="board2">
 
@@ -439,16 +457,19 @@
                 </tbody>
             </table>
 
-            <br>
+            <div class="loginTimerData">
+                <!-- <p id="playerOne">Player:</p> -->
+                <p id="gameTimeFour">Czas</p>
+            </div>
         </div>
-    </div>
+    <!-- </div> -->
 
 
-    <form name="f" th:action="@{/logout}" method="post">
+    <!-- <form name="f" th:action="@{/logout}" method="post">
 
         <button type="submit" class="btn">Wyloguj</button>
 
-    </form>
+    </form> -->
 
 </body>
 

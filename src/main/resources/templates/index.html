@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    <link rel="stylesheet" href="css/index.css">
+
     <script src="js/game.js"></script>
     <script src="js/gameplay.js"></script>
 
@@ -40,18 +42,66 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/ranking">Ranking</a>
                 </li>
+                <li class="nav-item">
+                    <form name="f" th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn">Wyloguj</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
 
-    <p>
+    <!-- <p>
         <input id="boardId" placeholder="Paste board id">
         <button onclick="connect_to_specific_game()">Connect by game id</button>
-    </p>
+    </p> -->
 
     <form id="login-form" class="form" name="f" th:action="@{/}" method="get">
-        
-        <input type="submit" name="submit" class="btn btn-dark btn-md" value="create">
+        <h3 class="text-center text-dark">Dołącz do gry</h3>
+
+        <div class="form-group">
+            <label class="text-dark">Id gry</label>
+            <input type='text' name="gameJoinId" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" class="btn btn-dark btn-md" value="join">
+        </div>
+    </form>
+
+    <form id="login-form" class="form" name="f" th:action="@{/}" method="get">
+
+        <h3 class="text-center text-dark">Stwórz gre</h3>
+
+        <div class="form-group">
+            <label class="text-dark">Czas gry(minuty)</label>
+            <input list="gameTime" type="text" class="form-control" name="gameTime">
+            <datalist id="gameTime">
+                <option value="1:00">
+                <option value="3:00">
+                <option value="5:00">
+                <option value="10:00">
+                <option value="30:00">
+            </datalist>
+            </input>
+        </div>
+
+        <div class="form-group">
+            <label class="text-dark">Doliczany czas(sekundy)</label>
+            <input list="additionalTime" type="text" class="form-control" name="additionalTime">
+            <datalist id="additionalTime">
+                <option value="0:00">
+                <option value="1:00">
+                <option value="3:00">
+                <option value="5:00">
+                <option value="10:00">
+            </datalist>
+            </input>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" name="submit" class="btn btn-dark btn-md" value="create">
+        </div>
     </form>
     <!-- <button href="/" onclick="create_game()">Stwórz grę</button> -->
 
