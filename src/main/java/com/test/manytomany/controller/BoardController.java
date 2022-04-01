@@ -3,16 +3,10 @@ package com.test.manytomany.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.test.manytomany.exception.InvalidGameException;
 import com.test.manytomany.exception.InvalidParamException;
-import com.test.manytomany.model.ChatMessage;
-import com.test.manytomany.model.GameResult;
-import com.test.manytomany.model.connect.ConnectRequest;
-import com.test.manytomany.model.GamePlay;
-import com.test.manytomany.model.connect.ConnectResponse;
-import com.test.manytomany.model.player.Player;
+import com.test.manytomany.model.*;
+import com.test.manytomany.model.connect.*;
 import com.test.manytomany.service.BoardService;
 import com.test.manytomany.service.ChatService;
 import com.test.manytomany.service.GameService;
@@ -23,8 +17,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Type;
 
 @RestController
 @RequestMapping("/game")
@@ -50,7 +42,7 @@ public class BoardController {
 
         String json = httpEntity.getBody();
         Gson gson = new Gson();
-        Player request = gson.fromJson(json, Player.class);
+        CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
 
         log.info("create" + request);
 
@@ -65,10 +57,11 @@ public class BoardController {
         String json = httpEntity.getBody();
         Gson gson = new Gson();
         ConnectRequest request = gson.fromJson(json, ConnectRequest.class);
-
         log.info("connect" + request);
 
-        return ResponseEntity.ok(boardService.connectToGame(request));
+        ConnectResponse connectResponse = boardService.connectToGame(request);
+
+        return ResponseEntity.ok(connectResponse);
     }
 
     @CrossOrigin
@@ -104,6 +97,53 @@ public class BoardController {
            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
            return ResponseEntity.ok(request);
        }
+
+       //jesli koniec czasu
+        if(o.getType().equals("time")) {
+            OutOfTime request = gson.fromJson(json, OutOfTime.class);
+
+            System.out.println(request.getTeam());
+            System.out.println(request.getGameResult());
+            System.out.println(request.getGameId());
+
+            log.info("OutOFTIme: ", request);
+
+            if(request.getGameResult().equals(GameResult.CHECKMATE)){
+                gameService.updateGameWinners(request);
+            }
+
+            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
+
+            request.setGameResult(GameResult.CHECKMATE);
+
+            return ResponseEntity.ok(request);
+        }
+
+        //powiadomienie o polaczeniu
+        if(o.getType().equals("connect")) {
+            NotificateConnectRequest request = gson.fromJson(json, NotificateConnectRequest.class);
+
+            log.info("Notificate connect: ", request);
+
+            NotificateConnectResponse notificateResponse = boardService.notificateConnectResponse(request);
+            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + notificateResponse.getGameId(), notificateResponse);
+
+            return ResponseEntity.ok(notificateResponse);
+        }
+
+        //rozlaczenie jednego z graczy
+//        if(o.getType().equals("disconnect")) {
+//            Disconnect request = gson.fromJson(json, Disconnect.class);
+//
+//            log.info("Disconnect: ", request);
+//
+//            if(!request.getGameResult().equals(GameResult.CHECKMATE)){
+//                request = gameService.updateGameWinners(request);
+//            }
+//
+//            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
+//            return ResponseEntity.ok(request);
+//        }
 
         return ResponseEntity.ok(o);
     }

@@ -35,11 +35,11 @@ function reset(bId, bIdA) {
     document.getElementById("A71").innerHTML = "&#x2658";
     document.getElementById("A81").innerHTML = "&#x2656";
 
-    for(let i = 1; i < 9; i++) {
-            figuresOnBoard[i]=[]
-            for(let j = 1; j < 9; j++) {
-                figuresOnBoard[i][j]=document.getElementById("A"+i.toString()+j.toString()).innerHTML;
-            }
+    for (let i = 1; i < 9; i++) {
+        figuresOnBoard[i] = []
+        for (let j = 1; j < 9; j++) {
+            figuresOnBoard[i][j] = document.getElementById("A" + i.toString() + j.toString()).innerHTML;
+        }
     }
 
     boardId = bId;
@@ -51,9 +51,9 @@ function reset(bId, bIdA) {
     // document.getElementById(boardIdAdditional).innerHTML = boardIdAdditional;
 }
 
-var figureNameOld="";
-var coordinateOld="";
-var figureNameNew="";
+var figureNameOld = "";
+var coordinateOld = "";
+var figureNameNew = "";
 var coordinateNew = "";
 var boardName = "";
 var moveType = "";
@@ -61,32 +61,38 @@ var gameResult = "";
 var color;
 var castling = [true, true, true];
 var enPassantCord = "";
-var figuresOnBoard=[];
+var figuresOnBoard = [];
 var promoFigure = "";
+var internalFirst = null
+var internalSecond = null;
+var internalThird = null
+var internalFourth = null;
+var interval = 100;
 
-function runMe(position){
-    
-    var outside  = document.getElementById(boardId);
+
+function runMe(position) {
+
+    var outside = document.getElementById(boardId);
     var inside = document.getElementById(position);
 
     //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
     //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
 
     //  if(color===nextMoveColor){
-    if(gameResult !== "CHECKMATE"){
-        if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
-            figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
+    if (gameResult !== "CHECKMATE") {
+        if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+            figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
             coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
             boardName = position[0];
             moveType = "BASIC";
-        }else if(figureNameOld!=="" && outside.contains(inside)) {//po kliknieciu 2
-            figureNameNew=document.getElementById(position).innerHTML;//pobiera nazwe figury
+        } else if (figureNameOld !== "" && outside.contains(inside)) {//po kliknieciu 2
+            figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
             coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
             makeAMove();
-    
+
             boardName = "";
         }
-    }else{
+    } else {
         console.log("koniec gry");
     }
     // }
@@ -96,18 +102,18 @@ function runMe(position){
 }
 
 function runMeTwo(position) {
-    var outside  = document.getElementById(boardId);
+    var outside = document.getElementById(boardId);
     var inside = document.getElementById(position);
 
     //  if(color===nextMoveColor){
-    if(gameResult !== "CHECKMATE"){
-        if(figureNameOld=== "" && outside.contains(inside) && checkColor(inside.innerHTML.toString())===color){//po kliknieciu 1
-            figureNameOld=document.getElementById(position).innerHTML;//pobiera nazwe figury
+    if (gameResult !== "CHECKMATE") {
+        if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+            figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
             coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
             boardName = position[0];
             moveType = "RESERVE";
         }
-    }else {
+    } else {
         console.log("koniec gry");
     }
     // }
@@ -120,11 +126,11 @@ function runMeTwo(position) {
 }
 
 function checkColor(name) {
-    if(name === "♜" || name === "♞" || name === "♝" ||
-    name === "♛" || name === "♚" || name === "♟" ){
+    if (name === "♜" || name === "♞" || name === "♝" ||
+        name === "♛" || name === "♚" || name === "♟") {
         return "BLACK";
-    }else if(name === "♖" || name === "♘" || name === "♗" ||
-    name === "♕" || name === "♔" || name === "♙" ){
+    } else if (name === "♖" || name === "♘" || name === "♗" ||
+        name === "♕" || name === "♔" || name === "♙") {
         return "WHITE";
     }
 
@@ -134,10 +140,10 @@ function makeAMove() {
     // var playerId = document.getElementById("playerId").innerHTML;
 
     var figuresOnBoard = [];
-    for(let i = 1; i < 9; i++) {
-        figuresOnBoard[i]=[]
-        for(let j = 1; j < 9; j++) {
-            figuresOnBoard[i][j]=document.getElementById("A" + i.toString()+j.toString()).innerHTML;
+    for (let i = 1; i < 9; i++) {
+        figuresOnBoard[i] = []
+        for (let j = 1; j < 9; j++) {
+            figuresOnBoard[i][j] = document.getElementById("A" + i.toString() + j.toString()).innerHTML;
         }
     }
 
@@ -164,11 +170,12 @@ function makeAMove() {
             "castlingMove": false,
             "enPassantCord": enPassantCord,
             "enPassantMove": false,
-            "promoFigure": promoFigure
+            "promoFigure": promoFigure,
+            "gameResult": gameResult
 
         }),
         success: function (data) {
-//            gameOn = false;
+            //            gameOn = false;
             // displayResponse(data);
             // playerIdMove = data.playerIdMove;
         },
@@ -182,7 +189,7 @@ function displayResponseBasic(data) {
 
     //sprawdzanie czy ruch jest bijacy i odpowiednie ustawienie zbitego pionki na dodatkowym polu
 
-    if(data.boardId == boardId && data.moveStatus === "OK") {
+    if (data.boardId == boardId && data.moveStatus === "OK") {
         var help = "A";
         var helpTwo = "B";
         var field = "";
@@ -192,63 +199,63 @@ function displayResponseBasic(data) {
 
         // console.log("kord " + data.enPassantCord);
         //dla bialego bicie w przelocie koordynaty do przeniesienia pionka na 2 szachownice
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="BLACK"){//kolor przeciwny
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "BLACK") {//kolor przeciwny
             console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) + 1))
             figureTwo = document.getElementById(help +
-                 data.coordinateNew[0] + 
-                 (parseInt(data.coordinateNew[1]) + 1)).innerHTML;
+                data.coordinateNew[0] +
+                (parseInt(data.coordinateNew[1]) + 1)).innerHTML;
         }
-        
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="WHITE") {
+
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "WHITE") {
             console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) - 1))
             figureTwo = document.getElementById(help +
-                 data.coordinateNew[0] + 
-                  (parseInt(data.coordinateNew[1]) - 1)).innerHTML;
+                data.coordinateNew[0] +
+                (parseInt(data.coordinateNew[1]) - 1)).innerHTML;
         }
-       
+
         // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
 
-        if(figure !== "" && data.castlingMove == false){
+        if (figure !== "" && data.castlingMove == false) {
             console.log("jest bicie");
             // console.log(helpTwo);
             // console.log(checkColor(figure).charAt(0));
             // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
-            
-            for(var i = 15; i >= 0; i--) {
-               
-                if(i > 9){
-                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML===""){
-                        field =i.toString();
+
+            for (var i = 15; i >= 0; i--) {
+
+                if (i > 9) {
+                    if (document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML === "") {
+                        field = i.toString();
                     }
                 }
 
-                if(i < 10){
-                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML===""){
+                if (i < 10) {
+                    if (document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML === "") {
                         field = "0" + i.toString();
                     }
-                }  
+                }
             }
 
             // console.log(helpTwo + checkColor(figure).charAt(0) + field);
             document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
-        } 
+        }
 
-        if(data.enPassantMove == true &&  data.castlingMove == false && figureTwo !== ""){
+        if (data.enPassantMove == true && data.castlingMove == false && figureTwo !== "") {
             console.log("bicie w przelocie");
 
-            for(var i = 15; i >= 0; i--) {
-               
-                if(i > 9){
-                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + i.toString()).innerHTML===""){
-                        field =i.toString();
+            for (var i = 15; i >= 0; i--) {
+
+                if (i > 9) {
+                    if (document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + i.toString()).innerHTML === "") {
+                        field = i.toString();
                     }
                 }
 
-                if(i < 10){
-                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + "0" + i.toString()).innerHTML===""){
+                if (i < 10) {
+                    if (document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + "0" + i.toString()).innerHTML === "") {
                         field = "0" + i.toString();
                     }
-                }  
+                }
             }
 
             // console.log(helpTwo + checkColor(figure).charAt(0) + field);
@@ -256,7 +263,7 @@ function displayResponseBasic(data) {
         }
     }
 
-    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+    if (data.boardId == boardIdAdditional && data.moveStatus === "OK") {
         var help = "B";
         var helpTwo = "A";
         var figure = document.getElementById(help + data.coordinateNew).innerHTML;
@@ -264,72 +271,72 @@ function displayResponseBasic(data) {
 
         // console.log(document.getElementById(help + data.coordinateNew).innerHTML);
         // console.log("kord " + data.enPassantCord);
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="BLACK"){//kolor przeciwny
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "BLACK") {//kolor przeciwny
             console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) + 1))
             figureTwo = document.getElementById(help +
-                 data.coordinateNew[0] + 
-                 (parseInt(data.coordinateNew[1]) + 1)).innerHTML;
-        }
-        
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)==="WHITE") {
-            console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) - 1))
-            figureTwo = document.getElementById(help +
-                 data.coordinateNew[0] + 
-                  (parseInt(data.coordinateNew[1]) - 1)).innerHTML;
+                data.coordinateNew[0] +
+                (parseInt(data.coordinateNew[1]) + 1)).innerHTML;
         }
 
-        if(figure !== "" && data.castlingMove == false){
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            console.log(data.coordinateNew[0] + " " + (parseInt(data.coordinateNew[1]) - 1))
+            figureTwo = document.getElementById(help +
+                data.coordinateNew[0] +
+                (parseInt(data.coordinateNew[1]) - 1)).innerHTML;
+        }
+
+        if (figure !== "" && data.castlingMove == false) {
             console.log("jest bicie");
             // console.log(helpTwo);
             // console.log(checkColor(figure).charAt(0));
             // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
-            
-            for(var i = 15; i >= 0; i--) {
-               
-                if(i > 9){
-                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML===""){
-                        field =i.toString();
+
+            for (var i = 15; i >= 0; i--) {
+
+                if (i > 9) {
+                    if (document.getElementById(helpTwo + checkColor(figure).charAt(0) + i.toString()).innerHTML === "") {
+                        field = i.toString();
                     }
                 }
 
-                if(i < 10){
-                    if(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML===""){
+                if (i < 10) {
+                    if (document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + i.toString()).innerHTML === "") {
                         field = "0" + i.toString();
                     }
-                }  
+                }
             }
 
             // console.log(helpTwo + checkColor(figure).charAt(0) + field);
             document.getElementById(helpTwo + checkColor(figure).charAt(0) + field).innerHTML = figure;
         }
 
-        if(data.enPassantMove == true &&  data.castlingMove == false && figureTwo !== ""){
+        if (data.enPassantMove == true && data.castlingMove == false && figureTwo !== "") {
             console.log("bicie w przelocie");
 
-            for(var i = 15; i >= 0; i--) {
-               
-                if(i > 9){
-                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + i.toString()).innerHTML===""){
-                        field =i.toString();
+            for (var i = 15; i >= 0; i--) {
+
+                if (i > 9) {
+                    if (document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + i.toString()).innerHTML === "") {
+                        field = i.toString();
                     }
                 }
 
-                if(i < 10){
-                    if(document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + "0" + i.toString()).innerHTML===""){
+                if (i < 10) {
+                    if (document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + "0" + i.toString()).innerHTML === "") {
                         field = "0" + i.toString();
                     }
-                }  
+                }
             }
 
             // console.log(helpTwo + checkColor(figure).charAt(0) + field);
             document.getElementById(helpTwo + checkColor(figureTwo).charAt(0) + field).innerHTML = figureTwo;
         }
-        
+
     }
-    
+
 
     // ustawianie szachownicy
-    if(data.boardId == boardId && data.moveStatus === "OK"){
+    if (data.boardId == boardId && data.moveStatus === "OK") {
         var help = "A";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(data.boardName + data.coordinateOld).innerHTML = data.figureNameOld;
@@ -338,47 +345,53 @@ function displayResponseBasic(data) {
         // console.log(data.boardName + data.coordinateOld);
 
         //prawo castling biale
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
-            if(data.coordinateOld === "61" && data.coordinateNew === "71") {
-                document.getElementById(help+"51").innerHTML = "";
-                document.getElementById(help+"81").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            if (data.coordinateOld === "61" && data.coordinateNew === "71") {
+                document.getElementById(help + "51").innerHTML = "";
+                document.getElementById(help + "81").innerHTML = "";
             }
         }
 
         //lewo castling biale
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
-            if(data.coordinateOld === "41" && data.coordinateNew === "31") {
-                document.getElementById(help+"51").innerHTML = "";
-                document.getElementById(help+"11").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            if (data.coordinateOld === "41" && data.coordinateNew === "31") {
+                document.getElementById(help + "51").innerHTML = "";
+                document.getElementById(help + "11").innerHTML = "";
             }
         }
 
         //prawo castling czarne
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
-            if(data.coordinateOld === "68" && data.coordinateNew === "78") {
-                document.getElementById(help+"58").innerHTML = "";
-                document.getElementById(help+"88").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK") {
+            if (data.coordinateOld === "68" && data.coordinateNew === "78") {
+                document.getElementById(help + "58").innerHTML = "";
+                document.getElementById(help + "88").innerHTML = "";
             }
         }
 
         //lewo castling czarne
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
-            if(data.coordinateOld === "48" && data.coordinateNew === "38") {
-                document.getElementById(help+"58").innerHTML = "";
-                document.getElementById(help+"18").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK") {
+            if (data.coordinateOld === "48" && data.coordinateNew === "38") {
+                document.getElementById(help + "58").innerHTML = "";
+                document.getElementById(help + "18").innerHTML = "";
             }
         }
 
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "WHITE") {
-            document.getElementById(help+(data.coordinateNew -1)).innerHTML="";
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            document.getElementById(help + (data.coordinateNew - 1)).innerHTML = "";
         }
 
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "BLACK") {
-            document.getElementById(help+(parseInt(data.coordinateNew) +1)).innerHTML="";
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "BLACK") {
+            document.getElementById(help + (parseInt(data.coordinateNew) + 1)).innerHTML = "";
         }
+
+        //ustawianie czasu
+
+        setTimeForBoardA(data);
+
+        // clearInterval(internalFirst);
     }
 
-    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+    if (data.boardId == boardIdAdditional && data.moveStatus === "OK") {
         var help = "B";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;
@@ -387,55 +400,57 @@ function displayResponseBasic(data) {
         // console.log(data.boardName + data.coordinateOld);
 
         //prawo castling biale
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
-            if(data.coordinateOld === "61" && data.coordinateNew === "71") {
-                document.getElementById(help+"51").innerHTML = "";
-                document.getElementById(help+"81").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            if (data.coordinateOld === "61" && data.coordinateNew === "71") {
+                document.getElementById(help + "51").innerHTML = "";
+                document.getElementById(help + "81").innerHTML = "";
             }
         }
 
         //lewo castling biale
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE"){
-            if(data.coordinateOld === "41" && data.coordinateNew === "31") {
-                document.getElementById(help+"51").innerHTML = "";
-                document.getElementById(help+"11").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            if (data.coordinateOld === "41" && data.coordinateNew === "31") {
+                document.getElementById(help + "51").innerHTML = "";
+                document.getElementById(help + "11").innerHTML = "";
             }
         }
 
         //prawo castling czarne
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
-            if(data.coordinateOld === "68" && data.coordinateNew === "78") {
-                document.getElementById(help+"58").innerHTML = "";
-                document.getElementById(help+"88").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK") {
+            if (data.coordinateOld === "68" && data.coordinateNew === "78") {
+                document.getElementById(help + "58").innerHTML = "";
+                document.getElementById(help + "88").innerHTML = "";
             }
         }
 
         //lewo castling czarne
-        if(data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK"){
-            if(data.coordinateOld === "48" && data.coordinateNew === "38") {
-                document.getElementById(help+"58").innerHTML = "";
-                document.getElementById(help+"18").innerHTML = "";
+        if (data.castlingMove == true && checkColor(data.figureNameNew) === "BLACK") {
+            if (data.coordinateOld === "48" && data.coordinateNew === "38") {
+                document.getElementById(help + "58").innerHTML = "";
+                document.getElementById(help + "18").innerHTML = "";
             }
         }
 
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "WHITE") {
-            document.getElementById(help+(data.coordinateNew -1)).innerHTML="";
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "WHITE") {
+            document.getElementById(help + (data.coordinateNew - 1)).innerHTML = "";
         }
 
-        if(data.enPassantMove == true && checkColor(data.figureNameNew)=== "BLACK") {
-            document.getElementById(help+(data.coordinateNew +1)).innerHTML="";
+        if (data.enPassantMove == true && checkColor(data.figureNameNew) === "BLACK") {
+            document.getElementById(help + (data.coordinateNew + 1)).innerHTML = "";
         }
+
+        //ustawianie czasu
+
+        setTimeForBoardB(data);
+
+        // clearInterval(internalFirst);
+
     }
 
-    //awans pionka
-    if(data.figureNameNew === ""){
-        
-    }
 
-    
-    figureNameOld="";
-    positionOld="";
-    figureNameNew="";
+    figureNameOld = "";
+    positionOld = "";
+    figureNameNew = "";
     positionNew = "";
     boardName = "";
     moveType = "";
@@ -445,28 +460,30 @@ function displayResponseReserve(data) {
 
 
     // ustawianie szachownicy
-    if(data.boardId == boardId && data.moveStatus === "OK"){
+    if (data.boardId == boardId && data.moveStatus === "OK") {
         var help = "A";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + checkColor(data.figureNameNew)[0] + data.coordinateOld).innerHTML = data.figureNameOld;
 
+        setTimeForBoardA(data);
         // console.log(help + data.coordinateNew);
         // console.log(help + checkColor(data.figureNameNew)[0] + data.coordinateOld);
     }
 
-    if(data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+    if (data.boardId == boardIdAdditional && data.moveStatus === "OK") {
         var help = "B";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + checkColor(data.figureNameNew)[0] + data.coordinateOld).innerHTML = data.figureNameOld;
 
+        setTimeForBoardB(data);
         // console.log(help + data.coordinateNew);
         // console.log(help + checkColor(data.figureNameNew)[0] + data.coordinateOld);
     }
 
 
-    figureNameOld="";
-    positionOld="";
-    figureNameNew="";
+    figureNameOld = "";
+    positionOld = "";
+    figureNameNew = "";
     positionNew = "";
     boardName = "";
     moveType = "";

@@ -1,26 +1,45 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" href="css/registration.css">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 
-<p>Zarejestruj sie</p>
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" name="f" th:action="@{/createPlayer}" th:object="${player}" method="post">
 
-<form name="f" th:action="@{/createPlayer}" th:object="${player}" method="post" >
+                            <h3 class="text-center text-dark">Zarejestruj się</h3>
 
-        <label for="login">Username</label>
-        <input type="text" id="login" name="login">
+                            <div class="form-group">
+                                <label for="login" class="text-dark">Login</label>
+                                <input type="text" id="login" name="login" class="form-control">
+                            </div>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
+                            <div class="form-group">
+                                <label for="password" class="text-dark">Hasło</label>
+                                <input type="password" id="password" name="password" class="form-control">
+                            </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn">Zarejestruj</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark btn-md">Zarejestruj</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-</form>
-
 </body>
+
 </html>

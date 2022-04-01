@@ -16,6 +16,20 @@ public class ConnectResponse {
     private Color color;
     private Team team;
 
+    //time
+    private String gameTime;
+    private String additionalTime;
+
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Long getChatId() {
         return chatId;
     }
@@ -90,5 +104,21 @@ public class ConnectResponse {
 
     public ConnectResponse() {
 
+    }
+
+    public String getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(String gameTime) {
+        this.gameTime = gameTime;
+    }
+
+    public String getAdditionalTime() {
+        return additionalTime;
+    }
+
+    public void setAdditionalTime(String additionalTime) {
+        this.additionalTime = additionalTime;
     }
 }

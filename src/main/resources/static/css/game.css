@@ -5,7 +5,7 @@ body {
 .chess-board {
      border-spacing: 0;
      border-collapse: collapse;
-
+     display: inline-block;
 }
 .chess-board th { 
     padding: .5em; 

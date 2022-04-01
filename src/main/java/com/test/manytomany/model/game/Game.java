@@ -4,6 +4,7 @@ import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.board.Board;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,25 @@ public class Game {
 
     @Enumerated(EnumType.STRING)
     private WinnerTeam winnerTeam;
+
+    private String gameTime;
+    private String additionalTime;
+
+    public String getGameTime() {
+        return gameTime;
+    }
+
+    public void setGameTime(String gameTime) {
+        this.gameTime = gameTime;
+    }
+
+    public String getAdditionalTime() {
+        return additionalTime;
+    }
+
+    public void setAdditionalTime(String additionalTime) {
+        this.additionalTime = additionalTime;
+    }
 
     public Long getId() {
         return id;

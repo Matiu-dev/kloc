@@ -30,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/addPlayer").permitAll()
                 .antMatchers("/addGame").permitAll()
-                .antMatchers("/index").permitAll()
+                .antMatchers("/ranking").permitAll()
+                .antMatchers("/index").hasAnyRole("USER", "ADMIN")
                 .and().formLogin().successHandler(successHandler)
                 .loginPage("/login").permitAll()
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");

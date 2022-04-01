@@ -5,6 +5,8 @@ import com.test.manytomany.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlayerService {
 
@@ -26,4 +28,7 @@ public class PlayerService {
         return playerRepository.findByid(id);
     }
 
+    public List<Player> findAllPlayers() {
+        return playerRepository.findAll();
+    }
 }

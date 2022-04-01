@@ -3,11 +3,9 @@ package com.test.manytomany.service;
 import com.test.manytomany.chesspiecerules.*;
 import com.test.manytomany.model.*;
 import com.test.manytomany.model.PlayerBoard.Team;
-import com.test.manytomany.model.connect.ChatConnectRequest;
-import com.test.manytomany.model.connect.ConnectRequest;
+import com.test.manytomany.model.connect.*;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.board.Board;
-import com.test.manytomany.model.connect.ConnectResponse;
 import com.test.manytomany.model.game.Game;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.BoardRepository;
@@ -39,7 +37,8 @@ public class BoardService {
     @Autowired
     private ChatService chatService;
 
-    public ConnectResponse createAndAddPlayerToBoard(Player player) {
+    public ConnectResponse createAndAddPlayerToBoard(CreateGameRequest createGameRequest) {
+
 
         //response
         ConnectResponse connectResponse = new ConnectResponse();
@@ -50,6 +49,8 @@ public class BoardService {
 
         //tworzy i zapisuje gre
         Game game = new Game();
+        game.setGameTime(createGameRequest.getGameTime());
+        game.setAdditionalTime(createGameRequest.getAdditionalTime());
         gameService.createGame(game);
 
         //tworzy , dodaje gracza i zapisuje plansze
@@ -59,15 +60,15 @@ public class BoardService {
 
         Random random = new Random();
         if(random.nextInt(2) == 0) {
-            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.BLACK, Team.B);
+            boardFirst.addPlayer(playerService.findPlayerById(createGameRequest.getId()), Color.BLACK, Team.B);
             color = Color.BLACK;
             team = Team.B;
             connectResponse.setPlayerIdMove(-1L);
         }else {
-            boardFirst.addPlayer(playerService.findPlayerById(player.getId()), Color.WHITE, Team.A);
+            boardFirst.addPlayer(playerService.findPlayerById(createGameRequest.getId()), Color.WHITE, Team.A);
             color = Color.WHITE;
             team = Team.A;
-            connectResponse.setPlayerIdMove(player.getId());
+            connectResponse.setPlayerIdMove(createGameRequest.getId());
         }
 
         //tworzenie drugiej planszy
@@ -82,11 +83,11 @@ public class BoardService {
         connectResponse.setBoardIdAdditional(boardSecond.getId());
         connectResponse.setColor(color);
         connectResponse.setTeam(team);
-        connectResponse.setPlayerId(player.getId());
+        connectResponse.setPlayerId(createGameRequest.getId());
 
         //laczenie z chatem
         connectResponse.setChatId(chatService.createAndAddPlayerToChat(
-                new ChatConnectRequest(player, connectResponse.getGameId()))
+                new ChatConnectRequest(playerService.findPlayerById(createGameRequest.getId()), connectResponse.getGameId()))
                 .getChatId());
 
         return connectResponse;
@@ -101,6 +102,9 @@ public class BoardService {
 
         connectResponse.setGameId(game.getId());
         connectResponse.setPlayerId(player.getId());
+        connectResponse.setGameTime(game.getGameTime());
+        connectResponse.setAdditionalTime(game.getAdditionalTime());
+//        connectResponse.setType("connect");
 
         Set<Board> boardList = game.getBoards();
 
@@ -154,6 +158,11 @@ public class BoardService {
                     connectResponse.setBoardIdAdditional(newListBoard.get(1).getId());
                 }
 
+                //ustawia chat
+                connectResponse.setChatId(chatService.connectToChat(
+                                new ChatConnectRequest(player, connectResponse.getGameId()))
+                        .getChatId());
+
                 return connectResponse;
             }
 
@@ -176,9 +185,15 @@ public class BoardService {
                 //ustawienie drugiej szachownicy bo
                 //w pierwszej jest wolne miejsce
                 if(connectResponse.getBoardIdAdditional()== null){
-                    System.out.println("nie");
+//                    System.out.println("nie");
                     connectResponse.setBoardIdAdditional(newListBoard.get(1).getId());
                 }
+
+
+                //ustawia chat
+                connectResponse.setChatId(chatService.connectToChat(
+                                new ChatConnectRequest(player, connectResponse.getGameId()))
+                        .getChatId());
 
                 return connectResponse;
             }
@@ -186,12 +201,54 @@ public class BoardService {
             connectResponse.setBoardIdAdditional(b.getId());//ustawienie dodatkowego boardu id
         }
 
-        connectResponse.setChatId(chatService.connectToChat(
-                        new ChatConnectRequest(player, connectResponse.getGameId()))
-                .getChatId());
+//        connectResponse.setChatId(chatService.connectToChat(
+//                        new ChatConnectRequest(player, connectResponse.getGameId()))
+//                .getChatId());
 
         return connectResponse;
 
+    }
+
+    public NotificateConnectResponse notificateConnectResponse(NotificateConnectRequest request) {
+
+
+        //ustawianie pozostalych graczy
+
+        NotificateConnectResponse notificateConnectResponse = new NotificateConnectResponse();
+        notificateConnectResponse.setType(request.getType());
+        notificateConnectResponse.setGameId(request.getGameId());
+        notificateConnectResponse.setBoardId(request.getBoardId());
+        notificateConnectResponse.setBoardIdAdditional(request.getBoardIdAdditional());
+        notificateConnectResponse.setLogin(playerService.findPlayerById(request.getId()).getLogin());
+
+        Board boardFirst = boardService.findBoardById(request.getBoardId());
+        Board boardSecond = boardService.findBoardById(request.getBoardIdAdditional());
+
+        boardFirst.getPlayers().stream().forEach(v -> {
+            if(v.getColor().equals(Color.BLACK)) {
+                notificateConnectResponse.setLoginBoardFirstBlack(v.getPlayer().getLogin());
+            }
+        });
+
+        boardFirst.getPlayers().stream().forEach(v -> {
+            if(v.getColor().equals(Color.WHITE)) {
+                notificateConnectResponse.setLoginBoardFirstWhite(v.getPlayer().getLogin());
+            }
+        });
+
+        boardSecond.getPlayers().stream().forEach(v -> {
+            if(v.getColor().equals(Color.BLACK)) {
+                notificateConnectResponse.setLoginBoardSecondBlack(v.getPlayer().getLogin());
+            }
+        });
+
+        boardSecond.getPlayers().stream().forEach(v -> {
+            if(v.getColor().equals(Color.WHITE)) {
+                notificateConnectResponse.setLoginBoardSecondWhite(v.getPlayer().getLogin());
+            }
+        });
+
+        return notificateConnectResponse;
     }
 
     public GamePlay makeAMove(GamePlay gamePlay) throws Exception {

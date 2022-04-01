@@ -62,28 +62,4 @@ public class GameController {
 
         return "main";
     }
-
-//    @GetMapping("/")
-//    public String joinGame(@RequestParam String submit, @RequestParam String boardId, Model model) {//@RequestParam String submit Model model
-//
-//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if(user instanceof UserDetails){
-//            String name = ((UserDetails) user).getUsername();
-//            model.addAttribute("username", name);
-//            model.addAttribute("playerId",
-//                    playerService.getUserByLogin(((UserDetails) user).getUsername()));
-//        }else {
-//            //To-Do
-//        }
-//
-//        if(submit.equals("create")) {
-//            //przekazac wszystkie parametry na htmla jak wyzej
-////            model.addAttribute("submit", submit);
-//            model.addAttribute("submit", submit);
-//        }
-//        System.out.println("submit " + submit);
-//
-//        return "main";
-//    }
-
 }

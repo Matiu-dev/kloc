@@ -10,6 +10,8 @@
     <script src="js/game.js"></script>
     <script src="js/gameplay.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/time.js"></script>
+    <script src="js/disconnect.js"></script>
     <!--    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
 
     <!--    libs for stomp and sockjs-->
@@ -26,20 +28,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <script>
-            submit = "[[${submit}]]";
-            // console.log("submit to: " +submit);
+    <script>
+        submit = "[[${submit}]]";
+        // console.log("submit to: " +submit);
 
-            if(submit === "create") {
-                gameTime = "[[${gameTime}]]";
-                additionalTime = "[[${additionalTime}]]";
-            }
+        if (submit === "create") {
+            gameTime = "[[${gameTime}]]";
+            additionalTime = "[[${additionalTime}]]";
+        }
 
-            if(submit==="join"){
-                gameId = "[[${gameJoinId}]]";
-                console.log(gameId);
-            }
-        </script>
+        if (submit === "join") {
+            gameId = "[[${gameJoinId}]]";
+            console.log(gameId);
+        }
+    </script>
 </head>
 
 <body>
@@ -53,7 +55,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="playerId" th:text="${playerId}"></a>
@@ -92,384 +94,398 @@
     </p> -->
 
     <!-- <div class="row"> -->
-        <div class="column">
+    <div class="column">
 
-            <!-- <p id="boardName1"></p> -->
-            <div class="loginTimerData">
-                <!-- <p id="playerOne">Player:</p> -->
-                <p id="gameTimeOne">Czas:</p>
-            </div>
+        <!-- <p id="boardName1"></p> -->
 
-            <table class="chess-board" id="board1">
+        <table class="chess-board" id="board1">
 
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <th>a</th>
-                        <th>b</th>
-                        <th>c</th>
-                        <th>d</th>
-                        <th>e</th>
-                        <th>f</th>
-                        <th>g</th>
-                        <th>h</th>
-                    </tr>
+            <tr class="loginTimerData">
+                <th>T</th>
+                <td colspan="8" class="light">
+                    <p id="AgameTimeFirst">Czas:</p>
+                    <p id="AplayerFirst"></p>
+                </td>
+            </tr>
 
-                    <tr>
-                        <!-- AB01 - A szachownica / B - black -->
-                        <th>H</th>
-                        <td class="dark" id="AB00" onclick="runMeTwo('AB00')"></td>
-                        <td class="light" id="AB01" onclick="runMeTwo('AB01')"></td>
-                        <td class="dark" id="AB02" onclick="runMeTwo('AB02')"></td>
-                        <td class="light" id="AB03" onclick="runMeTwo('AB03')"></td>
-                        <td class="dark" id="AB04" onclick="runMeTwo('AB04')"></td>
-                        <td class="light" id="AB05" onclick="runMeTwo('AB05')"></td>
-                        <td class="dark" id="AB06" onclick="runMeTwo('AB06')"></td>
-                        <td class="light" id="AB07" onclick="runMeTwo('AB07')"></td>
-                    </tr>
+            <tr>
+                <th></th>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+                <th>g</th>
+                <th>h</th>
+            </tr>
 
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="AB08" onclick="runMeTwo('AB08')"></td>
-                        <td class="light" id="AB09" onclick="runMeTwo('AB09')"></td>
-                        <td class="dark" id="AB10" onclick="runMeTwo('AB10')"></td>
-                        <td class="light" id="AB11" onclick="runMeTwo('AB11')"></td>
-                        <td class="dark" id="AB12" onclick="runMeTwo('AB12')"></td>
-                        <td class="light" id="AB13" onclick="runMeTwo('AB13')"></td>
-                        <td class="dark" id="AB14" onclick="runMeTwo('AB14')"></td>
-                        <td class="light" id="AB15" onclick="runMeTwo('AB15')"></td>
-                    </tr>
-                    <tr>
-                        <th>8</th>
-                        <td class="light" id="A18" onclick="runMe('A18')">&#x265C</td>
-                        <td class="dark" id="A28" onclick="runMe('A28')">&#x265E</td>
-                        <td class="light" id="A38" onclick="runMe('A38')">&#x265D</td>
-                        <td class="dark" id="A48" onclick="runMe('A48')">&#x265B</td>
-                        <td class="light" id="A58" onclick="runMe('A58')">&#x265A</td>
-                        <td class="dark" id="A68" onclick="runMe('A68')">&#x265D</td>
-                        <td class="light" id="A78" onclick="runMe('A78')">&#x265E</td>
-                        <td class="dark" id="A88" onclick="runMe('A88')">&#x265C</td>
-                    </tr>
-                    <tr>
-                        <th>7</th>
-                        <td class="dark" id="A17" onclick="runMe('A17')">&#x265F</td>
-                        <td class="light" id="A27" onclick="runMe('A27')">&#x265F</td>
-                        <td class="dark" id="A37" onclick="runMe('A37')">&#x265F</td>
-                        <td class="light" id="A47" onclick="runMe('A47')">&#x265F</td>
-                        <td class="dark" id="A57" onclick="runMe('A57')">&#x265F</td>
-                        <td class="light" id="A67" onclick="runMe('A67')">&#x265F</td>
-                        <td class="dark" id="A77" onclick="runMe('A77')">&#x265F</td>
-                        <td class="light" id="A87" onclick="runMe('A87')">&#x265F</td>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <td class="light" id="A16" onclick="runMe('A16')"></td>
-                        <td class="dark" id="A26" onclick="runMe('A26')"></td>
-                        <td class="light" id="A36" onclick="runMe('A36')"></td>
-                        <td class="dark" id="A46" onclick="runMe('A46')"></td>
-                        <td class="light" id="A56" onclick="runMe('A56')"></td>
-                        <td class="dark" id="A66" onclick="runMe('A66')"></td>
-                        <td class="light" id="A76" onclick="runMe('A76')"></td>
-                        <td class="dark" id="A86" onclick="runMe('A86')"></td>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <td class="dark" id="A15" onclick="runMe('A15')"></td>
-                        <td class="light" id="A25" onclick="runMe('A25')"></td>
-                        <td class="dark" id="A35" onclick="runMe('A35')"></td>
-                        <td class="light" id="A45" onclick="runMe('A45')"></td>
-                        <td class="dark" id="A55" onclick="runMe('A55')"></td>
-                        <td class="light" id="A65" onclick="runMe('A65')"></td>
-                        <td class="dark" id="A75" onclick="runMe('A75')"></td>
-                        <td class="light" id="A85" onclick="runMe('A85')"></td>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <td class="light" id="A14" onclick="runMe('A14')"></td>
-                        <td class="dark" id="A24" onclick="runMe('A24')"></td>
-                        <td class="light" id="A34" onclick="runMe('A34')"></td>
-                        <td class="dark" id="A44" onclick="runMe('A44')"></td>
-                        <td class="light" id="A54" onclick="runMe('A54')"></td>
-                        <td class="dark" id="A64" onclick="runMe('A64')"></td>
-                        <td class="light" id="A74" onclick="runMe('A74')"></td>
-                        <td class="dark" id="A84" onclick="runMe('A84')"></td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td class="dark" id="A13" onclick="runMe('A13')"></td>
-                        <td class="light" id="A23" onclick="runMe('A23')"></td>
-                        <td class="dark" id="A33" onclick="runMe('A33')"></td>
-                        <td class="light" id="A43" onclick="runMe('A43')"></td>
-                        <td class="dark" id="A53" onclick="runMe('A53')"></td>
-                        <td class="light" id="A63" onclick="runMe('A63')"></td>
-                        <td class="dark" id="A73" onclick="runMe('A73')"></td>
-                        <td class="light" id="A83" onclick="runMe('A83')"></td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td class="light" id="A12" onclick="runMe('A12')">&#x2659</td>
-                        <td class="dark" id="A22" onclick="runMe('A22')">&#x2659</td>
-                        <td class="light" id="A32" onclick="runMe('A32')">&#x2659</td>
-                        <td class="dark" id="A42" onclick="runMe('A42')">&#x2659</td>
-                        <td class="light" id="A52" onclick="runMe('A52')">&#x2659</td>
-                        <td class="dark" id="A62" onclick="runMe('A62')">&#x2659</td>
-                        <td class="light" id="A72" onclick="runMe('A72')">&#x2659</td>
-                        <td class="dark" id="A82" onclick="runMe('A82')">&#x2659</td>
-                    </tr>
-                    <tr>
-                        <th>1</th>
-                        <td class="dark" id="A11" onclick="runMe('A11')">&#x2656</td>
-                        <td class="light" id="A21" onclick="runMe('A21')">&#x2658</td>
-                        <td class="dark" id="A31" onclick="runMe('A31')">&#x2657</td>
-                        <td class="light" id="A41" onclick="runMe('A41')">&#x2655</td>
-                        <td class="dark" id="A51" onclick="runMe('A51')">&#x2654</td>
-                        <td class="light" id="A61" onclick="runMe('A61')">&#x2657</td>
-                        <td class="dark" id="A71" onclick="runMe('A71')">&#x2658</td>
-                        <td class="light" id="A81" onclick="runMe('A81')">&#x2656</td>
-                    </tr>
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="AW00" onclick="runMeTwo('AW00')"></td>
-                        <td class="light" id="AW01" onclick="runMeTwo('AW01')"></td>
-                        <td class="dark" id="AW02" onclick="runMeTwo('AW02')"></td>
-                        <td class="light" id="AW03" onclick="runMeTwo('AW03')"></td>
-                        <td class="dark" id="AW04" onclick="runMeTwo('AW04')"></td>
-                        <td class="light" id="AW05" onclick="runMeTwo('AW05')"></td>
-                        <td class="dark" id="AW06" onclick="runMeTwo('AW06')"></td>
-                        <td class="light" id="AW07" onclick="runMeTwo('AW07')"></td>
-                    </tr>
+            <tr>
+                <!-- AB01 - A szachownica / B - black -->
+                <th>H</th>
+                <td class="dark" id="AB00" onclick="runMeTwo('AB00')"></td>
+                <td class="light" id="AB01" onclick="runMeTwo('AB01')"></td>
+                <td class="dark" id="AB02" onclick="runMeTwo('AB02')"></td>
+                <td class="light" id="AB03" onclick="runMeTwo('AB03')"></td>
+                <td class="dark" id="AB04" onclick="runMeTwo('AB04')"></td>
+                <td class="light" id="AB05" onclick="runMeTwo('AB05')"></td>
+                <td class="dark" id="AB06" onclick="runMeTwo('AB06')"></td>
+                <td class="light" id="AB07" onclick="runMeTwo('AB07')"></td>
+            </tr>
 
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="AW08" onclick="runMeTwo('AW08')"></td>
-                        <td class="light" id="AW09" onclick="runMeTwo('AW09')"></td>
-                        <td class="dark" id="AW10" onclick="runMeTwo('AW10')"></td>
-                        <td class="light" id="AW11" onclick="runMeTwo('AW11')"></td>
-                        <td class="dark" id="AW12" onclick="runMeTwo('AW12')"></td>
-                        <td class="light" id="AW13" onclick="runMeTwo('AW13')"></td>
-                        <td class="dark" id="AW14" onclick="runMeTwo('AW14')"></td>
-                        <td class="light" id="AW15" onclick="runMeTwo('AW15')"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="AB08" onclick="runMeTwo('AB08')"></td>
+                <td class="light" id="AB09" onclick="runMeTwo('AB09')"></td>
+                <td class="dark" id="AB10" onclick="runMeTwo('AB10')"></td>
+                <td class="light" id="AB11" onclick="runMeTwo('AB11')"></td>
+                <td class="dark" id="AB12" onclick="runMeTwo('AB12')"></td>
+                <td class="light" id="AB13" onclick="runMeTwo('AB13')"></td>
+                <td class="dark" id="AB14" onclick="runMeTwo('AB14')"></td>
+                <td class="light" id="AB15" onclick="runMeTwo('AB15')"></td>
+            </tr>
+            <tr>
+                <th>8</th>
+                <td class="light" id="A18" onclick="runMe('A18')">&#x265C</td>
+                <td class="dark" id="A28" onclick="runMe('A28')">&#x265E</td>
+                <td class="light" id="A38" onclick="runMe('A38')">&#x265D</td>
+                <td class="dark" id="A48" onclick="runMe('A48')">&#x265B</td>
+                <td class="light" id="A58" onclick="runMe('A58')">&#x265A</td>
+                <td class="dark" id="A68" onclick="runMe('A68')">&#x265D</td>
+                <td class="light" id="A78" onclick="runMe('A78')">&#x265E</td>
+                <td class="dark" id="A88" onclick="runMe('A88')">&#x265C</td>
+            </tr>
+            <tr>
+                <th>7</th>
+                <td class="dark" id="A17" onclick="runMe('A17')">&#x265F</td>
+                <td class="light" id="A27" onclick="runMe('A27')">&#x265F</td>
+                <td class="dark" id="A37" onclick="runMe('A37')">&#x265F</td>
+                <td class="light" id="A47" onclick="runMe('A47')">&#x265F</td>
+                <td class="dark" id="A57" onclick="runMe('A57')">&#x265F</td>
+                <td class="light" id="A67" onclick="runMe('A67')">&#x265F</td>
+                <td class="dark" id="A77" onclick="runMe('A77')">&#x265F</td>
+                <td class="light" id="A87" onclick="runMe('A87')">&#x265F</td>
+            </tr>
+            <tr>
+                <th>6</th>
+                <td class="light" id="A16" onclick="runMe('A16')"></td>
+                <td class="dark" id="A26" onclick="runMe('A26')"></td>
+                <td class="light" id="A36" onclick="runMe('A36')"></td>
+                <td class="dark" id="A46" onclick="runMe('A46')"></td>
+                <td class="light" id="A56" onclick="runMe('A56')"></td>
+                <td class="dark" id="A66" onclick="runMe('A66')"></td>
+                <td class="light" id="A76" onclick="runMe('A76')"></td>
+                <td class="dark" id="A86" onclick="runMe('A86')"></td>
+            </tr>
+            <tr>
+                <th>5</th>
+                <td class="dark" id="A15" onclick="runMe('A15')"></td>
+                <td class="light" id="A25" onclick="runMe('A25')"></td>
+                <td class="dark" id="A35" onclick="runMe('A35')"></td>
+                <td class="light" id="A45" onclick="runMe('A45')"></td>
+                <td class="dark" id="A55" onclick="runMe('A55')"></td>
+                <td class="light" id="A65" onclick="runMe('A65')"></td>
+                <td class="dark" id="A75" onclick="runMe('A75')"></td>
+                <td class="light" id="A85" onclick="runMe('A85')"></td>
+            </tr>
+            <tr>
+                <th>4</th>
+                <td class="light" id="A14" onclick="runMe('A14')"></td>
+                <td class="dark" id="A24" onclick="runMe('A24')"></td>
+                <td class="light" id="A34" onclick="runMe('A34')"></td>
+                <td class="dark" id="A44" onclick="runMe('A44')"></td>
+                <td class="light" id="A54" onclick="runMe('A54')"></td>
+                <td class="dark" id="A64" onclick="runMe('A64')"></td>
+                <td class="light" id="A74" onclick="runMe('A74')"></td>
+                <td class="dark" id="A84" onclick="runMe('A84')"></td>
+            </tr>
+            <tr>
+                <th>3</th>
+                <td class="dark" id="A13" onclick="runMe('A13')"></td>
+                <td class="light" id="A23" onclick="runMe('A23')"></td>
+                <td class="dark" id="A33" onclick="runMe('A33')"></td>
+                <td class="light" id="A43" onclick="runMe('A43')"></td>
+                <td class="dark" id="A53" onclick="runMe('A53')"></td>
+                <td class="light" id="A63" onclick="runMe('A63')"></td>
+                <td class="dark" id="A73" onclick="runMe('A73')"></td>
+                <td class="light" id="A83" onclick="runMe('A83')"></td>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td class="light" id="A12" onclick="runMe('A12')">&#x2659</td>
+                <td class="dark" id="A22" onclick="runMe('A22')">&#x2659</td>
+                <td class="light" id="A32" onclick="runMe('A32')">&#x2659</td>
+                <td class="dark" id="A42" onclick="runMe('A42')">&#x2659</td>
+                <td class="light" id="A52" onclick="runMe('A52')">&#x2659</td>
+                <td class="dark" id="A62" onclick="runMe('A62')">&#x2659</td>
+                <td class="light" id="A72" onclick="runMe('A72')">&#x2659</td>
+                <td class="dark" id="A82" onclick="runMe('A82')">&#x2659</td>
+            </tr>
+            <tr>
+                <th>1</th>
+                <td class="dark" id="A11" onclick="runMe('A11')">&#x2656</td>
+                <td class="light" id="A21" onclick="runMe('A21')">&#x2658</td>
+                <td class="dark" id="A31" onclick="runMe('A31')">&#x2657</td>
+                <td class="light" id="A41" onclick="runMe('A41')">&#x2655</td>
+                <td class="dark" id="A51" onclick="runMe('A51')">&#x2654</td>
+                <td class="light" id="A61" onclick="runMe('A61')">&#x2657</td>
+                <td class="dark" id="A71" onclick="runMe('A71')">&#x2658</td>
+                <td class="light" id="A81" onclick="runMe('A81')">&#x2656</td>
+            </tr>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="AW00" onclick="runMeTwo('AW00')"></td>
+                <td class="light" id="AW01" onclick="runMeTwo('AW01')"></td>
+                <td class="dark" id="AW02" onclick="runMeTwo('AW02')"></td>
+                <td class="light" id="AW03" onclick="runMeTwo('AW03')"></td>
+                <td class="dark" id="AW04" onclick="runMeTwo('AW04')"></td>
+                <td class="light" id="AW05" onclick="runMeTwo('AW05')"></td>
+                <td class="dark" id="AW06" onclick="runMeTwo('AW06')"></td>
+                <td class="light" id="AW07" onclick="runMeTwo('AW07')"></td>
+            </tr>
 
-            <div class="loginTimerData">
-                <!-- <p id="playerOne">Player:</p> -->
-                <p id="gameTimeTwo">Czas</p>
-            </div>
-        </div>
+            <tr>
+                <th>H</th>
+                <td class="dark" id="AW08" onclick="runMeTwo('AW08')"></td>
+                <td class="light" id="AW09" onclick="runMeTwo('AW09')"></td>
+                <td class="dark" id="AW10" onclick="runMeTwo('AW10')"></td>
+                <td class="light" id="AW11" onclick="runMeTwo('AW11')"></td>
+                <td class="dark" id="AW12" onclick="runMeTwo('AW12')"></td>
+                <td class="light" id="AW13" onclick="runMeTwo('AW13')"></td>
+                <td class="dark" id="AW14" onclick="runMeTwo('AW14')"></td>
+                <td class="light" id="AW15" onclick="runMeTwo('AW15')"></td>
+            </tr>
 
-        <div class="columnTwo">
-            <!-- wybor figury po zmianie z pionka -->
-            <table class="chess-board">
-                <tr>
-                    <td class="dark" id="promoQueen" onclick="getPromoFigures(this)">Queen</td>
-                </tr>
-                <tr>
-                    <td class="light" id="promoBishop" onclick="getPromoFigures(this)">Bishop</td>
-                </tr>
-                <tr>
-                    <td class="dark" id="promoKnight" onclick="getPromoFigures(this)">Knight</td>
-                </tr>
-                <tr>
-                    <td class="light" id="promoRook" onclick="getPromoFigures(this)">Rook</td>
-                </tr>
-            </table>
-        </div>
 
-        <div class="column">
-            <div class="chat">
-                <div class="container">
-                    <div class="chat-content">
-                        <div class="card" id="addMessage">
-                            <ul class="list-group list-group-flush">
-                            </ul>
-                        </div>
+            <tr class="loginTimerData">
+                <th>T</th>
+                <td colspan="8" class="light">
+                    <p id="AgameTimeSecond">Czas</p>
+                    <p id="AplayerSecond"></p>
+                </td>
+            </tr>
+            
+
+        </table>
+    </div>
+
+    <div class="columnTwo">
+        <!-- wybor figury po zmianie z pionka -->
+        <table class="chess-board">
+            <tr>
+                <td class="dark" id="promoQueen" onclick="getPromoFigures(this)">Queen</td>
+            </tr>
+            <tr>
+                <td class="light" id="promoBishop" onclick="getPromoFigures(this)">Bishop</td>
+            </tr>
+            <tr>
+                <td class="dark" id="promoKnight" onclick="getPromoFigures(this)">Knight</td>
+            </tr>
+            <tr>
+                <td class="light" id="promoRook" onclick="getPromoFigures(this)">Rook</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="column">
+        <div class="chat">
+            <div class="container">
+                <div class="chat-content">
+                    <div class="card" id="addMessage">
+                        <ul class="list-group list-group-flush">
+                        </ul>
                     </div>
-                    <div class="chat-send row">
-                        <div class="col-8">
-                            <input type="text" class="form-control" name="message" id="input-message">
-                        </div>
-                        <div class="col-2">
-                            <button id="acceptMessage" type="submit" class="btn btn-primary"
-                                onclick="sendMessage()">Wyślij</button>
-                        </div>
+                </div>
+                <div class="chat-send row">
+                    <div class="col-8">
+                        <input type="text" class="form-control" name="message" id="input-message">
+                    </div>
+                    <div class="col-2">
+                        <button id="acceptMessage" type="submit" class="btn btn-primary"
+                            onclick="sendMessage()">Wyślij</button>
                     </div>
                 </div>
             </div>
-            
         </div>
+   
+    </div>
 
-        <div class="column">
-            
-            <div class="loginTimerData">
-                <!-- <p id="playerOne">Player:</p> -->
+    <div class="column">
+
+        <table class="chess-board" id="board2">
+
+            <!-- <div class="loginTimerData">
                 <p id="gameTimeThree">Czas</p>
-            </div>
+            </div> -->
 
-            <table class="chess-board" id="board2">
+            <tr class="loginTimerData">
+                <th>T</th>
+                <td colspan="8" class="light">
+                    <p id="BgameTimeFirst">Czas:</p>
+                    <p id="BplayerFirst"></p>
+                </td>
+            </tr>
 
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <th>a</th>
-                        <th>b</th>
-                        <th>c</th>
-                        <th>d</th>
-                        <th>e</th>
-                        <th>f</th>
-                        <th>g</th>
-                        <th>h</th>
-                    </tr>
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="BB00" onclick="runMeTwo('BB00')"></td>
-                        <td class="light" id="BB01" onclick="runMeTwo('BB01')"></td>
-                        <td class="dark" id="BB02" onclick="runMeTwo('BB02')"></td>
-                        <td class="light" id="BB03" onclick="runMeTwo('BB03')"></td>
-                        <td class="dark" id="BB04" onclick="runMeTwo('BB04')"></td>
-                        <td class="light" id="BB05" onclick="runMeTwo('BB05')"></td>
-                        <td class="dark" id="BB06" onclick="runMeTwo('BB06')"></td>
-                        <td class="light" id="BB07" onclick="runMeTwo('BB07')"></td>
-                    </tr>
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="BB08" onclick="runMeTwo('BB08')"></td>
-                        <td class="light" id="BB09" onclick="runMeTwo('BB09')"></td>
-                        <td class="dark" id="BB10" onclick="runMeTwo('BB10')"></td>
-                        <td class="light" id="BB11" onclick="runMeTwo('BB11')"></td>
-                        <td class="dark" id="BB12" onclick="runMeTwo('BB12')"></td>
-                        <td class="light" id="BB13" onclick="runMeTwo('BB13')"></td>
-                        <td class="dark" id="BB14" onclick="runMeTwo('BB14')"></td>
-                        <td class="light" id="BB15" onclick="runMeTwo('BB15')"></td>
-                    </tr>
-                    <tr>
-                        <th>8</th>
-                        <td class="light" id="B18" onclick="runMe('B18')">&#x265C</td>
-                        <td class="dark" id="B28" onclick="runMe('B28')">&#x265E</td>
-                        <td class="light" id="B38" onclick="runMe('B38')">&#x265D</td>
-                        <td class="dark" id="B48" onclick="runMe('B48')">&#x265B</td>
-                        <td class="light" id="B58" onclick="runMe('B58')">&#x265A</td>
-                        <td class="dark" id="B68" onclick="runMe('B68')">&#x265D</td>
-                        <td class="light" id="B78" onclick="runMe('B78')">&#x265E</td>
-                        <td class="dark" id="B88" onclick="runMe('B88')">&#x265C</td>
-                    </tr>
-                    <tr>
-                        <th>7</th>
-                        <td class="dark" id="B17" onclick="runMe('B17')">&#x265F</td>
-                        <td class="light" id="B27" onclick="runMe('B27')">&#x265F</td>
-                        <td class="dark" id="B37" onclick="runMe('B37')">&#x265F</td>
-                        <td class="light" id="B47" onclick="runMe('B47')">&#x265F</td>
-                        <td class="dark" id="B57" onclick="runMe('B57')">&#x265F</td>
-                        <td class="light" id="B67" onclick="runMe('B67')">&#x265F</td>
-                        <td class="dark" id="B77" onclick="runMe('B77')">&#x265F</td>
-                        <td class="light" id="B87" onclick="runMe('B87')">&#x265F</td>
-                    </tr>
-                    <tr>
-                        <th>6</th>
-                        <td class="light" id="B16" onclick="runMe('B16')"></td>
-                        <td class="dark" id="B26" onclick="runMe('B26')"></td>
-                        <td class="light" id="B36" onclick="runMe('B36')"></td>
-                        <td class="dark" id="B46" onclick="runMe('B46')"></td>
-                        <td class="light" id="B56" onclick="runMe('B56')"></td>
-                        <td class="dark" id="B66" onclick="runMe('B66')"></td>
-                        <td class="light" id="B76" onclick="runMe('B76')"></td>
-                        <td class="dark" id="B86" onclick="runMe('B86')"></td>
-                    </tr>
-                    <tr>
-                        <th>5</th>
-                        <td class="dark" id="B15" onclick="runMe('B15')"></td>
-                        <td class="light" id="B25" onclick="runMe('B25')"></td>
-                        <td class="dark" id="B35" onclick="runMe('B35')"></td>
-                        <td class="light" id="B45" onclick="runMe('B45')"></td>
-                        <td class="dark" id="B55" onclick="runMe('B55')"></td>
-                        <td class="light" id="B65" onclick="runMe('B65')"></td>
-                        <td class="dark" id="B75" onclick="runMe('B75')"></td>
-                        <td class="light" id="B85" onclick="runMe('B85')"></td>
-                    </tr>
-                    <tr>
-                        <th>4</th>
-                        <td class="light" id="B14" onclick="runMe('B14')"></td>
-                        <td class="dark" id="B24" onclick="runMe('B24')"></td>
-                        <td class="light" id="B34" onclick="runMe('B34')"></td>
-                        <td class="dark" id="B44" onclick="runMe('B44')"></td>
-                        <td class="light" id="B54" onclick="runMe('B54')"></td>
-                        <td class="dark" id="B64" onclick="runMe('B64')"></td>
-                        <td class="light" id="B74" onclick="runMe('B74')"></td>
-                        <td class="dark" id="B84" onclick="runMe('B84')"></td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td class="dark" id="B13" onclick="runMe('B13')"></td>
-                        <td class="light" id="B23" onclick="runMe('B23')"></td>
-                        <td class="dark" id="B33" onclick="runMe('B33')"></td>
-                        <td class="light" id="B43" onclick="runMe('B43')"></td>
-                        <td class="dark" id="B53" onclick="runMe('B53')"></td>
-                        <td class="light" id="B63" onclick="runMe('B63')"></td>
-                        <td class="dark" id="B73" onclick="runMe('B73')"></td>
-                        <td class="light" id="B83" onclick="runMe('B83')"></td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td class="light" id="B12" onclick="runMe('B12')">&#x2659</td>
-                        <td class="dark" id="B22" onclick="runMe('B22')">&#x2659</td>
-                        <td class="light" id="B32" onclick="runMe('B32')">&#x2659</td>
-                        <td class="dark" id="B42" onclick="runMe('B42')">&#x2659</td>
-                        <td class="light" id="B52" onclick="runMe('B52')">&#x2659</td>
-                        <td class="dark" id="B62" onclick="runMe('B62')">&#x2659</td>
-                        <td class="light" id="B72" onclick="runMe('B72')">&#x2659</td>
-                        <td class="dark" id="B82" onclick="runMe('B82')">&#x2659</td>
-                    </tr>
-                    <tr>
-                        <th>1</th>
-                        <td class="dark" id="B11" onclick="runMe('B11')">&#x2656</td>
-                        <td class="light" id="B21" onclick="runMe('B21')">&#x2658</td>
-                        <td class="dark" id="B31" onclick="runMe('B31')">&#x2657</td>
-                        <td class="light" id="B41" onclick="runMe('B41')">&#x2655</td>
-                        <td class="dark" id="B51" onclick="runMe('B51')">&#x2654</td>
-                        <td class="light" id="B61" onclick="runMe('B61')">&#x2657</td>
-                        <td class="dark" id="B71" onclick="runMe('B71')">&#x2658</td>
-                        <td class="light" id="B81" onclick="runMe('B81')">&#x2656</td>
-                    </tr>
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="BW00" onclick="runMeTwo('BW00')"></td>
-                        <td class="light" id="BW01" onclick="runMeTwo('BW01')"></td>
-                        <td class="dark" id="BW02" onclick="runMeTwo('BW02')"></td>
-                        <td class="light" id="BW03" onclick="runMeTwo('BW03')"></td>
-                        <td class="dark" id="BW04" onclick="runMeTwo('BW04')"></td>
-                        <td class="light" id="BW05" onclick="runMeTwo('BW05')"></td>
-                        <td class="dark" id="BW06" onclick="runMeTwo('BW06')"></td>
-                        <td class="light" id="BW07" onclick="runMeTwo('BW07')"></td>
-                    </tr>
-                    <tr>
-                        <th>H</th>
-                        <td class="dark" id="BW08" onclick="runMeTwo('BW08')"></td>
-                        <td class="light" id="BW09" onclick="runMeTwo('BW09')"></td>
-                        <td class="dark" id="BW10" onclick="runMeTwo('BW10')"></td>
-                        <td class="light" id="BW11" onclick="runMeTwo('BW11')"></td>
-                        <td class="dark" id="BW12" onclick="runMeTwo('BW12')"></td>
-                        <td class="light" id="BW13" onclick="runMeTwo('BW13')"></td>
-                        <td class="dark" id="BW14" onclick="runMeTwo('BW14')"></td>
-                        <td class="light" id="BW15" onclick="runMeTwo('BW15')"></td>
-                    </tr>
+            <tbody>
+                <tr>
+                    <th></th>
+                    <th>a</th>
+                    <th>b</th>
+                    <th>c</th>
+                    <th>d</th>
+                    <th>e</th>
+                    <th>f</th>
+                    <th>g</th>
+                    <th>h</th>
+                </tr>
+                <tr>
+                    <th>H</th>
+                    <td class="dark" id="BB00" onclick="runMeTwo('BB00')"></td>
+                    <td class="light" id="BB01" onclick="runMeTwo('BB01')"></td>
+                    <td class="dark" id="BB02" onclick="runMeTwo('BB02')"></td>
+                    <td class="light" id="BB03" onclick="runMeTwo('BB03')"></td>
+                    <td class="dark" id="BB04" onclick="runMeTwo('BB04')"></td>
+                    <td class="light" id="BB05" onclick="runMeTwo('BB05')"></td>
+                    <td class="dark" id="BB06" onclick="runMeTwo('BB06')"></td>
+                    <td class="light" id="BB07" onclick="runMeTwo('BB07')"></td>
+                </tr>
+                <tr>
+                    <th>H</th>
+                    <td class="dark" id="BB08" onclick="runMeTwo('BB08')"></td>
+                    <td class="light" id="BB09" onclick="runMeTwo('BB09')"></td>
+                    <td class="dark" id="BB10" onclick="runMeTwo('BB10')"></td>
+                    <td class="light" id="BB11" onclick="runMeTwo('BB11')"></td>
+                    <td class="dark" id="BB12" onclick="runMeTwo('BB12')"></td>
+                    <td class="light" id="BB13" onclick="runMeTwo('BB13')"></td>
+                    <td class="dark" id="BB14" onclick="runMeTwo('BB14')"></td>
+                    <td class="light" id="BB15" onclick="runMeTwo('BB15')"></td>
+                </tr>
+                <tr>
+                    <th>8</th>
+                    <td class="light" id="B18" onclick="runMe('B18')">&#x265C</td>
+                    <td class="dark" id="B28" onclick="runMe('B28')">&#x265E</td>
+                    <td class="light" id="B38" onclick="runMe('B38')">&#x265D</td>
+                    <td class="dark" id="B48" onclick="runMe('B48')">&#x265B</td>
+                    <td class="light" id="B58" onclick="runMe('B58')">&#x265A</td>
+                    <td class="dark" id="B68" onclick="runMe('B68')">&#x265D</td>
+                    <td class="light" id="B78" onclick="runMe('B78')">&#x265E</td>
+                    <td class="dark" id="B88" onclick="runMe('B88')">&#x265C</td>
+                </tr>
+                <tr>
+                    <th>7</th>
+                    <td class="dark" id="B17" onclick="runMe('B17')">&#x265F</td>
+                    <td class="light" id="B27" onclick="runMe('B27')">&#x265F</td>
+                    <td class="dark" id="B37" onclick="runMe('B37')">&#x265F</td>
+                    <td class="light" id="B47" onclick="runMe('B47')">&#x265F</td>
+                    <td class="dark" id="B57" onclick="runMe('B57')">&#x265F</td>
+                    <td class="light" id="B67" onclick="runMe('B67')">&#x265F</td>
+                    <td class="dark" id="B77" onclick="runMe('B77')">&#x265F</td>
+                    <td class="light" id="B87" onclick="runMe('B87')">&#x265F</td>
+                </tr>
+                <tr>
+                    <th>6</th>
+                    <td class="light" id="B16" onclick="runMe('B16')"></td>
+                    <td class="dark" id="B26" onclick="runMe('B26')"></td>
+                    <td class="light" id="B36" onclick="runMe('B36')"></td>
+                    <td class="dark" id="B46" onclick="runMe('B46')"></td>
+                    <td class="light" id="B56" onclick="runMe('B56')"></td>
+                    <td class="dark" id="B66" onclick="runMe('B66')"></td>
+                    <td class="light" id="B76" onclick="runMe('B76')"></td>
+                    <td class="dark" id="B86" onclick="runMe('B86')"></td>
+                </tr>
+                <tr>
+                    <th>5</th>
+                    <td class="dark" id="B15" onclick="runMe('B15')"></td>
+                    <td class="light" id="B25" onclick="runMe('B25')"></td>
+                    <td class="dark" id="B35" onclick="runMe('B35')"></td>
+                    <td class="light" id="B45" onclick="runMe('B45')"></td>
+                    <td class="dark" id="B55" onclick="runMe('B55')"></td>
+                    <td class="light" id="B65" onclick="runMe('B65')"></td>
+                    <td class="dark" id="B75" onclick="runMe('B75')"></td>
+                    <td class="light" id="B85" onclick="runMe('B85')"></td>
+                </tr>
+                <tr>
+                    <th>4</th>
+                    <td class="light" id="B14" onclick="runMe('B14')"></td>
+                    <td class="dark" id="B24" onclick="runMe('B24')"></td>
+                    <td class="light" id="B34" onclick="runMe('B34')"></td>
+                    <td class="dark" id="B44" onclick="runMe('B44')"></td>
+                    <td class="light" id="B54" onclick="runMe('B54')"></td>
+                    <td class="dark" id="B64" onclick="runMe('B64')"></td>
+                    <td class="light" id="B74" onclick="runMe('B74')"></td>
+                    <td class="dark" id="B84" onclick="runMe('B84')"></td>
+                </tr>
+                <tr>
+                    <th>3</th>
+                    <td class="dark" id="B13" onclick="runMe('B13')"></td>
+                    <td class="light" id="B23" onclick="runMe('B23')"></td>
+                    <td class="dark" id="B33" onclick="runMe('B33')"></td>
+                    <td class="light" id="B43" onclick="runMe('B43')"></td>
+                    <td class="dark" id="B53" onclick="runMe('B53')"></td>
+                    <td class="light" id="B63" onclick="runMe('B63')"></td>
+                    <td class="dark" id="B73" onclick="runMe('B73')"></td>
+                    <td class="light" id="B83" onclick="runMe('B83')"></td>
+                </tr>
+                <tr>
+                    <th>2</th>
+                    <td class="light" id="B12" onclick="runMe('B12')">&#x2659</td>
+                    <td class="dark" id="B22" onclick="runMe('B22')">&#x2659</td>
+                    <td class="light" id="B32" onclick="runMe('B32')">&#x2659</td>
+                    <td class="dark" id="B42" onclick="runMe('B42')">&#x2659</td>
+                    <td class="light" id="B52" onclick="runMe('B52')">&#x2659</td>
+                    <td class="dark" id="B62" onclick="runMe('B62')">&#x2659</td>
+                    <td class="light" id="B72" onclick="runMe('B72')">&#x2659</td>
+                    <td class="dark" id="B82" onclick="runMe('B82')">&#x2659</td>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <td class="dark" id="B11" onclick="runMe('B11')">&#x2656</td>
+                    <td class="light" id="B21" onclick="runMe('B21')">&#x2658</td>
+                    <td class="dark" id="B31" onclick="runMe('B31')">&#x2657</td>
+                    <td class="light" id="B41" onclick="runMe('B41')">&#x2655</td>
+                    <td class="dark" id="B51" onclick="runMe('B51')">&#x2654</td>
+                    <td class="light" id="B61" onclick="runMe('B61')">&#x2657</td>
+                    <td class="dark" id="B71" onclick="runMe('B71')">&#x2658</td>
+                    <td class="light" id="B81" onclick="runMe('B81')">&#x2656</td>
+                </tr>
+                <tr>
+                    <th>H</th>
+                    <td class="dark" id="BW00" onclick="runMeTwo('BW00')"></td>
+                    <td class="light" id="BW01" onclick="runMeTwo('BW01')"></td>
+                    <td class="dark" id="BW02" onclick="runMeTwo('BW02')"></td>
+                    <td class="light" id="BW03" onclick="runMeTwo('BW03')"></td>
+                    <td class="dark" id="BW04" onclick="runMeTwo('BW04')"></td>
+                    <td class="light" id="BW05" onclick="runMeTwo('BW05')"></td>
+                    <td class="dark" id="BW06" onclick="runMeTwo('BW06')"></td>
+                    <td class="light" id="BW07" onclick="runMeTwo('BW07')"></td>
+                </tr>
+                <tr>
+                    <th>H</th>
+                    <td class="dark" id="BW08" onclick="runMeTwo('BW08')"></td>
+                    <td class="light" id="BW09" onclick="runMeTwo('BW09')"></td>
+                    <td class="dark" id="BW10" onclick="runMeTwo('BW10')"></td>
+                    <td class="light" id="BW11" onclick="runMeTwo('BW11')"></td>
+                    <td class="dark" id="BW12" onclick="runMeTwo('BW12')"></td>
+                    <td class="light" id="BW13" onclick="runMeTwo('BW13')"></td>
+                    <td class="dark" id="BW14" onclick="runMeTwo('BW14')"></td>
+                    <td class="light" id="BW15" onclick="runMeTwo('BW15')"></td>
+                </tr>
 
-                </tbody>
-            </table>
+            </tbody>
 
-            <div class="loginTimerData">
-                <!-- <p id="playerOne">Player:</p> -->
+            <!-- <div class="loginTimerData">
                 <p id="gameTimeFour">Czas</p>
-            </div>
-        </div>
-    <!-- </div> -->
+            </div> -->
 
-
-    <!-- <form name="f" th:action="@{/logout}" method="post">
-
-        <button type="submit" class="btn">Wyloguj</button>
-
-    </form> -->
+            <tr class="loginTimerData">
+                <th>T</th>
+                <td colspan="8" class="light">
+                    <p id="BgameTimeSecond">Czas</p>
+                    <p id="BplayerSecond"></p>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 </body>
 

@@ -5,8 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
+@org.springframework.stereotype.Repository
 public interface PlayerRepository extends Repository<Player, Long> {
 
     @Query(value = "SELECT * FROM player WHERE login = :login", nativeQuery = true)
@@ -17,5 +19,7 @@ public interface PlayerRepository extends Repository<Player, Long> {
     Player findByLogin(String login);
 
     Player save(Player player);
+
+    List<Player> findAll();
 
 }
