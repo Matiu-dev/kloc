@@ -66,7 +66,7 @@ public class BoardController {
 
     @CrossOrigin
     @PostMapping("/gameplay")
-    public ResponseEntity<Object> makeMove(HttpEntity<String> httpEntity) throws Exception {
+    public ResponseEntity<Object> makeMove(HttpEntity<String> httpEntity) throws Exception {//requestbody
 
         String json = httpEntity.getBody();
         Gson gson = new Gson();
