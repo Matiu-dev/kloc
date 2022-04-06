@@ -1,4 +1,4 @@
-const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com'
+const url = 'https://klocuwb.herokuapp.com';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
 let login;
 let loginTwo;
 let loginThree;
@@ -29,14 +29,14 @@ function connectToSocket(gameId) {
     stompClient.connect(login,"456", function (frame) {
         // console.log("connected to the frame: " + frame);
         // console.log("board id to: " + boardId);
-        console.log("kolor to: " + color);
-        console.log("chat id to: " + chatId);
+        // console.log("kolor to: " + color);
+        // console.log("chat id to: " + chatId);
 
 
         stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
             let data = JSON.parse(response.body);
-            console.log(data);
-            console.log(AgameTimeFirst + " " + AgameTimeSecond + " " + BgameTimeFirst + " " + BgameTimeSecond);
+            // console.log(data);
+            // console.log(AgameTimeFirst + " " + AgameTimeSecond + " " + BgameTimeFirst + " " + BgameTimeSecond);
             // console.log(data.nextMoveColor)
 
             if (data.type === "gameplay") {
