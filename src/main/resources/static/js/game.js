@@ -1,4 +1,4 @@
-const url = 'https://klocuwb.herokuapp.com';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
+const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
 let login;
 let loginTwo;
 let loginThree;
