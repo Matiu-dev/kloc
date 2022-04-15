@@ -6,10 +6,11 @@ import com.test.manytomany.model.game.WinnerTeam;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.UUID;
 
 public class GamePlay {
 
-    private String gameId;
+    private UUID gameId;
 
     private String boardId;
     private String playerId;
@@ -123,11 +124,11 @@ public class GamePlay {
 
     private String boardName;//A B - do usuniecia pewnie bo to na froncie jest sprawdzane
 
-    public String getGameId() {
+    public UUID getGameId() {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(UUID gameId) {
         this.gameId = gameId;
     }
 

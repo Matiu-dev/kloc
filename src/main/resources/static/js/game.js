@@ -1,4 +1,4 @@
-const url = 'https://klocuwb.herokuapp.com';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
+const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
 let login;
 let loginTwo;
 let loginThree;
@@ -6,6 +6,7 @@ let loginFourth;
 let gameId;
 let playerId;
 let boardId;
+let boardIdSecond;
 let boardIdAdditional;
 let stompClient;
 let playerIdMove;
@@ -19,6 +20,7 @@ let AgameTimeSecond;
 let BgameTimeFirst;
 let BgameTimeSecond;
 let additionalTime;
+let gameType;
 
 function connectToSocket(gameId) {
 
@@ -26,7 +28,7 @@ function connectToSocket(gameId) {
     let socket = new SockJS(url + "/gameplay");
     stompClient = Stomp.over(socket);
 
-    stompClient.connect(login,"456", function (frame) {
+    stompClient.connect(login, "456", function (frame) {
         // console.log("connected to the frame: " + frame);
         // console.log("board id to: " + boardId);
         // console.log("kolor to: " + color);
@@ -62,28 +64,38 @@ function connectToSocket(gameId) {
                 // console.log(castling[0] + " " + castling[1] + " " + castling[2]);
 
                 gameResult = data.gameResult;
+
+                if (gameResult === "CHECKMATE") {
+                    clearAllIntervals();
+                    alert("Zakonczenie gry z powodu szach mat.")
+                }
             }
 
             if (data.type === "message") {
                 displayResponseMessage(data);
             }
 
-            if(data.type === "time") {
+            if (data.type === "time") {
                 gameResult = data.gameResult;
+
+                if (gameResult === "CHECKMATE") {
+                    clearAllIntervals();
+                    alert("Zakonczenie gry z powodu skończenia się czasu.")
+                }
             }
 
-            if(data.type === "connect") {
-                alert("Player connected: " + data.login);
+            if (data.type === "connect") {
+                alert("Polaczenie gracza o nicku: " + data.login);
                 setLogins(data);
             }
 
-            if(data.type === "disconnect") {
-                gameResult = data.gameResult;
+            // if (data.type === "disconnect") {
+            //     gameResult = data.gameResult;
 
-                alert("Winner team: " + data.team);
-            }
+            //     alert("Winner team: " + data.team);
+            // }
 
-            
+
         })
 
         notificateOtherPlayers();
@@ -94,7 +106,7 @@ function connectToSocket(gameId) {
 
 function create_game() {
     login = document.getElementById("login").innerHTML;//sprawdzic czy z sesji da sie to wyciagnac
-    let id = document.getElementById("playerId").innerHTML;//i to
+    // let id = document.getElementById("playerId").innerHTML;//i to
 
     if (login == null || login === '') {
         alert("Please enter login");
@@ -105,10 +117,11 @@ function create_game() {
             dataType: "json",
             contentType: "application/json",
             data: JSON.stringify({
-                "id": id,
-                // "playerName": login
+                // "playerId": id,
+                "login": login,
                 "gameTime": gameTime,
-                "additionalTime": additionalTime
+                "additionalTime": additionalTime,
+                "gameType": gameType
             }),
             success: function (data) {
                 gameId = data.gameId;
@@ -125,15 +138,29 @@ function create_game() {
                 //ustawia czas
                 setTime();
 
-
                 //ustawia figury do awansu
-                setPromoFigures(color);
+                setPromoFigures(color, gameType);
 
                 nextMoveColor = "WHITE";
                 reset(boardId, boardIdAdditional);
                 connectToSocket(gameId);
-                alert("Your created a game. Game id is: " + gameId +
-                    " and your board id is: " + boardId);
+
+                if (gameType === "2") {
+                    boardIdSecond = data.boardIdAdditional;
+                    colorSecond = data.colorSecond;
+
+                    alert("Stworzenie gry pomyślne. Id gry to: " + gameId +
+                        " twoja szachwnica ma numer: " + boardId +
+                        " twoja druga szachownica ma numer: " + boardIdSecond);
+                }
+
+                if (gameType === "4") {
+                    boardIdSecond = "";
+
+                    alert("Stworzenie gry pomyślne. Id gry to: " + gameId +
+                        " twoja szachwnica ma numer: " + boardId);
+                }
+
             },
             error: function (error) {
                 console.log(error);
@@ -159,7 +186,7 @@ window.onclose = function () {
 
 function connect_to_specific_game() {
     login = document.getElementById("login").innerHTML;
-    let id = document.getElementById("playerId").innerHTML;
+    // let id = document.getElementById("playerId").innerHTML;
 
 
     if (login == null || login === '') {
@@ -177,7 +204,7 @@ function connect_to_specific_game() {
             contentType: "application/json",
             data: JSON.stringify({
                 "gameId": gameId,
-                "playerId": id
+                "login": login
             }),
             success: function (data) {
                 gameId = data.gameId;
@@ -188,7 +215,8 @@ function connect_to_specific_game() {
                 playerId = data.playerId;
                 team = data.team;
                 gameTime = data.gameTime;
-                
+                gameType = data.gameType;
+
                 additionalTime = data.additionalTime;
                 //ustawia id dla szachownic
                 setBoardsId(boardId, boardIdAdditional);
@@ -197,14 +225,28 @@ function connect_to_specific_game() {
                 setTime();
 
                 //ustawia figury do awansu
-                setPromoFigures(color);
+                setPromoFigures(color, gameType);
 
                 nextMoveColor = "WHITE";
                 reset(boardId, boardIdAdditional);
                 connectToSocket(gameId);
-                alert("You connected to a game. Game id is: " + gameId +
-                    " and your board id is: " + boardId);
-                console.log(boardId);
+
+
+                if (gameType === "2") {
+                    boardIdSecond = data.boardIdAdditional;
+                    colorSecond = data.colorSecond;
+
+                    alert("Pomyślnie dołaczyłes do gry. Id gry to: " + gameId +
+                        " twoja szachwnica ma numer: " + boardId +
+                        " twoja druga szachownica ma numer: " + boardIdSecond);
+                }
+
+                if (gameType === "4") {
+                    boardIdSecond = "";
+
+                    alert("Pomyślnie dołaczyłes do gry. Id gry to: " + gameId +
+                        " twoja szachwnica ma numer: " + boardId);
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -217,7 +259,8 @@ function notificateOtherPlayers() {
 
     console.log("notificate");
 
-    let id = document.getElementById("playerId").innerHTML;//i to
+    // let id = document.getElementById("playerId").innerHTML;//i to
+    login = document.getElementById("login").innerHTML;
 
     $.ajax({
         url: url + "/game/gameplay",
@@ -227,12 +270,13 @@ function notificateOtherPlayers() {
         data: JSON.stringify({
             "type": "connect",
             "gameId": gameId,
-            "id": id,
+            "login": login,
+            // "playerId": id,
             "boardId": boardId,
             "boardIdAdditional": boardIdAdditional
         }),
         success: function (data) {
-            
+
         },
         error: function (error) {
             console.log(error);
@@ -265,12 +309,17 @@ function setTime() {
     BgameTimeSecond = gameTime;
 }
 
-function setPromoFigures(color) {
+function setPromoFigures(color, gameType) {
+
+    
     if (color === "WHITE") {
         document.getElementById("promoQueen").innerHTML = "♕";
         document.getElementById("promoBishop").innerHTML = "♗";
         document.getElementById("promoKnight").innerHTML = "♘";
         document.getElementById("promoRook").innerHTML = "♖";
+
+        promoFigure = "♕";
+        // document.getElementById("promoQueen").innerHTML.style.background = "#FF8C00";
     }
 
     if (color === "BLACK") {
@@ -278,57 +327,72 @@ function setPromoFigures(color) {
         document.getElementById("promoBishop").innerHTML = "♝";
         document.getElementById("promoKnight").innerHTML = "♞";
         document.getElementById("promoRook").innerHTML = "♜";
+        promoFigure = "♛";
+    }
+
+    document.getElementById("promoQueen").style.background = "#FF8C00";
+
+    if(gameType === "2") {
+        if (color === "BLACK") {
+            document.getElementById("promoQueenSecond").innerHTML = "♕";
+            document.getElementById("promoBishopSecond").innerHTML = "♗";
+            document.getElementById("promoKnightSecond").innerHTML = "♘";
+            document.getElementById("promoRookSecond").innerHTML = "♖";
+            promoFigureSecond = "♕";
+        }
+    
+        if (color === "WHITE") {
+            document.getElementById("promoQueenSecond").innerHTML = "♛";
+            document.getElementById("promoBishopSecond").innerHTML = "♝";
+            document.getElementById("promoKnightSecond").innerHTML = "♞";
+            document.getElementById("promoRookSecond").innerHTML = "♜";
+            promoFigureSecond = "♛";
+        }
+
+        document.getElementById("promoQueenSecond").style.background = "#FF8C00";
     }
 }
 
-function  setLogins(data) {
-    if(data.boardId == boardId) {
+function setLogins(data) {
+    if (data.boardId == boardId) {
         var help = "A";
         var helpTwo = "B"
 
-        if(document.getElementById(help + "playerFirst").innerHTML === "") {
+        if (document.getElementById(help + "playerFirst").innerHTML === "") {
             document.getElementById(help + "playerFirst").innerHTML = data.loginBoardFirstBlack;
         }
 
-        if(document.getElementById(help + "playerSecond").innerHTML === "") {
+        if (document.getElementById(help + "playerSecond").innerHTML === "") {
             document.getElementById(help + "playerSecond").innerHTML = data.loginBoardFirstWhite;
         }
 
-        if(document.getElementById(helpTwo + "playerFirst").innerHTML === "") {
+        if (document.getElementById(helpTwo + "playerFirst").innerHTML === "") {
             document.getElementById(helpTwo + "playerFirst").innerHTML = data.loginBoardSecondBlack;
         }
 
-        if(document.getElementById(helpTwo + "playerSecond").innerHTML === "") {
+        if (document.getElementById(helpTwo + "playerSecond").innerHTML === "") {
             document.getElementById(helpTwo + "playerSecond").innerHTML = data.loginBoardSecondWhite;
         }
     }
 
-    if(data.boardId == boardIdAdditional){
+    if (data.boardId == boardIdAdditional) {
         var help = "B";
-        var helpTwo="A";
+        var helpTwo = "A";
 
-        if(document.getElementById(help + "playerFirst").innerHTML === "") {
+        if (document.getElementById(help + "playerFirst").innerHTML === "") {
             document.getElementById(help + "playerFirst").innerHTML = data.loginBoardFirstBlack;
         }
 
-        if(document.getElementById(help + "playerSecond").innerHTML === "") {
+        if (document.getElementById(help + "playerSecond").innerHTML === "") {
             document.getElementById(help + "playerSecond").innerHTML = data.loginBoardFirstWhite;
         }
 
-        if(document.getElementById(helpTwo + "playerFirst").innerHTML === "") {
+        if (document.getElementById(helpTwo + "playerFirst").innerHTML === "") {
             document.getElementById(helpTwo + "playerFirst").innerHTML = data.loginBoardSecondBlack;
         }
 
-        if(document.getElementById(helpTwo + "playerSecond").innerHTML === "") {
+        if (document.getElementById(helpTwo + "playerSecond").innerHTML === "") {
             document.getElementById(helpTwo + "playerSecond").innerHTML = data.loginBoardSecondWhite;
         }
     }
-    // document.getElementById("AplayerFirst").innerHTML = data.loginBoardFirstBlack;
-    // document.getElementById("AplayerSecond").innerHTML = data.loginBoardFirstWhite;
-    // document.getElementById("BplayerFirst").innerHTML = data.loginBoardSecondBlack;
-    // document.getElementById("BplayerSecond").innerHTML = data.loginBoardSecondWhite;
-    // console.log(data.loginBoardFirstWhite);
-    // console.log(data.loginBoardFirstBlack);
-    // console.log(data.loginBoardSecondWhite);
-    // console.log(data.loginBoardSecondBlack);
 }

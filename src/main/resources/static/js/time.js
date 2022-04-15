@@ -175,6 +175,14 @@ function setTimeForBoardB(data) {
     }
 }
 
+function clearAllIntervals() {
+
+    clearInterval(internalFirst);
+    clearInterval(internalSecond);
+    clearInterval(internalThird);
+    clearInterval(internalFourth);
+}
+
 function timeLeft() {
     $.ajax({
         url: url + "/game/gameplay",

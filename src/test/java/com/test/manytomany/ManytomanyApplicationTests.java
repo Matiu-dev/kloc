@@ -52,7 +52,7 @@ class ManytomanyApplicationTests {
 				{null, "♖", "♙", "", "", "", "", "♟", "♜"},
 		};
 		pionekDoPrzodu = new GamePlay();
-		pionekDoPrzodu.setGameId("154");
+//		pionekDoPrzodu.setGameId("154");
 		pionekDoPrzodu.setBoardId("303");
 		pionekDoPrzodu.setPlayerId("1");
 		pionekDoPrzodu.setCoordinateOld("57");
@@ -76,7 +76,7 @@ class ManytomanyApplicationTests {
 				{null, "♖", "♙", "", "", "", "", "♟", "♜"},
 		};
 		atakNaPole = new GamePlay();
-		atakNaPole.setGameId("154");
+//		atakNaPole.setGameId("154");
 		atakNaPole.setBoardId("303");
 		atakNaPole.setPlayerId("1");
 		atakNaPole.setCoordinateOld("57");

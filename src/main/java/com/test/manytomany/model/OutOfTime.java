@@ -4,11 +4,12 @@ import com.test.manytomany.model.PlayerBoard.Team;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.UUID;
 
 public class OutOfTime {
 
     private String type;
-    private String gameId;
+    private UUID gameId;
 
     @Enumerated(EnumType.STRING)
     private GameResult gameResult;
@@ -24,11 +25,11 @@ public class OutOfTime {
         this.type = type;
     }
 
-    public String getGameId() {
+    public UUID getGameId() {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(UUID gameId) {
         this.gameId = gameId;
     }
 

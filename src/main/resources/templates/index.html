@@ -33,11 +33,14 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="playerId" th:text="${playerId}"></a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="login" th:text="${username}">Login</a>
+<!--                    <form name="f" href="@{/searchPlayer}" method="get">-->
+                        <a class="nav-link" id="login" th:text="${username}" th:href="@{/{login}(login=${username})}">Login</a>
+<!--                        <button type="submit" class="btn" id="login" th:text="${username}"></button>-->
+<!--                    </form>-->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ranking">Ranking</a>
@@ -74,8 +77,32 @@
         <h3 class="text-center text-dark">Stwórz gre</h3>
 
         <div class="form-group">
-            <label class="text-dark">Czas gry(minuty)</label>
-            <input list="gameTime" type="text" class="form-control" name="gameTime">
+            <label for="GType" class="text-dark">Typ gry(jedno/dwuosobowa)</label>
+
+            <select class="form-control" name="gameType" id="GType">
+                <option value="2">Dwuosobowa</option>
+                <option value="4">Czteroosobwa</option>
+            </select>
+            <!-- <input  list="gameType" type="text" class="form-control" name="gameType" "> -->
+            <!-- <datalist id="gameType">
+                <option value="2">
+                <option value="4">
+            </datalist> -->
+            <!-- </input> -->
+        </div>
+
+        <div class="form-group">
+            <label for="GTime" class="text-dark">Czas gry(minuty)</label>
+
+            <select class="form-control" name="gameTime" id="GTime">
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="30">30</option>
+            </select>
+
+            <!-- <input list="gameTime" type="text" class="form-control" name="gameTime">
             <datalist id="gameTime">
                 <option value="1">
                 <option value="3">
@@ -83,12 +110,21 @@
                 <option value="10">
                 <option value="30">
             </datalist>
-            </input>
+            </input> -->
         </div>
 
         <div class="form-group">
-            <label class="text-dark">Doliczany czas(sekundy)</label>
-            <input list="additionalTime" type="text" class="form-control" name="additionalTime">
+            <label for="AT" class="text-dark">Doliczany czas(sekundy)</label>
+
+            <select class="form-control" name="additionalTime" id="AT">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+
+            <!-- <input list="additionalTime" type="text" class="form-control" name="additionalTime">
             <datalist id="additionalTime">
                 <option value="0">
                 <option value="1">
@@ -96,7 +132,7 @@
                 <option value="5">
                 <option value="10">
             </datalist>
-            </input>
+            </input> -->
         </div>
 
         <div class="form-group">

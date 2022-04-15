@@ -30,6 +30,7 @@ public class GameController {
                              @RequestParam(required=false) String gameJoinId,
                              @RequestParam(required = false) String gameTime,
                              @RequestParam(required = false) String additionalTime,
+                             @RequestParam(required = false) String gameType,
                              Model model) {//@RequestParam String submit Model model
 
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -37,15 +38,15 @@ public class GameController {
             String name = ((UserDetails) user).getUsername();
             model.addAttribute("username", name);
             model.addAttribute("playerId",
-                    playerService.getUserByLogin(((UserDetails) user).getUsername()));
+                    playerService.findPlayerByLogin(((UserDetails) user).getUsername()).getId());
         }else {
             //To-Do
         }
 
-        System.out.println("gameTime " + gameTime);
-        System.out.println("additionalTime " + additionalTime);
-        System.out.println("submit " + submit);
-        System.out.println("gameId " + gameJoinId);
+//        System.out.println("gameTime " + gameTime);
+//        System.out.println("additionalTime " + additionalTime);
+//        System.out.println("submit " + submit);
+//        System.out.println("gameId " + gameJoinId);
 
         if(submit.equals("create")) {
             //przekazac wszystkie parametry na htmla jak wyzej
@@ -53,6 +54,7 @@ public class GameController {
             model.addAttribute("submit", submit);
             model.addAttribute("gameTime", gameTime);
             model.addAttribute("additionalTime", additionalTime);
+            model.addAttribute("gameType", gameType);
         }
 
         if(submit.equals("join")) {

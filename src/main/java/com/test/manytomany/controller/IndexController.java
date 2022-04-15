@@ -22,7 +22,7 @@ public class IndexController {
             String name = ((UserDetails) user).getUsername();
             model.addAttribute("username", name);
             model.addAttribute("playerId",
-                    playerService.getUserByLogin(((UserDetails) user).getUsername()));
+                    playerService.findPlayerByLogin(((UserDetails) user).getUsername()).getId());
         }else {
             //To-Do
         }

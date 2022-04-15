@@ -35,6 +35,7 @@
         if (submit === "create") {
             gameTime = "[[${gameTime}]]";
             additionalTime = "[[${additionalTime}]]";
+            gameType = "[[${gameType}]]";
         }
 
         if (submit === "join") {
@@ -57,11 +58,11 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" id="playerId" th:text="${playerId}"></a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="login" th:text="${username}">Login</a>
+                    <a class="nav-link" id="login" th:text="${username}" th:href="@{/{login}(login=${username})}">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ranking">Ranking</a>
@@ -274,17 +275,23 @@
         <table class="chess-board">
             <tr>
                 <td class="dark" id="promoQueen" onclick="getPromoFigures(this)">Queen</td>
+                <td class="light" id="promoQueenSecond" onclick="getPromoFiguresSecond(this)"></td>
             </tr>
             <tr>
                 <td class="light" id="promoBishop" onclick="getPromoFigures(this)">Bishop</td>
+                <td class="dark" id="promoBishopSecond" onclick="getPromoFiguresSecond(this)"></td>
             </tr>
             <tr>
                 <td class="dark" id="promoKnight" onclick="getPromoFigures(this)">Knight</td>
+                <td class="light" id="promoKnightSecond" onclick="getPromoFiguresSecond(this)"></td>
             </tr>
             <tr>
                 <td class="light" id="promoRook" onclick="getPromoFigures(this)">Rook</td>
+                <td class="dark" id="promoRookSecond" onclick="getPromoFiguresSecond(this)"></td>
             </tr>
         </table>
+
+
     </div>
 
     <div class="column">
@@ -301,7 +308,7 @@
                         <input type="text" class="form-control" name="message" id="input-message">
                     </div>
                     <div class="col-2">
-                        <button id="acceptMessage" type="submit" class="btn btn-primary"
+                        <button id="acceptMessage" type="submit" class="btn btn-warning"
                             onclick="sendMessage()">Wyślij</button>
                     </div>
                 </div>

@@ -2,18 +2,31 @@ package com.test.manytomany.model.connect;
 
 import com.test.manytomany.model.player.Player;
 
+import java.util.UUID;
+
 public class CreateGameRequest {
 
-    private Long id;
+//    private UUID playerId;
+    private String login;
     private String gameTime;
     private String additionalTime;
+    private String gameType;
 
-    public Long getId() {
-        return id;
+//    public UUID getPlayerId() {
+//        return playerId;
+//    }
+//
+//    public void setPlayerId(UUID playerId) {
+//        this.playerId = playerId;
+//    }
+
+
+    public String getLogin() {
+        return login;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getGameTime() {
@@ -30,5 +43,13 @@ public class CreateGameRequest {
 
     public void setAdditionalTime(String additionalTime) {
         this.additionalTime = additionalTime;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }

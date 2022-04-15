@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 public class ChatService {
@@ -26,7 +28,7 @@ public class ChatService {
         return chatRepository.findByid(chatId);
     }
 
-    public Chat findChatByGameId(Long gameId) {
+    public Chat findChatByGameId(UUID gameId) {
         return chatRepository.findChatByGameId(gameId);
     }
 

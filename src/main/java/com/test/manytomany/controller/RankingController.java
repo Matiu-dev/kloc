@@ -27,7 +27,7 @@ public class RankingController {
             String name = ((UserDetails) user).getUsername();
             model.addAttribute("username", name);
             model.addAttribute("playerId",
-                    playerService.getUserByLogin(((UserDetails) user).getUsername()));
+                    playerService.findPlayerByLogin(((UserDetails) user).getUsername()).getId());
         }else {
             //To-Do
         }
@@ -36,11 +36,6 @@ public class RankingController {
 
         List<Player> arrayListPlayers = playerService.findAllPlayers();
         model.addAttribute("listPlayers", arrayListPlayers);
-
-//        for(Player p: arrayListPlayers) {
-//            System.out.println("Player: " +p.getLogin());
-//        }
-
 
 
         return "ranking";

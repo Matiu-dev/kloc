@@ -1,8 +1,10 @@
 package com.test.manytomany.model;
 
+import java.util.UUID;
+
 public class ChatMessage {
 
-    private Long gameId;
+    private UUID gameId;
     private String login;
     private String message;
     private String type;
@@ -15,11 +17,11 @@ public class ChatMessage {
         this.type = type;
     }
 
-    public Long getGameId() {
+    public UUID getGameId() {
         return gameId;
     }
 
-    public void setGameId(Long gameId) {
+    public void setGameId(UUID gameId) {
         this.gameId = gameId;
     }
 

@@ -6,6 +6,7 @@ import com.test.manytomany.model.PlayerBoard.PlayerBoard;
 import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.game.Game;
 import com.test.manytomany.model.player.Player;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
@@ -14,10 +15,20 @@ import java.util.*;
 @Entity(name = "Board")
 @Table(name = "board")
 public class Board {
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String test;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
 
     @JsonIgnore
     @OneToMany(
@@ -51,11 +62,11 @@ public class Board {
         this.game = game;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -67,11 +78,5 @@ public class Board {
         this.players = players;
     }
 
-    public String getTest() {
-        return test;
-    }
 
-    public void setTest(String test) {
-        this.test = test;
-    }
 }

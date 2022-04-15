@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class GameService {
@@ -35,7 +36,7 @@ public class GameService {
 
     public void updateGameWinners(GamePlay gamePlay) {
 
-        Game game = gameRepository.findByid(Long.valueOf(gamePlay.getGameId()));
+        Game game = gameRepository.findByid(gamePlay.getGameId());
 
         if(gamePlay.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.A);
@@ -48,11 +49,34 @@ public class GameService {
         Set<Board> listBoards = game.getBoards();
 //        System.out.println(listBoards.size());
 
-        for(Board b: listBoards) {
-            Player player;
+        Player player;
 
-            for(PlayerBoard pb: b.getPlayers()) {
+        if(game.getGameType().equals("4")) {
+            for(Board b: listBoards) {
+
+
+
+                for(PlayerBoard pb: b.getPlayers()) {
+                    player = pb.getPlayer();
+                    if(pb.getTeam().equals(gamePlay.getTeam())){
+                        System.out.println("wygrana gracza o id " + player.getId());
+                        player.setWins(pb.getPlayer().getWins()+1);
+                        playerService.savePlayer(player);
+                    } else{
+                        System.out.println("przegrana gracza o id " + player.getId());
+                        player.setLoses(pb.getPlayer().getLoses()+1);
+                        playerService.savePlayer(player);
+                    }
+
+                }
+            }
+        }
+
+        if(game.getGameType().equals("2")) {
+            Board board = listBoards.stream().findFirst().get();
+            for(PlayerBoard pb: board.getPlayers()){
                 player = pb.getPlayer();
+
                 if(pb.getTeam().equals(gamePlay.getTeam())){
                     System.out.println("wygrana gracza o id " + player.getId());
                     player.setWins(pb.getPlayer().getWins()+1);
@@ -62,7 +86,6 @@ public class GameService {
                     player.setLoses(pb.getPlayer().getLoses()+1);
                     playerService.savePlayer(player);
                 }
-
             }
         }
 
@@ -70,7 +93,7 @@ public class GameService {
     }
 
     public Game updateGameWinners(OutOfTime outOfTime) {
-        Game game = gameRepository.findByid(Long.valueOf(outOfTime.getGameId()));
+        Game game = gameRepository.findByid(outOfTime.getGameId());
 
         if(outOfTime.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.A);
@@ -83,11 +106,31 @@ public class GameService {
         Set<Board> listBoards = game.getBoards();
 //        System.out.println(listBoards.size());
 
-        for(Board b: listBoards) {
-            Player player;
+        Player player;
 
-            for(PlayerBoard pb: b.getPlayers()) {
+        if(game.getGameType().equals("4")) {
+            for(Board b: listBoards) {
+                for(PlayerBoard pb: b.getPlayers()) {
+                    player = pb.getPlayer();
+                    if(pb.getTeam().equals(outOfTime.getTeam())){
+                        System.out.println("wygrana gracza o id " + player.getId());
+                        player.setWins(pb.getPlayer().getWins()+1);
+                        playerService.savePlayer(player);
+                    } else{
+                        System.out.println("przegrana gracza o id " + player.getId());
+                        player.setLoses(pb.getPlayer().getLoses()+1);
+                        playerService.savePlayer(player);
+                    }
+
+                }
+            }
+        }
+
+        if(game.getGameType().equals("2")) {
+            Board board = listBoards.stream().findFirst().get();
+            for(PlayerBoard pb: board.getPlayers()){
                 player = pb.getPlayer();
+
                 if(pb.getTeam().equals(outOfTime.getTeam())){
                     System.out.println("wygrana gracza o id " + player.getId());
                     player.setWins(pb.getPlayer().getWins()+1);
@@ -97,7 +140,6 @@ public class GameService {
                     player.setLoses(pb.getPlayer().getLoses()+1);
                     playerService.savePlayer(player);
                 }
-
             }
         }
 
@@ -125,7 +167,7 @@ public class GameService {
 //        return disconnect;
 //    }
 
-    public Game findGameById(Long gameId) {
+    public Game findGameById(UUID gameId) {
         return gameRepository.findByid(gameId);
     }
 }

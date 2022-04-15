@@ -61,7 +61,7 @@ public class ChatController {
     @PostMapping("/message")
     public ResponseEntity<ChatMessage> makeMove(@RequestBody ChatMessage request) throws Exception {
 
-        log.info("gameplay" + request);
+        log.info("chatmessage: " + request);
 //        GamePlay gamePlay = boardService.makeAMove(request);
 //
 //        if(gamePlay.getGameResult().equals(GameResult.CHECKMATE)){

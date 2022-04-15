@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!-- bootstrap -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
@@ -13,8 +14,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </head>
-
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Kloc Online</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -30,7 +31,10 @@
                     <a class="nav-link" id="playerId" th:text="${playerId}"></a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="login" th:text="${username}" th:href="@{/{login}(login=${username})}">Login</a>
+<!--                    <form name="f" href="@{/searchPlayer}" method="get">-->
+                        <a class="nav-link" id="login" th:text="${username}" th:href="@{/{login}(login=${username})}">Login</a>
+<!--                        <button type="submit" class="btn" id="login" th:text="${username}"></button>-->
+<!--                    </form>-->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ranking">Ranking</a>
@@ -44,49 +48,6 @@
         </div>
     </nav>
 
-
-    <h1>Ranking</h1>
-
-    <table class="table1" id="myTable" width="350">
-        <tr>
-            <th width="50" valign="top">
-                <a>Id</a>
-            </th>
-            <th width="200">
-                <a>Login</a>
-            </th>
-            <th width="100">
-                <a>Wins</a>
-            </th>
-            <th witdth="100">
-                <a>Loses</a>
-            </th>
-            <th witdth="100">
-            </th>
-        </tr>
-    
-        <tr th:each="listPlayers: ${listPlayers}">
-            <td width="50" th:text="${listPlayers.id}" id="slot">
-    
-            </td>
-    
-            <td width="200" th:text="${listPlayers.login}">
-    
-            </td>
-    
-            <td width="100" th:text="${listPlayers.wins}">
-    
-            </td>
-    
-            <td width="100" th:text="${listPlayers.loses}">
-                
-            </td>
-    
-
-    
-        </tr>
-    
-    </table>
+    <h1>użytkownik</h1>
 </body>
-
 </html>

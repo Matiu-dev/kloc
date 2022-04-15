@@ -2,17 +2,31 @@ package com.test.manytomany.model.game;
 
 import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.board.Board;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class Game {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
+//    //dwuosobowa/czterossobowa
+    private String gameType;
 
     @OneToMany(mappedBy = "game")
     private Set<Board> boards;
@@ -39,11 +53,11 @@ public class Game {
         this.additionalTime = additionalTime;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -61,5 +75,13 @@ public class Game {
 
     public void setWinnerTeam(WinnerTeam winnerTeam) {
         this.winnerTeam = winnerTeam;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }

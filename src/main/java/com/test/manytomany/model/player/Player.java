@@ -5,23 +5,44 @@ import com.test.manytomany.model.PlayerBoard.PlayerBoard;
 import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.chat.Chat;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalIdCache;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.transform.Source;
 import java.util.*;
 
 @Entity(name = "Player")
 @Table(name = "player")
 public class Player {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
+    @Size(min = 3,max = 10, message = "Login może mieć dlugość od 3 do 10 znaków")
+    @NotNull(message = "Login nie może być pusty.")
     private String login;
 
+    @Size(min = 4,max = 15, message = "Hasło może mieć dlugość od 5 do 15 znaków")
+    @NotNull(message = "Hasło nie może być pusty.")
     private String password;
+
+    private String repeatPassword;
 
     private PlayerStatus playerStatus;
 
@@ -44,11 +65,11 @@ public class Player {
             cascade = {CascadeType.MERGE})
     Set<Chat> chats = new HashSet<>();
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -122,5 +143,13 @@ public class Player {
 
     public void setChats(Set<Chat> chats) {
         this.chats = chats;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 }

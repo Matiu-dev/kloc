@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/myprofile.css">
+
+    <script src="js/myprofile.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- bootstrap -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Kloc Online</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" id="playerId" th:text="${playerId}"></a>
+                </li> -->
+                <li class="nav-item">
+                    <!--                    <form name="f" href="@{/searchPlayer}" method="get">-->
+                    <a class="nav-link" id="login" th:text="${username}"
+                        th:href="@{/{login}(login=${username})}">Login</a>
+                    <!--                        <button type="submit" class="btn" id="login" th:text="${username}"></button>-->
+                    <!--                    </form>-->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ranking">Ranking</a>
+                </li>
+                <li class="nav-item">
+                    <form name="f" th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn">Wyloguj</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+
+                        <form id="login-form" class="form" name="f" th:action="@{/updatePlayer}" method="put">
+
+                            <div class="form-group">
+                                <label class="text-dark">
+                                    <a>Login: </a>
+                                    <a id="login" th:text="${username}"></a>
+                                </label>
+                                <input id="newlogin" type='text' name="modifeLogin" class="form-control" placeholder="Nowy login">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="text-dark">
+                                    <a>Hasło: </a>
+                                    <a id="password" th:text="${password}"></a>
+                                </label>
+                                <input id="newpassword" type='text' name="modifePassword" class="form-control" placeholder="Nowe hasło">
+                            </div>
+ 
+                        </form>
+
+                        <div id="login-form" class="form-group">
+                            <input type="button" onclick="updatePlayer()" class="btn btn-dark btn-md" value="Zmień">
+                        </div>
+
+                        <div id="login-form" class="form-group">
+                            <input type="button" onclick="deletePlayer()" class="btn btn-dark btn-md" value="Usuń">
+                        </div>
+
+                        <!-- <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-dark btn-md" value="Zaloguj">
+                        </div>
+
+                        <div id="register-link" class="text-right">
+                            <br>
+                            <a th:href="@{/registration}" class="text-dark">Rejestracja</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

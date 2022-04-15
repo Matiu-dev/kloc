@@ -1,35 +1,31 @@
 package com.test.manytomany.model.connect;
 
+import java.util.UUID;
+
 public class NotificateConnectRequest {
 
-    private Long id;
+//    private UUID playerId;
     private String type;
-    private String gameId;
-    private Long boardId;
-    private Long boardIdAdditional;
+    private UUID gameId;
+    private UUID boardId;
+    private UUID boardIdAdditional;
+    private String login;
 
-    public Long getBoardId() {
-        return boardId;
+//    public UUID getPlayerId() {
+//        return playerId;
+//    }
+//
+//    public void setPlayerId(UUID playerId) {
+//        this.playerId = playerId;
+//    }
+
+
+    public String getLogin() {
+        return login;
     }
 
-    public void setBoardId(Long boardId) {
-        this.boardId = boardId;
-    }
-
-    public Long getBoardIdAdditional() {
-        return boardIdAdditional;
-    }
-
-    public void setBoardIdAdditional(Long boardIdAdditional) {
-        this.boardIdAdditional = boardIdAdditional;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getType() {
@@ -40,11 +36,27 @@ public class NotificateConnectRequest {
         this.type = type;
     }
 
-    public String getGameId() {
+    public UUID getGameId() {
         return gameId;
     }
 
-    public void setGameId(String gameId) {
+    public void setGameId(UUID gameId) {
         this.gameId = gameId;
+    }
+
+    public void setBoardId(UUID boardId) {
+        this.boardId = boardId;
+    }
+
+    public void setBoardIdAdditional(UUID boardIdAdditional) {
+        this.boardIdAdditional = boardIdAdditional;
+    }
+
+    public UUID getBoardId() {
+        return boardId;
+    }
+
+    public UUID getBoardIdAdditional() {
+        return boardIdAdditional;
     }
 }

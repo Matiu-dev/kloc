@@ -51,7 +51,7 @@ function reset(bId, bIdA) {
     // document.getElementById(boardIdAdditional).innerHTML = boardIdAdditional;
 }
 
-var figureNameOld = "";
+var figureNameOld = ""; //nazwa bierki po 1 kliknieciu
 var coordinateOld = "";
 var figureNameNew = "";
 var coordinateNew = "";
@@ -59,70 +59,213 @@ var boardName = "";
 var moveType = "";
 var gameResult = "";
 var color;
+var colorSecond;
 var castling = [true, true, true];
 var enPassantCord = "";
 var figuresOnBoard = [];
 var promoFigure = "";
-var internalFirst = null
+var promoFigureSecond = "";
+var internalFirst = null;
 var internalSecond = null;
 var internalThird = null
 var internalFourth = null;
-var interval = 100;
+var interval = 1000;
+
+var oldInsideStyle;//
+var oldInside;
 
 
 function runMe(position) {
 
-    var outside = document.getElementById(boardId);
-    var inside = document.getElementById(position);
+    if (gameType === "4") {
+        var outside = document.getElementById(boardId);
+        var inside = document.getElementById(position);
 
-    //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
-    //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
+        //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
+        //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
 
-    if (color === nextMoveColor) {
+        // if (color === nextMoveColor) {
         if (gameResult !== "CHECKMATE") {
             if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
                 moveType = "BASIC";
+
+                //zmiana backgroundu po kliknieciu
+                oldInsideStyle = inside.style.backgroundColor;
+                oldInside = inside;
+                inside.style.background = "#FF8C00";
+
             } else if (figureNameOld !== "" && outside.contains(inside)) {//po kliknieciu 2
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
-                makeAMove();
+                makeAMove(boardId, promoFigure);
 
                 boardName = "";
+
+                //odmiana backgroundu
+                oldInside.style.background = oldInsideStyle;
             }
         } else {
             console.log("koniec gry");
         }
+        // }
+        // else {
+        //     console.log("to nie twoja kolej na ruch");
+        // }
     }
-    else {
-        console.log("to nie twoja kolej na ruch");
+
+    if (gameType === "2") {
+        var outside = document.getElementById(boardId);
+        var outsideTwo = document.getElementById(boardIdSecond);
+
+        var inside = document.getElementById(position);
+
+        //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
+        //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
+
+        // if (color === nextMoveColor) {
+        if (gameResult !== "CHECKMATE") {
+            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+                figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
+                boardName = position[0];
+                moveType = "BASIC";
+
+                //zmiana backgroundu po kliknieciu
+                oldInsideStyle = inside.style.backgroundColor;
+                oldInside = inside;
+                inside.style.background = "#FF8C00";
+            } else if (figureNameOld !== "" && outside.contains(inside) && boardName === "A") {//po kliknieciu 2
+                figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
+
+                //odmiana backgroundu
+                oldInside.style.background = oldInsideStyle;
+
+                makeAMove(boardId, promoFigure);
+
+                boardName = "";
+                oldInside = "";
+                oldInsideStyle = "";
+                console.log("tu");
+            }
+
+            if (figureNameOld === "" && outsideTwo.contains(inside) && checkColor(inside.innerHTML.toString()) === colorSecond) {
+                figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
+                boardName = position[0];
+                moveType = "BASIC";
+
+                //zmiana backgroundu po kliknieciu
+                oldInsideStyle = inside.style.backgroundColor;
+                oldInside = inside;
+                inside.style.background = "#FF8C00";
+            } else if (figureNameOld !== "" && outsideTwo.contains(inside) && boardName === "B") {
+                figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
+
+                //odmiana backgroundu
+                oldInside.style.background = oldInsideStyle;
+
+                makeAMove(boardIdSecond, promoFigureSecond);
+
+                boardName = "";
+                oldInside = "";
+                oldInsideStyle = "";
+
+                console.log("tu");
+            }
+        } else {
+            console.log("koniec gry");
+        }
+        // }
+        // else {
+        //     console.log("to nie twoja kolej na ruch");
+        // }
     }
 }
 
 function runMeTwo(position) {
-    var outside = document.getElementById(boardId);
-    var inside = document.getElementById(position);
+    if (gameType === "4") {
+        var outside = document.getElementById(boardId);
+        var inside = document.getElementById(position);
 
-     if(color===nextMoveColor){
-    if (gameResult !== "CHECKMATE") {
-        if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
-            figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
-            coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
-            boardName = position[0];
-            moveType = "RESERVE";
+        //  if(color===nextMoveColor){
+        if (gameResult !== "CHECKMATE") {
+            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+                figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
+                boardName = position[0];
+                moveType = "RESERVE";
+
+                //zmiana backgroundu po kliknieciu
+                oldInsideStyle = inside.style.backgroundColor;
+                oldInside = inside;
+                inside.style.background = "#FF8C00";
+            }
+        } else {
+            console.log("koniec gry");
         }
-    } else {
-        console.log("koniec gry");
+        // }
+        // else {
+        //     console.log("to nie twoja kolej na ruch");
+        //  }
     }
-    }
-    else {
-        console.log("to nie twoja kolej na ruch");
-     }
 
-    // console.log(document.getElementById(position).innerHTML);
-    // console.log(position.substring(2));
+    if (gameType === "2") {
+        
+
+        var outside = document.getElementById(boardId);
+        var outsideTwo = document.getElementById(boardIdSecond);
+
+        var inside = document.getElementById(position);
+
+        //  if(color===nextMoveColor){
+        if (gameResult !== "CHECKMATE") {
+            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+                figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
+                boardName = position[0];
+                moveType = "RESERVE";
+                console.log("dolozenie");
+
+                 //zmiana backgroundu po kliknieciu
+                 oldInsideStyle = inside.style.backgroundColor;
+                 oldInside = inside;
+                 inside.style.background = "#FF8C00";
+            }
+        } else {
+            console.log("koniec gry");
+        }
+        // }
+        // else {
+        //     console.log("to nie twoja kolej na ruch");
+        //  }
+
+        //  if(color===nextMoveColor){
+        if (gameResult !== "CHECKMATE") {
+            if (figureNameOld === "" && outsideTwo.contains(inside) && checkColor(inside.innerHTML.toString()) === colorSecond) {//po kliknieciu 1
+                figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
+                coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
+                boardName = position[0];
+                moveType = "RESERVE";
+                console.log("dolozenie");
+
+                 //zmiana backgroundu po kliknieciu
+                 oldInsideStyle = inside.style.backgroundColor;
+                 oldInside = inside;
+                 inside.style.background = "#FF8C00";
+            }
+        } else {
+            console.log("koniec gry");
+        }
+        // }
+        // else {
+        //     console.log("to nie twoja kolej na ruch");
+        //  }
+    }
 }
 
 function checkColor(name) {
@@ -136,14 +279,14 @@ function checkColor(name) {
 
 }
 
-function makeAMove() {
+function makeAMove(bId, pf) {
     // var playerId = document.getElementById("playerId").innerHTML;
 
     var figuresOnBoard = [];
     for (let i = 1; i < 9; i++) {
         figuresOnBoard[i] = []
         for (let j = 1; j < 9; j++) {
-            figuresOnBoard[i][j] = document.getElementById("A" + i.toString() + j.toString()).innerHTML;
+            figuresOnBoard[i][j] = document.getElementById(boardName + i.toString() + j.toString()).innerHTML;
         }
     }
 
@@ -155,7 +298,7 @@ function makeAMove() {
         data: JSON.stringify({
             "type": "gameplay",
             "gameId": gameId,
-            "boardId": boardId,
+            "boardId": bId,
             "playerId": playerId,
             "coordinateOld": coordinateOld,
             "figureNameOld": figureNameOld,
@@ -170,7 +313,7 @@ function makeAMove() {
             "castlingMove": false,
             "enPassantCord": enPassantCord,
             "enPassantMove": false,
-            "promoFigure": promoFigure,
+            "promoFigure": pf,
             "gameResult": gameResult
 
         }),
@@ -490,5 +633,23 @@ function displayResponseReserve(data) {
 }
 
 function getPromoFigures(name) {
+
+    document.getElementById("promoQueen").style.background = "#A0522D";
+    document.getElementById("promoBishop").style.background = "#eee";
+    document.getElementById("promoKnight").style.background = "#A0522D";
+    document.getElementById("promoRook").style.background = "#eee";
+
     promoFigure = name.innerHTML;
+    name.style.backgroundColor = "#FF8C00";
+}
+
+function getPromoFiguresSecond(name) {
+
+    document.getElementById("promoQueenSecond").style.background = "#eee";
+    document.getElementById("promoBishopSecond").style.background = "#A0522D";
+    document.getElementById("promoKnightSecond").style.background = "#eee";
+    document.getElementById("promoRookSecond").style.background = "#A0522D";
+
+    promoFigureSecond = name.innerHTML;
+    name.style.backgroundColor = "#FF8C00";
 }

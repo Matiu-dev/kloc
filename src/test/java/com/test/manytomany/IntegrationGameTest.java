@@ -96,7 +96,7 @@ public class IntegrationGameTest {
 
         OutOfTime outOfTime = new OutOfTime();
         outOfTime.setTeam(Team.A);
-        outOfTime.setGameId(game.getId().toString());
+        outOfTime.setGameId(game.getId());
 
         //when
         Game gameResponse = gameService.updateGameWinners(outOfTime);

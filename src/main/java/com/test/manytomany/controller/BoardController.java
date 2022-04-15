@@ -7,15 +7,21 @@ import com.test.manytomany.exception.InvalidGameException;
 import com.test.manytomany.exception.InvalidParamException;
 import com.test.manytomany.model.*;
 import com.test.manytomany.model.connect.*;
+import com.test.manytomany.model.player.Player;
+import com.test.manytomany.security.MyPlayerDetails;
+import com.test.manytomany.security.MyPlayerDetailsService;
 import com.test.manytomany.service.BoardService;
 import com.test.manytomany.service.ChatService;
 import com.test.manytomany.service.GameService;
+import com.test.manytomany.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,28 +41,36 @@ public class BoardController {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private PlayerService playerService;
+
     @CrossOrigin
     @PostMapping("/create")
-    public ResponseEntity<ConnectResponse> createAndAddPlayerToBoard(HttpEntity<String> httpEntity) {
-
-
-        String json = httpEntity.getBody();
-        Gson gson = new Gson();
-        CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
+    public ResponseEntity<ConnectResponse> createAndAddPlayerToBoard(@RequestBody CreateGameRequest request) {
+//            String json = httpEntity.getBody();
+//            Gson gson = new Gson();
+//            CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
 
         log.info("create" + request);
 
+        Player player = playerService.findPlayerByLogin(request.getLogin());
+//        String json = httpEntity.getBody();
+//        Gson gson = new Gson();
+//        CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
+//
+//        log.info("create" + request);
+
 //        return ResponseEntity.ok(boardService.saveBoard(request, game));
-        return ResponseEntity.ok(boardService.createAndAddPlayerToBoard(request));
+        return ResponseEntity.ok(boardService.createAndAddPlayerToBoard(request, player));
     }
 
     @CrossOrigin
     @PostMapping("/connect")
-    public ResponseEntity<ConnectResponse> connect(HttpEntity<String> httpEntity) throws InvalidParamException, InvalidGameException {
+    public ResponseEntity<ConnectResponse> connect(@RequestBody ConnectRequest request) throws InvalidParamException, InvalidGameException {
 
-        String json = httpEntity.getBody();
-        Gson gson = new Gson();
-        ConnectRequest request = gson.fromJson(json, ConnectRequest.class);
+//        String json = httpEntity.getBody();
+//        Gson gson = new Gson();
+//        ConnectRequest request = gson.fromJson(json, ConnectRequest.class);
         log.info("connect" + request);
 
         ConnectResponse connectResponse = boardService.connectToGame(request);
@@ -68,6 +82,16 @@ public class BoardController {
     @PostMapping("/gameplay")
     public ResponseEntity<Object> makeMove(HttpEntity<String> httpEntity) throws Exception {//requestbody
 
+//        Player player = null;
+//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        if (user instanceof UserDetails) {
+//            player = playerService.findPlayerByLogin(((UserDetails) user).getUsername());
+//        } else {
+//
+//        }
+
+
         String json = httpEntity.getBody();
         Gson gson = new Gson();
 
@@ -75,13 +99,13 @@ public class BoardController {
         Foo o = builder.create().fromJson(json, Foo.class);
 
         //jesli obiekt gameplay
-        if(o.getType().equals("gameplay")) {
+        if (o.getType().equals("gameplay")) {
             GamePlay request = gson.fromJson(json, GamePlay.class);
 
             log.info("gameplay" + request);
             GamePlay gamePlay = boardService.makeAMove(request);
 
-            if(gamePlay.getGameResult().equals(GameResult.CHECKMATE)){
+            if (gamePlay.getGameResult().equals(GameResult.CHECKMATE)) {
                 gameService.updateGameWinners(gamePlay);
             }
 
@@ -90,25 +114,25 @@ public class BoardController {
         }
 
         //jestli obiekt chatMessage
-       if(o.getType().equals("message")) {
-           ChatMessage request = gson.fromJson(json, ChatMessage.class);
+        if (o.getType().equals("message")) {
+            ChatMessage request = gson.fromJson(json, ChatMessage.class);
 
-           log.info("ChatMessage " + request);
-           simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
-           return ResponseEntity.ok(request);
-       }
+            log.info("ChatMessage " + request);
+            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
+            return ResponseEntity.ok(request);
+        }
 
-       //jesli koniec czasu
-        if(o.getType().equals("time")) {
+        //jesli koniec czasu
+        if (o.getType().equals("time")) {
             OutOfTime request = gson.fromJson(json, OutOfTime.class);
 
-            System.out.println(request.getTeam());
-            System.out.println(request.getGameResult());
-            System.out.println(request.getGameId());
+//            System.out.println(request.getTeam());
+//            System.out.println(request.getGameResult());
+//            System.out.println(request.getGameId());
 
             log.info("OutOFTIme: ", request);
 
-            if(request.getGameResult().equals(GameResult.CHECKMATE)){
+            if (request.getGameResult().equals(GameResult.CHECKMATE)) {
                 gameService.updateGameWinners(request);
             }
 
@@ -120,7 +144,7 @@ public class BoardController {
         }
 
         //powiadomienie o polaczeniu
-        if(o.getType().equals("connect")) {
+        if (o.getType().equals("connect")) {
             NotificateConnectRequest request = gson.fromJson(json, NotificateConnectRequest.class);
 
             log.info("Notificate connect: ", request);
@@ -130,20 +154,6 @@ public class BoardController {
 
             return ResponseEntity.ok(notificateResponse);
         }
-
-        //rozlaczenie jednego z graczy
-//        if(o.getType().equals("disconnect")) {
-//            Disconnect request = gson.fromJson(json, Disconnect.class);
-//
-//            log.info("Disconnect: ", request);
-//
-//            if(!request.getGameResult().equals(GameResult.CHECKMATE)){
-//                request = gameService.updateGameWinners(request);
-//            }
-//
-//            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
-//            return ResponseEntity.ok(request);
-//        }
 
         return ResponseEntity.ok(o);
     }

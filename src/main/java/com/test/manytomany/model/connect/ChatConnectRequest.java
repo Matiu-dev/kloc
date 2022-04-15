@@ -2,10 +2,12 @@ package com.test.manytomany.model.connect;
 
 import com.test.manytomany.model.player.Player;
 
+import java.util.UUID;
+
 public class ChatConnectRequest {
 
-    Player player;
-    Long gameId;
+    private Player player;
+    private UUID gameId;
 
     public Player getPlayer() {
         return player;
@@ -15,11 +17,11 @@ public class ChatConnectRequest {
         this.player = player;
     }
 
-    public Long getGameId() {
+    public UUID getGameId() {
         return gameId;
     }
 
-    public void setGameId(Long gameId) {
+    public void setGameId(UUID gameId) {
         this.gameId = gameId;
     }
 
@@ -31,7 +33,7 @@ public class ChatConnectRequest {
                 '}';
     }
 
-    public ChatConnectRequest(Player player, Long gameId) {
+    public ChatConnectRequest(Player player, UUID gameId) {
         this.player = player;
         this.gameId = gameId;
     }

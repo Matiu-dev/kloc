@@ -3,17 +3,18 @@ package com.test.manytomany.model.PlayerBoard;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Embeddable
 public class PlayerBoardId implements Serializable {
 
     @Column(name="player_id")
-    private Long playerId;
+    private UUID playerId;
 
     @Column(name="board_id")
-    private Long boardId;
+    private UUID boardId;
 
-    public PlayerBoardId(Long playerId, Long boardId) {
+    public PlayerBoardId(UUID playerId, UUID boardId) {
         this.playerId = playerId;
         this.boardId = boardId;
     }

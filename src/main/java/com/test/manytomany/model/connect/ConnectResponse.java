@@ -3,24 +3,31 @@ package com.test.manytomany.model.connect;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.PlayerBoard.Team;
 
+import java.util.UUID;
+
 public class ConnectResponse {
 
-    private Long gameId;
-    private Long playerId;
+    private UUID gameId;
+    private UUID playerId;
     private Long chatId;
-    private Long boardId;
-    private Long boardIdAdditional;
+    private UUID boardId;
+    private UUID boardIdAdditional;
     //aktualny ruch gracza
-    private Long playerIdMove;
+    private UUID playerIdMove;
 
     private Color color;
+    private Color colorSecond;
     private Team team;
 
     //time
     private String gameTime;
     private String additionalTime;
 
+    //typ ruchu
     private String type;
+
+    //dwuosoowa/cztero
+    private String gameType;
 
     public String getType() {
         return type;
@@ -38,28 +45,20 @@ public class ConnectResponse {
         this.chatId = chatId;
     }
 
-    public Long getPlayerIdMove() {
+    public UUID getPlayerIdMove() {
         return playerIdMove;
     }
 
-    public void setPlayerIdMove(Long playerIdMove) {
+    public void setPlayerIdMove(UUID playerIdMove) {
         this.playerIdMove = playerIdMove;
     }
 
-    public Long getGameId() {
+    public UUID getGameId() {
         return gameId;
     }
 
-    public void setGameId(Long gameId) {
+    public void setGameId(UUID gameId) {
         this.gameId = gameId;
-    }
-
-    public Long getBoardId() {
-        return boardId;
-    }
-
-    public void setBoardId(Long boardId) {
-        this.boardId = boardId;
     }
 
     public Color getColor() {
@@ -70,11 +69,19 @@ public class ConnectResponse {
         this.color = color;
     }
 
-    public Long getBoardIdAdditional() {
+    public UUID getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(UUID boardId) {
+        this.boardId = boardId;
+    }
+
+    public UUID getBoardIdAdditional() {
         return boardIdAdditional;
     }
 
-    public void setBoardIdAdditional(Long boardIdAdditional) {
+    public void setBoardIdAdditional(UUID boardIdAdditional) {
         this.boardIdAdditional = boardIdAdditional;
     }
 
@@ -86,15 +93,15 @@ public class ConnectResponse {
         this.team = team;
     }
 
-    public Long getPlayerId() {
+    public UUID getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(Long playerId) {
+    public void setPlayerId(UUID playerId) {
         this.playerId = playerId;
     }
 
-    public ConnectResponse(Long gameId, Long boardId, Long boardIdAdditional, Long playerIdMove, Color color) {
+    public ConnectResponse(UUID gameId, UUID boardId, UUID boardIdAdditional, UUID playerIdMove, Color color) {
         this.gameId = gameId;
         this.boardId = boardId;
         this.boardIdAdditional = boardIdAdditional;
@@ -120,5 +127,21 @@ public class ConnectResponse {
 
     public void setAdditionalTime(String additionalTime) {
         this.additionalTime = additionalTime;
+    }
+
+    public Color getColorSecond() {
+        return colorSecond;
+    }
+
+    public void setColorSecond(Color colorSecond) {
+        this.colorSecond = colorSecond;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }

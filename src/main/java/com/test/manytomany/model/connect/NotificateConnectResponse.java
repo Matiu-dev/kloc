@@ -1,12 +1,14 @@
 package com.test.manytomany.model.connect;
 
+import java.util.UUID;
+
 public class NotificateConnectResponse {
 
     private String login;
-    private String gameId;
+    private UUID gameId;
     private String type;
-    private Long boardId;
-    private Long boardIdAdditional;
+    private UUID boardId;
+    private UUID boardIdAdditional;
 
     //pozostali gracze
     private String loginBoardFirstWhite;
@@ -20,14 +22,6 @@ public class NotificateConnectResponse {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
     }
 
     public String getType() {
@@ -70,19 +64,27 @@ public class NotificateConnectResponse {
         this.loginBoardSecondBlack = loginBoardSecondBlack;
     }
 
-    public Long getBoardId() {
-        return boardId;
+    public void setGameId(UUID gameId) {
+        this.gameId = gameId;
     }
 
-    public void setBoardId(Long boardId) {
+    public void setBoardId(UUID boardId) {
         this.boardId = boardId;
     }
 
-    public Long getBoardIdAdditional() {
-        return boardIdAdditional;
+    public void setBoardIdAdditional(UUID boardIdAdditional) {
+        this.boardIdAdditional = boardIdAdditional;
     }
 
-    public void setBoardIdAdditional(Long boardIdAdditional) {
-        this.boardIdAdditional = boardIdAdditional;
+    public UUID getGameId() {
+        return gameId;
+    }
+
+    public UUID getBoardId() {
+        return boardId;
+    }
+
+    public UUID getBoardIdAdditional() {
+        return boardIdAdditional;
     }
 }
