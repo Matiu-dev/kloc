@@ -1,5 +1,6 @@
 package com.test.manytomany.chesspiecerules;
 
+import com.test.manytomany.chesspiecerules.ChessMoves.*;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
@@ -18,13 +19,30 @@ public class CheckAttack {
                                                         Color nextMoveColor) {
 
         GamePlay gamePlay = new GamePlay();
-        gamePlay.setCoordinateNew(attackPosition);
+//        gamePlay.setCoordinateNew(attackPosition);
         gamePlay.setFiguresOnBoard(fobA);
-        gamePlay.setCoordinateOld(coordinateOld);
-        gamePlay.setFigureNameOld(figureNameOld);
-        gamePlay.setCoordinateNew(coordinateNew);
-        gamePlay.setFigureNameNew(figureNameNew);
         gamePlay.setNextMoveColor(nextMoveColor);
+        gamePlay.setEnPassantCord("");
+
+//        gamePlay.set
+
+        if(figureNameNew.equals(Pieces.BLACKKING.getPiece())) {
+            gamePlay.setCoordinateNew(coordinateNew);
+            gamePlay.setFigureNameNew(figureNameNew);
+        }
+
+        if(figureNameOld.equals(Pieces.BLACKKING.getPiece())) {
+            gamePlay.setCoordinateNew(coordinateOld);
+            gamePlay.setFigureNameNew(figureNameOld);
+        }
+
+//        gamePlay.setCoordinateOld(coordinateOld);
+//        gamePlay.setFigureNameOld(figureNameOld);
+//        gamePlay.setCoordinateNew(coordinateNew);
+//        gamePlay.setFigureNameNew(figureNameNew);
+
+
+
 
         String[][] fob = gamePlay.getFiguresOnBoard();
 
@@ -104,13 +122,21 @@ public class CheckAttack {
                                                         Color nextMoveColor) {
 
         GamePlay gamePlay = new GamePlay();
-        gamePlay.setCoordinateNew(attackPosition);
+//        gamePlay.setCoordinateNew(attackPosition);
         gamePlay.setFiguresOnBoard(fobA);
-        gamePlay.setCoordinateOld(coordinateOld);
-        gamePlay.setFigureNameOld(figureNameOld);
-        gamePlay.setCoordinateNew(coordinateNew);
-        gamePlay.setFigureNameNew(figureNameNew);
         gamePlay.setNextMoveColor(nextMoveColor);
+        gamePlay.setEnPassantCord("");
+
+
+        if(figureNameNew.equals(Pieces.WHITEKING.getPiece())) {
+            gamePlay.setCoordinateNew(coordinateNew);
+            gamePlay.setFigureNameNew(figureNameNew);
+        }
+
+        if(figureNameOld.equals(Pieces.WHITEKING.getPiece())) {
+            gamePlay.setCoordinateNew(coordinateOld);
+            gamePlay.setFigureNameNew(figureNameOld);
+        }
 
         String[][] fob = gamePlay.getFiguresOnBoard();
 

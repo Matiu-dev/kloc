@@ -43,7 +43,7 @@ function reset(bId, bIdA) {
     }
 
     boardId = bId;
-    boardIdAdditional = bIdA
+    boardIdAdditional = bIdA;
 
     // console.log("Testuje: " + boardId);
     // console.log("testuje 2: " + boardIdAdditional);
@@ -60,11 +60,21 @@ var moveType = "";
 var gameResult = "";
 var color;
 var colorSecond;
+// roszada
 var castling = [true, true, true];
+var castlingTwo = [true, true, true];
+
+//bicie w przelocie
 var enPassantCord = "";
+var enPassantCordSecond = "";
+
 var figuresOnBoard = [];
+
+//promocja pionka - nazwa
 var promoFigure = "";
 var promoFigureSecond = "";
+
+// czas
 var internalFirst = null;
 var internalSecond = null;
 var internalThird = null
@@ -86,7 +96,10 @@ function runMe(position) {
 
         // if (color === nextMoveColor) {
         if (gameResult !== "CHECKMATE") {
-            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+            if (figureNameOld === "" 
+            && outside.contains(inside) 
+            && checkColor(inside.innerHTML.toString()) === color
+            ) {// && color === nextMoveColor//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -97,7 +110,7 @@ function runMe(position) {
                 oldInside = inside;
                 inside.style.background = "#FF8C00";
 
-            } else if (figureNameOld !== "" && outside.contains(inside)) {//po kliknieciu 2
+            } else if (figureNameOld !== "" && outside.contains(inside) ) {//po kliknieciu 2 && color === nextMoveColor
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
                 makeAMove(boardId, promoFigure);
@@ -127,7 +140,10 @@ function runMe(position) {
 
         // if (color === nextMoveColor) {
         if (gameResult !== "CHECKMATE") {
-            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+            //do 1 planszy
+            if (figureNameOld === "" &&
+              outside.contains(inside) &&
+              checkColor(inside.innerHTML.toString()) === color ) {//po kliknieciu 1 && color === nextMoveColor
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -137,7 +153,11 @@ function runMe(position) {
                 oldInsideStyle = inside.style.backgroundColor;
                 oldInside = inside;
                 inside.style.background = "#FF8C00";
-            } else if (figureNameOld !== "" && outside.contains(inside) && boardName === "A") {//po kliknieciu 2
+            } else if (figureNameOld !== "" 
+            && outside.contains(inside) 
+            && boardName === "A" 
+            && coordinateOld !== position.substring(1)) {//po kliknieciu 2 && color === nextMoveColor
+                //nie mozna kliknac 2 raz na to samo pole todo
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
 
@@ -146,13 +166,16 @@ function runMe(position) {
 
                 makeAMove(boardId, promoFigure);
 
-                boardName = "";
-                oldInside = "";
-                oldInsideStyle = "";
+                // boardName = "";
+                // oldInside = "";
+                // oldInsideStyle = "";
                 console.log("tu");
             }
 
-            if (figureNameOld === "" && outsideTwo.contains(inside) && checkColor(inside.innerHTML.toString()) === colorSecond) {
+            //do 2 planszy
+            if (figureNameOld === "" 
+            && outsideTwo.contains(inside) 
+            && checkColor(inside.innerHTML.toString()) === colorSecond) {//&& colorSecond === nextMoveColorSecond
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -162,7 +185,10 @@ function runMe(position) {
                 oldInsideStyle = inside.style.backgroundColor;
                 oldInside = inside;
                 inside.style.background = "#FF8C00";
-            } else if (figureNameOld !== "" && outsideTwo.contains(inside) && boardName === "B") {
+            } else if (figureNameOld !== "" 
+            && outsideTwo.contains(inside) 
+            && boardName === "B"
+            && coordinateOld !== position.substring(1)) {//&& colorSecond === nextMoveColorSecond
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
 
@@ -224,7 +250,10 @@ function runMeTwo(position) {
 
         //  if(color===nextMoveColor){
         if (gameResult !== "CHECKMATE") {
-            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+            if (figureNameOld === "" 
+            && outside.contains(inside) 
+            && checkColor(inside.innerHTML.toString()) === color
+            && color === nextMoveColor) {//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -246,7 +275,10 @@ function runMeTwo(position) {
 
         //  if(color===nextMoveColor){
         if (gameResult !== "CHECKMATE") {
-            if (figureNameOld === "" && outsideTwo.contains(inside) && checkColor(inside.innerHTML.toString()) === colorSecond) {//po kliknieciu 1
+            if (figureNameOld === "" 
+            && outsideTwo.contains(inside) 
+            && checkColor(inside.innerHTML.toString()) === colorSecond
+            && colorSecond === nextMoveColorSecond) {//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -290,42 +322,177 @@ function makeAMove(bId, pf) {
         }
     }
 
-    $.ajax({
-        url: url + "/game/gameplay",
-        type: 'POST',
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify({
-            "type": "gameplay",
-            "gameId": gameId,
-            "boardId": bId,
-            "playerId": playerId,
-            "coordinateOld": coordinateOld,
-            "figureNameOld": figureNameOld,
-            "coordinateNew": coordinateNew,
-            "figureNameNew": figureNameNew,
-            "figuresOnBoard": figuresOnBoard,
-            "boardName": boardName,
-            "nextMoveColor": color,
-            "moveType": moveType,
-            "team": team,
-            "castling": castling,
-            "castlingMove": false,
-            "enPassantCord": enPassantCord,
-            "enPassantMove": false,
-            "promoFigure": pf,
-            "gameResult": gameResult
+    if (gameType === "4") {
+        $.ajax({
+            url: url + "/game/gameplay",
+            type: 'POST',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "type": "gameplay",
+                "gameId": gameId,
+                "boardId": bId,
+                "playerId": playerId,
+                "coordinateOld": coordinateOld,
+                "figureNameOld": figureNameOld,
+                "coordinateNew": coordinateNew,
+                "figureNameNew": figureNameNew,
+                "figuresOnBoard": figuresOnBoard,
+                "boardName": boardName,
+                "nextMoveColor": nextMoveColor,//color
+                "moveType": moveType,
+                "team": team,
+                "castling": castling,
+                "castlingMove": false,
+                "enPassantCord": enPassantCord,
+                "enPassantMove": false,
+                "promoFigure": pf,
+                "gameResult": gameResult
+    
+            }),
+            success: function (data) {
+                //            gameOn = false;
+                // displayResponse(data);
+                // playerIdMove = data.playerIdMove;
 
-        }),
-        success: function (data) {
-            //            gameOn = false;
-            // displayResponse(data);
-            // playerIdMove = data.playerIdMove;
-        },
-        error: function (error) {
-            console.log(error);
+                    boardName = "";
+                    oldInside = "";
+                    oldInsideStyle = "";
+
+                    figureNameOld = "";
+                    positionOld = "";
+                    figureNameNew = "";
+                    positionNew = "";
+                    moveType = "";
+
+                    if(data.boardId == boardId) {
+                        console.log("dla 1 planszy " + castling);
+                        castling = data.castling;
+                    }
+                    
+                    if(data.boardId == boardIdSecond) {
+                        console.log("castling two: " +castlingTwo);
+                        castlingTwo = data.castling;
+                    }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    }
+
+    if (gameType === "2") {
+
+        if(bId == boardId){
+            $.ajax({
+                url: url + "/game/gameplay",
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "type": "gameplay",
+                    "gameId": gameId,
+                    "boardId": bId,
+                    "playerId": playerId,
+                    "coordinateOld": coordinateOld,
+                    "figureNameOld": figureNameOld,
+                    "coordinateNew": coordinateNew,
+                    "figureNameNew": figureNameNew,
+                    "figuresOnBoard": figuresOnBoard,
+                    "boardName": boardName,
+                    "nextMoveColor": nextMoveColor,
+                    "moveType": moveType,
+                    "team": team,
+                    "castling": castling,
+                    "castlingMove": false,
+                    "enPassantCord": enPassantCord,
+                    "enPassantMove": false,
+                    "promoFigure": pf,
+                    "gameResult": gameResult
+        
+                }),
+                success: function (data) {
+                    boardName = "";
+                    oldInside = "";
+                    oldInsideStyle = "";
+
+                    figureNameOld = "";
+                    positionOld = "";
+                    figureNameNew = "";
+                    positionNew = "";
+                    moveType = "";
+
+                    if(data.boardId == boardId) {
+                        console.log("dla 1 planszy " + castling);
+                        castling = data.castling;
+                    }
+                    
+                    if(data.boardId == boardIdSecond) {
+                        console.log("castling two: " +castlingTwo);
+                        castlingTwo = data.castling;
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
         }
-    })
+
+        if(bId == boardIdSecond) {
+            $.ajax({
+                url: url + "/game/gameplay",
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "type": "gameplay",
+                    "gameId": gameId,
+                    "boardId": bId,
+                    "playerId": playerId,
+                    "coordinateOld": coordinateOld,
+                    "figureNameOld": figureNameOld,
+                    "coordinateNew": coordinateNew,
+                    "figureNameNew": figureNameNew,
+                    "figuresOnBoard": figuresOnBoard,
+                    "boardName": boardName,
+                    "nextMoveColor": nextMoveColorSecond,
+                    "moveType": moveType,
+                    "team": team,
+                    "castling": castlingTwo,
+                    "castlingMove": false,
+                    "enPassantCord": enPassantCordSecond,
+                    "enPassantMove": false,
+                    "promoFigure": pf,
+                    "gameResult": gameResult
+        
+                }),
+                success: function (data) {
+                    boardName = "";
+                    oldInside = "";
+                    oldInsideStyle = "";
+
+                    figureNameOld = "";
+                    positionOld = "";
+                    figureNameNew = "";
+                    positionNew = "";
+                    moveType = "";
+
+                    if(data.boardId == boardId) {
+                        console.log("dla 1 planszy " + castling);
+                        castling = data.castling;
+                    }
+                    
+                    if(data.boardId == boardIdSecond) {
+                        console.log("castling two: " +castlingTwo);
+                        castlingTwo = data.castling;
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        }
+    }
 }
 
 function displayResponseBasic(data) {
@@ -480,9 +647,10 @@ function displayResponseBasic(data) {
 
     // ustawianie szachownicy
     if (data.boardId == boardId && data.moveStatus === "OK") {
+        console.log("update pierwszej szachownicy");
         var help = "A";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
-        document.getElementById(data.boardName + data.coordinateOld).innerHTML = data.figureNameOld;
+        document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;
 
         // console.log(help + data.coordinateNew);
         // console.log(data.boardName + data.coordinateOld);
@@ -520,7 +688,7 @@ function displayResponseBasic(data) {
         }
 
         if (data.enPassantMove == true && checkColor(data.figureNameNew) === "WHITE") {
-            document.getElementById(help + (data.coordinateNew - 1)).innerHTML = "";
+            document.getElementById(help + (parseInt(data.coordinateNew) - 1)).innerHTML = "";
         }
 
         if (data.enPassantMove == true && checkColor(data.figureNameNew) === "BLACK") {
@@ -535,6 +703,7 @@ function displayResponseBasic(data) {
     }
 
     if (data.boardId == boardIdAdditional && data.moveStatus === "OK") {
+        console.log("update drugiej szachownicy");
         var help = "B";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;
@@ -575,11 +744,12 @@ function displayResponseBasic(data) {
         }
 
         if (data.enPassantMove == true && checkColor(data.figureNameNew) === "WHITE") {
-            document.getElementById(help + (data.coordinateNew - 1)).innerHTML = "";
+            document.getElementById(help + (parseInt(data.coordinateNew) - 1)).innerHTML = "";
         }
 
         if (data.enPassantMove == true && checkColor(data.figureNameNew) === "BLACK") {
-            document.getElementById(help + (data.coordinateNew + 1)).innerHTML = "";
+            console.log(help + (data.coordinateNew + 1));
+            document.getElementById(help + (parseInt(data.coordinateNew) + 1)).innerHTML = "";
         }
 
         //ustawianie czasu
@@ -591,12 +761,12 @@ function displayResponseBasic(data) {
     }
 
 
-    figureNameOld = "";
-    positionOld = "";
-    figureNameNew = "";
-    positionNew = "";
-    boardName = "";
-    moveType = "";
+    // figureNameOld = "";
+    // positionOld = "";
+    // figureNameNew = "";
+    // positionNew = "";
+    // boardName = "";
+    // moveType = "";
 }
 
 function displayResponseReserve(data) {
@@ -624,12 +794,12 @@ function displayResponseReserve(data) {
     }
 
 
-    figureNameOld = "";
-    positionOld = "";
-    figureNameNew = "";
-    positionNew = "";
-    boardName = "";
-    moveType = "";
+    // figureNameOld = "";
+    // positionOld = "";
+    // figureNameNew = "";
+    // positionNew = "";
+    // boardName = "";
+    // moveType = "";
 }
 
 function getPromoFigures(name) {

@@ -1,17 +1,24 @@
 const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
+//loginy
 let login;
 let loginTwo;
 let loginThree;
 let loginFourth;
+
 let gameId;
 let playerId;
-let boardId;
-let boardIdSecond;
-let boardIdAdditional;
+let boardId;//twoja 1 plansza
+let boardIdSecond;//twoja 2 plansza - jesli 2 graczy to to jest twoja 2 plansza
+
+let boardIdAdditional;//dodatkowa plansza do wyswietlania wynikow
+
 let stompClient;
 let playerIdMove;
-let nextMoveColor;
-let team;
+
+let nextMoveColor;//kolejny ruch na 1 szachownicy
+let nextMoveColorSecond;//kolejny ruch na 2 szachownicy todo
+
+let team;//druzyna A lub B
 let chatId;
 let submit;
 let gameTime;
@@ -41,22 +48,63 @@ function connectToSocket(gameId) {
             // console.log(AgameTimeFirst + " " + AgameTimeSecond + " " + BgameTimeFirst + " " + BgameTimeSecond);
             // console.log(data.nextMoveColor)
 
-            if (data.type === "gameplay") {
+            // console.log(data.type === "gameplay" && data.moveStatus === "OK");
+
+            // if(data.type === "gameplay" && data.moveStatus === "BAD") {
+            //     boardName = "";
+            //     oldInside = "";
+            //     oldInsideStyle = "";
+
+            //     figureNameOld = "";
+            //     positionOld = "";
+            //     figureNameNew = "";
+            //     positionNew = "";
+            //     moveType = "";
+            // }
+
+            if (data.type === "gameplay" && data.moveStatus === "OK") {
                 //ustawienie nastepnego ruchu dla odpowiedniej planszy
+
+                // console.log(data.boardId == boardId);
+                // console.log(data.boardId == boardIdSecond);
+                // console.log(data.nextMoveColor);
+
                 if (data.boardId == boardId) {
                     nextMoveColor = data.nextMoveColor;
                     enPassantCord = data.enPassantCord;
                 }
 
-                //do roszady
-                if (data.playerId == playerId) {
-                    castling = data.castling;
+                if(data.boardId == boardIdSecond) {
+                    nextMoveColorSecond = data.nextMoveColor;
+                    enPassantCordSecond = data.enPassantCord;
                 }
 
+                // console.log("nastepny ruch: " + nextMoveColor + " " + nextMoveColorSecond);
+
+                // if(data.boardId == boardAdditional) {
+                //     nextMoveColorSe
+                // }
+
+                //do roszady
+                // if (data.playerId == playerId) {
+                //     // console.log("roszada");
+                //     if(data.boardId == boardId) {
+                //         console.log("dla 1 planszy " + castling);
+                //         castling = data.castling;
+                //     }
+                    
+                //     if(data.boardId == boardIdSecond) {
+                //         castlingTwo = data.castling;
+                //         console.log("castling two: " +castlingTwo);
+                //     }
+                // }
+
+                //ruch na planszy
                 if (data.moveType === "BASIC") {
                     displayResponseBasic(data);
                 }
 
+                //ruch z rezerwy na plansze
                 if (data.moveType === "RESERVE") {
                     displayResponseReserve(data);
                 }
@@ -148,6 +196,7 @@ function create_game() {
                 if (gameType === "2") {
                     boardIdSecond = data.boardIdAdditional;
                     colorSecond = data.colorSecond;
+                    nextMoveColorSecond = "WHITE";
 
                     alert("Stworzenie gry pomyślne. Id gry to: " + gameId +
                         " twoja szachwnica ma numer: " + boardId +
@@ -235,6 +284,7 @@ function connect_to_specific_game() {
                 if (gameType === "2") {
                     boardIdSecond = data.boardIdAdditional;
                     colorSecond = data.colorSecond;
+                    nextMoveColorSecond = "WHITE";
 
                     alert("Pomyślnie dołaczyłes do gry. Id gry to: " + gameId +
                         " twoja szachwnica ma numer: " + boardId +

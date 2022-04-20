@@ -1,5 +1,6 @@
 package com.test.manytomany.chesspiecerules;
 
+import com.test.manytomany.chesspiecerules.ChessMoves.*;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.MoveType;
@@ -9,7 +10,6 @@ public class MainRules {
 
     public GamePlay checkRules(GamePlay gamePlay) {
         //----ruchy----------
-        //ruch piona i ruch piona z biciem
 
         //dodanie figury z pola dodatkowego - do rozbudowania TODO
         if(gamePlay.getMoveType().equals(MoveType.RESERVE)){
@@ -62,7 +62,7 @@ public class MainRules {
             return new Bishop().checkMoveWhite(gamePlay);
         }
 
-        //czarny gonec
+        //czarny goniec
 
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKBISHOP.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {
@@ -80,7 +80,7 @@ public class MainRules {
             return new Queen().checkMoveWhite(gamePlay);
         }
 
-        //black hetman
+        //czarny hetman
 
         if(gamePlay.getFigureNameOld().equals(Pieces.BLACKQUEEN.getPiece())
                 && !gamePlay.checkBlack(gamePlay.getFigureNameNew())) {

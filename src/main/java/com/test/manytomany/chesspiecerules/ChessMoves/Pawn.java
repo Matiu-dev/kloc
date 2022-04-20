@@ -1,11 +1,12 @@
-package com.test.manytomany.chesspiecerules;
+package com.test.manytomany.chesspiecerules.ChessMoves;
 
+import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Pawn {
+public class Pawn implements ChessMovesInterface {
 
     private static final int COLUMN = 0;
     private static final int ROW = 1;
@@ -24,7 +25,7 @@ public class Pawn {
         char[] oldF = gamePlay.getCoordinateOld().toCharArray();
         char[] newF = gamePlay.getCoordinateNew().toCharArray();
         char[] enPassand;
-        if(gamePlay.getEnPassantCord()!=""){
+        if(!gamePlay.getEnPassantCord().equals("")  && gamePlay.getEnPassantCord() != null){
             enPassand = gamePlay.getEnPassantCord().toCharArray();
         }else {
             enPassand = "".toCharArray();
@@ -39,7 +40,7 @@ public class Pawn {
                         && !gamePlay.getFigureNameNew().isEmpty()) {
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
-            log.info("good move white pawn bias");
+            log.info("good attack move white pawn bias");
             gamePlay.setMoveStatus(MoveStatus.OK);
 
             if(gamePlay.getCoordinateNew().toCharArray()[1]=='8') {
@@ -73,7 +74,7 @@ public class Pawn {
                     && gamePlay.getFigureNameNew().isEmpty()) {
 
                 gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
-                log.info("good move white pawn enPassant move");
+                log.info("good move white enPassant ");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
 //                gamePlay.setCoordinateOld();
@@ -116,6 +117,7 @@ public class Pawn {
         } else {
             log.info("bad move white pawn");
             gamePlay.setMoveStatus(MoveStatus.BAD);
+
         }
 
         // ruch do przodu 2 pola
@@ -150,7 +152,7 @@ public class Pawn {
         char[] newF = gamePlay.getCoordinateNew().toCharArray();
 
         char[] enPassand;
-        if(gamePlay.getEnPassantCord()!="" && gamePlay.getEnPassantCord()!=null){
+        if(!gamePlay.getEnPassantCord().equals("") && gamePlay.getEnPassantCord()!=null){
             enPassand = gamePlay.getEnPassantCord().toCharArray();
         }else {
             enPassand = "".toCharArray();
@@ -199,7 +201,7 @@ public class Pawn {
                     && gamePlay.getFigureNameNew().isEmpty()) {
 
                 gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
-                log.info("good move white enPassant move");
+                log.info("good move black enPassant move");
                 gamePlay.setMoveStatus(MoveStatus.OK);
 
 //                gamePlay.setCoordinateOld();

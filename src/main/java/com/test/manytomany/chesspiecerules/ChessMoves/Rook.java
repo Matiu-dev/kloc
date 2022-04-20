@@ -1,12 +1,13 @@
-package com.test.manytomany.chesspiecerules;
+package com.test.manytomany.chesspiecerules.ChessMoves;
 
+import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Rook {
+public class Rook implements ChessMovesInterface {
 
     private static final int COLUMN = 0;
     private static final int ROW = 1;
@@ -89,11 +90,14 @@ public class Rook {
 
 
             }else {
-                log.info("bad move white rook up");
+                log.info("bad move white rook down");
                 gamePlay.setMoveStatus(MoveStatus.BAD);
 
 
             }
+
+            gamePlay.setMoveStatus(MoveStatus.BAD);
+
             return gamePlay;
         }
 
@@ -127,7 +131,7 @@ public class Rook {
 
 
             }else {
-                log.info("bad move white rook up");
+                log.info("bad move white rook right");
                 gamePlay.setMoveStatus(MoveStatus.BAD);
 
             }
@@ -164,12 +168,14 @@ public class Rook {
 
 
             }else {
-                log.info("bad move white rook up");
+                log.info("bad move white rook left");
                 gamePlay.setMoveStatus(MoveStatus.BAD);
 
             }
             return gamePlay;
         }
+
+        gamePlay.setMoveStatus(MoveStatus.BAD);
 
         return gamePlay;
     }
@@ -319,6 +325,8 @@ public class Rook {
             }
             return gamePlay;
         }
+
+        gamePlay.setMoveStatus(MoveStatus.BAD);
 
         return gamePlay;
     }

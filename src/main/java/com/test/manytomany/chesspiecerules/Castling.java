@@ -134,12 +134,13 @@ public class Castling {
             ruleFourRight = true;
         }
 
-        System.out.println(ruleOneLeft + " " + ruleTwo + " " + ruleThreeLeft + " " + ruleFourLeft);
+         if (ruleOneLeft && ruleTwo && ruleThreeLeft && ruleFourLeft) {
 
-        if (ruleOneLeft && ruleTwo && ruleThreeLeft && ruleFourLeft) {
+             //roszada lewo
+             System.out.println("lewo roszada " + ruleOneLeft + " " + ruleTwo + " " + ruleThreeLeft + " " + ruleFourLeft);
 
 
-            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
+             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move castling");
             gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -158,7 +159,11 @@ public class Castling {
             gamePlay.setCastlingMove(true);
         } else if (ruleOneRight && ruleTwo && ruleThreeRight && ruleFourRight) {
 
-            gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
+             //roszada prawo
+             System.out.println("prawo roszada " + ruleOneRight + " " + ruleTwo + " " + ruleThreeRight + " " + ruleFourRight);
+
+
+             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move castling");
             gamePlay.setMoveStatus(MoveStatus.OK);
 
@@ -209,7 +214,7 @@ public class Castling {
                         && gamePlay.getFigureNameNew().equals(Pieces.BLACKKING.getPiece())
                         && gamePlay.getCastling()[0] && gamePlay.getCastling()[2];
 
-//        Zasada 2. Nie można za pomocą roszady uciekać przed szachem!
+        //Zasada 2. Nie można za pomocą roszady uciekać przed szachem!
         boolean ruleTwo = new CheckAttack().checkAttackOnBlackKingByWhiteFigures(
                 BLACK_KING_START_POSITION,
                 gamePlay.getFiguresOnBoard(),
@@ -294,8 +299,11 @@ public class Castling {
             ruleFourRight = true;
         }
 
-        System.out.println(ruleOneLeft + " " + ruleTwo + " " + ruleThreeLeft + " " + ruleFourLeft);
+
         if (ruleOneLeft && ruleTwo && ruleThreeLeft && ruleFourLeft) {
+
+            //roszada lewo
+            System.out.println("lewo roszada " + ruleOneLeft + " " + ruleTwo + " " + ruleThreeLeft + " " + ruleFourLeft);
 
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
@@ -316,6 +324,10 @@ public class Castling {
 
             gamePlay.setCastlingMove(true);
         } else if (ruleOneRight && ruleTwo && ruleThreeRight && ruleFourRight) {
+
+            //roszada prawo
+            System.out.println("prawo roszada " + ruleOneRight + " " + ruleTwo + " " + ruleThreeRight + " " + ruleFourRight);
+
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black castling");

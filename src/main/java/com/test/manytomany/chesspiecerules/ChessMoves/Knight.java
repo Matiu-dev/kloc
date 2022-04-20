@@ -1,5 +1,6 @@
-package com.test.manytomany.chesspiecerules;
+package com.test.manytomany.chesspiecerules.ChessMoves;
 
+import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
@@ -7,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 // goniec
 @Slf4j
-public class Knight {
+public class Knight implements ChessMovesInterface {
 
     private static final int COLUMN = 0;
     private static final int ROW = 1;

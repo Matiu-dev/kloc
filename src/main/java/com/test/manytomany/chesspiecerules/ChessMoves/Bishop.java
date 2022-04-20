@@ -1,12 +1,13 @@
-package com.test.manytomany.chesspiecerules;
+package com.test.manytomany.chesspiecerules.ChessMoves;
 
+import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
 import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Bishop {
+public class Bishop implements ChessMovesInterface {
 
     private static final int COLUMN = 0;
     private static final int ROW = 1;
