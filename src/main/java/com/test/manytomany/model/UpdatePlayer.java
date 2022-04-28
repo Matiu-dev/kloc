@@ -3,9 +3,17 @@ package com.test.manytomany.model;
 public class UpdatePlayer {
 
     private String login;
-    private String newlogin;
     private String password;
     private String newpassword;
+    private String repeatnewpassword;
+
+    public String getRepeatnewpassword() {
+        return repeatnewpassword;
+    }
+
+    public void setRepeatnewpassword(String repeatnewpassword) {
+        this.repeatnewpassword = repeatnewpassword;
+    }
 
     public String getLogin() {
         return login;
@@ -13,14 +21,6 @@ public class UpdatePlayer {
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getNewlogin() {
-        return newlogin;
-    }
-
-    public void setNewlogin(String newlogin) {
-        this.newlogin = newlogin;
     }
 
     public String getPassword() {

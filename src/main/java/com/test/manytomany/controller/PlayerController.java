@@ -1,24 +1,34 @@
 package com.test.manytomany.controller;
 
-import com.test.manytomany.model.ChatMessage;
 import com.test.manytomany.model.DeletePlayer;
 import com.test.manytomany.model.UpdatePlayer;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.model.player.PlayerRole;
+import com.test.manytomany.model.player.PlayerStatus;
 import com.test.manytomany.service.PlayerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //@RequestMapping("/player")
+@Slf4j
 @Controller
 public class PlayerController {
+
+    private boolean invalidateHttpSession = true;
 
     @Autowired
     private PlayerService playerService;
@@ -28,17 +38,19 @@ public class PlayerController {
 
 //        System.out.println(player.getRepeatPassword());
         player.setPlayerRole(PlayerRole.ROLE_USER);
+        player.setPlayerStatus(PlayerStatus.ACTIVE);
+
         return playerService.savePlayer(player);
     }
 
-    @GetMapping("/{login}")
+    @GetMapping("/player/{login}")
     public String getPlayer(@PathVariable(name = "login") String login, Model model) {
 
         Player player = null;
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        String name = ((UserDetails) user).getUsername();
 
-        if(user instanceof UserDetails){
+        if (user instanceof UserDetails) {
             String name = ((UserDetails) user).getUsername();
             model.addAttribute("username", name);
             model.addAttribute("playerId",
@@ -46,13 +58,13 @@ public class PlayerController {
 
             player = (playerService.findPlayerByLogin(((UserDetails) user).getUsername()));
 
-            if(player != null && login.equals(name)) {
+            if (player != null && login.equals(name)) {
 
                 model.addAttribute("password", player.getPassword());
 
                 return "myprofile";
             }
-        }else {
+        } else {
             //To-Do
         }
 
@@ -61,12 +73,20 @@ public class PlayerController {
     }
 
     @CrossOrigin
-    @PutMapping("/updatePlayer")
+    @PutMapping("/updatePassword")
     @ResponseBody
-    public HttpStatus updatePlayer(@RequestBody UpdatePlayer updatePlayer) {
+    public HttpStatus updatePassword(@RequestBody UpdatePlayer updatePlayer) {
 
-        System.out.println(updatePlayer.getNewlogin() + " " + updatePlayer.getNewpassword());
-        playerService.updatePlayer(updatePlayer);
+//        System.out.println(updatePlayer.getNewlogin() + " " + updatePlayer.getNewpassword());
+//        boolean check =
+
+        log.info("changing password");
+
+        boolean check = playerService.updatePassword(updatePlayer);
+
+        if (check) {
+            SecurityContextHolder.clearContext();
+        }
 
         return HttpStatus.OK;
     }
@@ -79,5 +99,14 @@ public class PlayerController {
         playerService.deleteByLogin(deletePlayer.getLogin());
 
         return HttpStatus.OK;
+    }
+
+
+    public boolean isInvalidateHttpSession() {
+        return invalidateHttpSession;
+    }
+
+    public void setInvalidateHttpSession(boolean invalidateHttpSession) {
+        this.invalidateHttpSession = invalidateHttpSession;
     }
 }

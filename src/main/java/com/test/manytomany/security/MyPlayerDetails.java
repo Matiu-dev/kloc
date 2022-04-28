@@ -1,8 +1,10 @@
 package com.test.manytomany.security;
 
 import com.test.manytomany.model.player.Player;
+import com.test.manytomany.model.player.PlayerStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
@@ -51,7 +53,13 @@ public class MyPlayerDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+
+        if(player.getPlayerStatus().equals(PlayerStatus.DISABLED)){
+            System.out.println("Konto zamknięte");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public Player getUser() {

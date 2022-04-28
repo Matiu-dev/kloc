@@ -44,6 +44,7 @@ public class Player {
 
     private String repeatPassword;
 
+    @Enumerated(EnumType.STRING)
     private PlayerStatus playerStatus;
 
     @Enumerated(EnumType.STRING)

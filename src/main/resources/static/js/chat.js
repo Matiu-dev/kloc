@@ -14,10 +14,11 @@ function sendMessage() {
             "type": "message",
             "gameId": gameId,
             "login": login,
-            "message": message
+            "message": message,
+            "team": team
         }),
         success: function (data) {
-
+            document.getElementById("input-message").value = "";
         },
         error: function (error) {
             console.log(error);
@@ -27,7 +28,31 @@ function sendMessage() {
 
 function displayResponseMessage(data) {
 
-    document.getElementById("addMessage").innerHTML +=
-     "<ul class='list-group list-group-flush' ><li class='list-group-item'><strong>"+ data.login+ ": " +"</strong><span>" + data.message +"</span></li></ul>";
-    console.log("Message");
+    if(data.messageCommand === "TEAM" && data.team == team) {
+        document.getElementById("addMessage").innerHTML +=
+        "<ul class='list-group list-group-flush' ><li class='list-group-item'><strong>"+ data.login+ ": " +"</strong><span>" + data.message +"</span></li></ul>";
+    }
+
+    if(data.messageCommand === "WHISPER" && data.whisperLogin == login) {
+        document.getElementById("addMessage").innerHTML +=
+        "<ul class='list-group list-group-flush' ><li class='list-group-item'><strong>"+ data.login+ " (PW): " +"</strong><span>" + data.message +"</span></li></ul>";
+
+    }
+
+    if(data.messageCommand === "WHISPER" && data.login == login) {
+        document.getElementById("addMessage").innerHTML +=
+        "<ul class='list-group list-group-flush' ><li class='list-group-item'><strong>"+ data.login+ " (PW): " +"</strong><span>" + data.message +"</span></li></ul>";
+
+    }
+
+    if(data.messageCommand === "ALL") {
+        document.getElementById("addMessage").innerHTML +=
+        "<ul class='list-group list-group-flush' ><li class='list-group-item'><strong>"+ data.login+ ": " +"</strong><span>" + data.message +"</span></li></ul>";
+    }
+}
+
+function writeFigureName(name) {
+    console.log(name.innerHTML);
+
+    document.getElementById("input-message").value += name.innerHTML;
 }

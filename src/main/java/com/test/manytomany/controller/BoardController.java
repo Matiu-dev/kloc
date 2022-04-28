@@ -6,10 +6,10 @@ import com.google.gson.GsonBuilder;
 import com.test.manytomany.exception.InvalidGameException;
 import com.test.manytomany.exception.InvalidParamException;
 import com.test.manytomany.model.*;
+import com.test.manytomany.model.chat.ChatMessageRequest;
+import com.test.manytomany.model.chat.ChatMessageResponse;
 import com.test.manytomany.model.connect.*;
 import com.test.manytomany.model.player.Player;
-import com.test.manytomany.security.MyPlayerDetails;
-import com.test.manytomany.security.MyPlayerDetailsService;
 import com.test.manytomany.service.BoardService;
 import com.test.manytomany.service.ChatService;
 import com.test.manytomany.service.GameService;
@@ -20,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,7 +44,7 @@ public class BoardController {
 
     @CrossOrigin
     @PostMapping("/create")
-    public ResponseEntity<ConnectResponse> createAndAddPlayerToBoard(@RequestBody CreateGameRequest request) {
+    public ConnectResponse createAndAddPlayerToBoard(@RequestBody CreateGameRequest request) {
 //            String json = httpEntity.getBody();
 //            Gson gson = new Gson();
 //            CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
@@ -61,12 +59,12 @@ public class BoardController {
 //        log.info("create" + request);
 
 //        return ResponseEntity.ok(boardService.saveBoard(request, game));
-        return ResponseEntity.ok(boardService.createAndAddPlayerToBoard(request, player));
+        return boardService.createAndAddPlayerToBoard(request, player);
     }
 
     @CrossOrigin
     @PostMapping("/connect")
-    public ResponseEntity<ConnectResponse> connect(@RequestBody ConnectRequest request) throws InvalidParamException, InvalidGameException {
+    public ConnectResponse connect(@RequestBody ConnectRequest request) throws InvalidParamException, InvalidGameException {
 
 //        String json = httpEntity.getBody();
 //        Gson gson = new Gson();
@@ -75,12 +73,12 @@ public class BoardController {
 
         ConnectResponse connectResponse = boardService.connectToGame(request);
 
-        return ResponseEntity.ok(connectResponse);
+        return connectResponse;
     }
 
     @CrossOrigin
     @PostMapping("/gameplay")
-    public ResponseEntity<Object> makeMove(HttpEntity<String> httpEntity) throws Exception {//requestbody
+    public Object makeMove(HttpEntity<String> httpEntity) throws Exception {//requestbody
 
 //        Player player = null;
 //        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -115,11 +113,11 @@ public class BoardController {
 
         //jestli obiekt chatMessage
         if (o.getType().equals("message")) {
-            ChatMessage request = gson.fromJson(json, ChatMessage.class);
+            ChatMessageRequest request = gson.fromJson(json, ChatMessageRequest.class);
 
             log.info("ChatMessage " + request);
-            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), request);
-            return ResponseEntity.ok(request);
+            simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getGameId(), chatService.sendMessage(request));
+            return chatService.sendMessage(request);
         }
 
         //jesli koniec czasu

@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <link rel="stylesheet" href="css/myprofile.css">
+    <link rel="stylesheet" href="/css/myprofile.css">
 
-    <script src="js/myprofile.js"></script>
+    <script src="/js/myprofile.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -39,7 +39,7 @@
                 <li class="nav-item">
                     <!--                    <form name="f" href="@{/searchPlayer}" method="get">-->
                     <a class="nav-link" id="login" th:text="${username}"
-                        th:href="@{/{login}(login=${username})}">Login</a>
+                        th:href="@{/player/{login}(login=${username})}">Login</a>
                     <!--                        <button type="submit" class="btn" id="login" th:text="${username}"></button>-->
                     <!--                    </form>-->
                 </li>
@@ -68,35 +68,32 @@
                                     <a>Login: </a>
                                     <a id="login" th:text="${username}"></a>
                                 </label>
-                                <input id="newlogin" type='text' name="modifeLogin" class="form-control" placeholder="Nowy login">
+                                <!-- <input id="newlogin" type='text' name="modifeLogin" class="form-control" placeholder="Nowy login"> -->
                             </div>
+
+                            <!-- <div  class="form-group">
+                                <input type="button" onclick="updateLogin()" class="btn btn-dark btn-md" value="Zmień login">
+                            </div> -->
 
                             <div class="form-group">
                                 <label class="text-dark">
                                     <a>Hasło: </a>
                                     <a id="password" th:text="${password}"></a>
                                 </label>
-                                <input id="newpassword" type='text' name="modifePassword" class="form-control" placeholder="Nowe hasło">
+                                <input id="newpassword" type='password' name="modifePassword" class="form-control" placeholder="Nowe hasło">
+                                <input id="repeatnewpassword" type='password' name="modifePassword" class="form-control" placeholder="Potwierdź hasło">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="button" onclick="updatePassword()" class="btn btn-dark btn-md" value="Zmień hasło">
                             </div>
  
                         </form>
 
                         <div id="login-form" class="form-group">
-                            <input type="button" onclick="updatePlayer()" class="btn btn-dark btn-md" value="Zmień">
+                            <input type="button" onclick="deletePlayer()" class="btn btn-dark btn-md" value="Usuń konto">
                         </div>
 
-                        <div id="login-form" class="form-group">
-                            <input type="button" onclick="deletePlayer()" class="btn btn-dark btn-md" value="Usuń">
-                        </div>
-
-                        <!-- <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-dark btn-md" value="Zaloguj">
-                        </div>
-
-                        <div id="register-link" class="text-right">
-                            <br>
-                            <a th:href="@{/registration}" class="text-dark">Rejestracja</a>
-                        </div> -->
                     </div>
                 </div>
             </div>

@@ -1,15 +1,8 @@
 package com.test.manytomany.service;
 
-import com.test.manytomany.chesspiecerules.MainRules;
-import com.test.manytomany.model.GamePlay;
-import com.test.manytomany.model.GameResult;
-import com.test.manytomany.model.MoveStatus;
-import com.test.manytomany.model.Pieces;
-import com.test.manytomany.model.chat.Chat;
+import com.test.manytomany.model.chat.*;
 import com.test.manytomany.model.connect.ChatConnectRequest;
 import com.test.manytomany.model.connect.ChatConnectResponse;
-import com.test.manytomany.model.connect.ConnectResponse;
-import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.ChatRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,10 +65,49 @@ public class ChatService {
         chatConnectResponse.setChatId(chat.getId());
         return chatConnectResponse;
     }
-//
-//    public GamePlay sendMessage(Chat chat) throws Exception {
-//
-//
-//        return chat;
-//    }
+
+
+    //
+    public ChatMessageResponse sendMessage(ChatMessageRequest chatMessage) throws Exception {
+
+        ChatMessageResponse chatMessageResponse = new ChatMessageResponse();
+        chatMessageResponse.setMessageStatus(MessageStatus.BAD);
+        chatMessageResponse.setTeam(chatMessage.getTeam());
+        chatMessageResponse.setType(chatMessage.getType());
+        chatMessageResponse.setWhisperLogin(null);
+        chatMessageResponse.setLogin(chatMessage.getLogin());
+
+        String[] m;
+
+        //bez niczego - wysyla wiadomosc do druzyny
+        //nick - do gracza o nicku np /whisper kloc1 wiadomosc
+        //all - wysyla wiadomosc do wszystkich /all wiadomosc
+
+        m = chatMessage.getMessage().split(" ");
+
+        if (m[0].equals("/all")) {
+            chatMessageResponse.setMessage(chatMessage.getMessage().substring(5));
+            chatMessageResponse.setMessageStatus(MessageStatus.OK);
+            chatMessageResponse.setMessageCommand(MessageCommand.ALL);
+        }
+
+        if (m[0].equals("/whisper") && m.length >= 3) {
+
+            int start = m[0].length() + 1 + m[1].length() + 1;
+
+            chatMessageResponse.setMessage(chatMessage.getMessage().substring(start));
+            chatMessageResponse.setMessageStatus(MessageStatus.OK);
+            chatMessageResponse.setMessageCommand(MessageCommand.WHISPER);
+            chatMessageResponse.setWhisperLogin(m[1]);
+        }
+
+        if(chatMessage.getMessage().toCharArray()[0] != '/') {
+            chatMessageResponse.setMessage(chatMessage.getMessage());
+            chatMessageResponse.setMessageStatus(MessageStatus.OK);
+            chatMessageResponse.setMessageCommand(MessageCommand.TEAM);
+        }
+
+
+        return chatMessageResponse;
+    }
 }

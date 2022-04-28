@@ -1,9 +1,9 @@
 const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
 //loginy
 let login;
-let loginTwo;
-let loginThree;
-let loginFourth;
+//let loginTwo;
+//let loginThree;
+//let loginFourth;
 
 let gameId;
 let playerId;
@@ -32,7 +32,12 @@ let gameType;
 function connectToSocket(gameId) {
 
     console.log("connecting to the game");
-    let socket = new SockJS(url + "/gameplay");
+    // let socket = new SockJS(url + "/gameplay");
+    let socket = new SockJS(url + "/gameplay", null, {
+        sessionId: function() {
+            return gameId + ":" + login + ":" + team;
+        }
+    });
     stompClient = Stomp.over(socket);
 
     stompClient.connect(login, "456", function (frame) {
@@ -119,7 +124,7 @@ function connectToSocket(gameId) {
                 }
             }
 
-            if (data.type === "message") {
+            if (data.type === "message" && data.messageStatus === "OK") {
                 displayResponseMessage(data);
             }
 
@@ -132,16 +137,19 @@ function connectToSocket(gameId) {
                 }
             }
 
+            if (data.type === "disconnect") {
+                gameResult = data.gameResult;
+
+                if (gameResult === "CHECKMATE") {
+                    clearAllIntervals();
+                    alert("Zakonczenie gry z powodu wyjścia gracza z gry.")
+                }
+            }
+
             if (data.type === "connect") {
                 alert("Polaczenie gracza o nicku: " + data.login);
                 setLogins(data);
             }
-
-            // if (data.type === "disconnect") {
-            //     gameResult = data.gameResult;
-
-            //     alert("Winner team: " + data.team);
-            // }
 
 
         })

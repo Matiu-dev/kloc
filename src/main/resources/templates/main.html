@@ -297,16 +297,38 @@
     <div class="column">
         <div class="chat">
             <div class="container">
-                <div class="chat-content">
+                <div class="chat-content ">
                     <div class="card" id="addMessage">
                         <ul class="list-group list-group-flush">
                         </ul>
                     </div>
                 </div>
+
                 <div class="chat-send row">
+                    <div class="col-8"></div>
+                        <table>
+                            <tr>
+                                <td class="dark" onclick="writeFigureName(this)">♟</td>
+                                <td class="light" onclick="writeFigureName(this)">♞</td>
+                                <td class="dark" onclick="writeFigureName(this)">♝</td>
+                                <td class="light" onclick="writeFigureName(this)">♜</td>
+                                <td class="dark" onclick="writeFigureName(this)">♛</td>
+                                <td class="light" onclick="writeFigureName(this)">♙</td>
+                                <td class="dark" onclick="writeFigureName(this)">♘</td>
+                                <td class="light" onclick="writeFigureName(this)">♗</td>
+                                <td class="dark" onclick="writeFigureName(this)">♖</td>
+                                <td class="light" onclick="writeFigureName(this)">♕</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="chat-send row">
+
                     <div class="col-8">
                         <input type="text" class="form-control" name="message" id="input-message">
                     </div>
+
                     <div class="col-2">
                         <button id="acceptMessage" type="submit" class="btn btn-warning"
                             onclick="sendMessage()">Wyślij</button>

@@ -1,15 +1,9 @@
 package com.test.manytomany.controller;
 
 import com.google.gson.Gson;
-import com.test.manytomany.exception.InvalidGameException;
-import com.test.manytomany.exception.InvalidParamException;
-import com.test.manytomany.model.ChatMessage;
-import com.test.manytomany.model.chat.Chat;
+import com.test.manytomany.model.chat.ChatMessageRequest;
 import com.test.manytomany.model.connect.ChatConnectRequest;
 import com.test.manytomany.model.connect.ChatConnectResponse;
-import com.test.manytomany.model.connect.ConnectRequest;
-import com.test.manytomany.model.connect.ConnectResponse;
-import com.test.manytomany.model.player.Player;
 import com.test.manytomany.service.ChatService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +53,7 @@ public class ChatController {
 //
     @CrossOrigin
     @PostMapping("/message")
-    public ResponseEntity<ChatMessage> makeMove(@RequestBody ChatMessage request) throws Exception {
+    public ResponseEntity<ChatMessageRequest> makeMove(@RequestBody ChatMessageRequest request) throws Exception {
 
         log.info("chatmessage: " + request);
 //        GamePlay gamePlay = boardService.makeAMove(request);

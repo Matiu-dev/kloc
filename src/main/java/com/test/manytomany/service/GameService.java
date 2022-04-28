@@ -36,7 +36,7 @@ public class GameService {
 
     public void updateGameWinners(GamePlay gamePlay) {
 
-        Game game = gameRepository.findByid(gamePlay.getGameId());
+        Game game = gameRepository.findById(gamePlay.getGameId());
 
         if(gamePlay.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.A);
@@ -93,7 +93,7 @@ public class GameService {
     }
 
     public Game updateGameWinners(OutOfTime outOfTime) {
-        Game game = gameRepository.findByid(outOfTime.getGameId());
+        Game game = gameRepository.findById(outOfTime.getGameId());
 
         if(outOfTime.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.A);
@@ -147,27 +147,22 @@ public class GameService {
         return game;
     }
 
-//    public Disconnect updateGameWinners(Disconnect disconnect) {
-//        Game game = gameRepository.findByid(Long.valueOf(disconnect.getGameId()));
-//
-//        if(disconnect.getTeam().equals(Team.A)) {
-//            game.setWinnerTeam(WinnerTeam.A);
-//            disconnect.setTeam(Team.A);
-//        }
-//
-//        if(disconnect.getTeam().equals(Team.B)) {
-//            game.setWinnerTeam(WinnerTeam.B);
-//            disconnect.setTeam(Team.B);
-//        }
-//
-//        disconnect.setGameResult(GameResult.CHECKMATE);
-//
-//        createGame(game);
-//
-//        return disconnect;
-//    }
+    public Game updateGameWinners(Disconnect disconnect) {
+        Game game = gameRepository.findById(disconnect.getGameId());
+
+        if(disconnect.getTeam().equals(Team.A)) {
+            game.setWinnerTeam(WinnerTeam.B);
+        }
+
+        if(disconnect.getTeam().equals(Team.B)) {
+            game.setWinnerTeam(WinnerTeam.A);
+        }
+
+        createGame(game);
+        return game;
+    }
 
     public Game findGameById(UUID gameId) {
-        return gameRepository.findByid(gameId);
+        return gameRepository.findById(gameId);
     }
 }

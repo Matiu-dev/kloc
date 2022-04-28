@@ -2,6 +2,7 @@ package com.test.manytomany.service;
 
 import com.test.manytomany.model.UpdatePlayer;
 import com.test.manytomany.model.player.Player;
+import com.test.manytomany.model.player.PlayerStatus;
 import com.test.manytomany.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,21 +64,25 @@ public class PlayerService {
 
     @Transactional
     public void deleteByLogin(String login) {
-        playerRepository.removeByLogin(login);
+        Player player = findPlayerByLogin(login);
+        player.setPlayerStatus(PlayerStatus.DISABLED);
+        savePlayer(player);
     }
 
-    public void updatePlayer(UpdatePlayer updatePlayer) {
+    public boolean updatePassword(UpdatePlayer updatePlayer) {
         Player player = findPlayerByLogin(updatePlayer.getLogin());
 
-        if(updatePlayer.getNewlogin() != null && !updatePlayer.getNewlogin().equals("")) {
-            player.setLogin(updatePlayer.getNewlogin());
-        }
-
-        if(updatePlayer.getNewpassword() != null && !updatePlayer.getNewpassword().equals("")) {
+        if(updatePlayer.getNewpassword() != null &&
+                !updatePlayer.getNewpassword().equals("") &&
+        !updatePlayer.getNewpassword().equals(player.getPassword()) &&
+        updatePlayer.getNewpassword().equals(updatePlayer.getRepeatnewpassword())) {
             player.setPassword(updatePlayer.getNewpassword());
+            player.setRepeatPassword(updatePlayer.getNewpassword());
+            savePlayer(player);
+            return true;
         }
 
-        savePlayer(player);
+        return false;
     }
 
 
