@@ -43,11 +43,6 @@ public class GameController {
             //To-Do
         }
 
-//        System.out.println("gameTime " + gameTime);
-//        System.out.println("additionalTime " + additionalTime);
-//        System.out.println("submit " + submit);
-//        System.out.println("gameId " + gameJoinId);
-
         if(submit.equals("create")) {
             //przekazac wszystkie parametry na htmla jak wyzej
 //            model.addAttribute("submit", submit);

@@ -37,6 +37,17 @@ public class Game {
     private String gameTime;
     private String additionalTime;
 
+    @Enumerated(EnumType.STRING)
+    private GameStatus gameStatus;
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
+    }
+
     public String getGameTime() {
         return gameTime;
     }

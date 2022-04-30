@@ -2,6 +2,8 @@ package com.test.manytomany.model.connect;
 
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.PlayerBoard.Team;
+import com.test.manytomany.model.game.Game;
+import com.test.manytomany.model.game.GameStatus;
 
 import java.util.UUID;
 
@@ -24,17 +26,19 @@ public class ConnectResponse {
     private String additionalTime;
 
     //typ ruchu
-    private String type;
+//    private String type;
 
     //dwuosoowa/cztero
     private String gameType;
 
-    public String getType() {
-        return type;
+    private GameStatus gameStatus;
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus = gameStatus;
     }
 
     public Long getChatId() {

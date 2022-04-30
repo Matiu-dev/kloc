@@ -264,6 +264,8 @@ function connect_to_specific_game() {
                 "login": login
             }),
             success: function (data) {
+                if(data.gameStatus === "OPEN"){
+
                 gameId = data.gameId;
                 boardId = data.boardId;
                 color = data.color;
@@ -305,6 +307,7 @@ function connect_to_specific_game() {
                     alert("Pomyślnie dołaczyłes do gry. Id gry to: " + gameId +
                         " twoja szachwnica ma numer: " + boardId);
                 }
+            }
             },
             error: function (error) {
                 console.log(error);

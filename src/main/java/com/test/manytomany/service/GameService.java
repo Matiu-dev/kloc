@@ -6,6 +6,7 @@ import com.test.manytomany.model.PlayerBoard.PlayerBoardId;
 import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.game.Game;
+import com.test.manytomany.model.game.GameStatus;
 import com.test.manytomany.model.game.WinnerTeam;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.GameRepository;
@@ -37,6 +38,7 @@ public class GameService {
     public void updateGameWinners(GamePlay gamePlay) {
 
         Game game = gameRepository.findById(gamePlay.getGameId());
+        game.setGameStatus(GameStatus.CLOSED);
 
         if(gamePlay.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.A);
@@ -94,6 +96,7 @@ public class GameService {
 
     public Game updateGameWinners(OutOfTime outOfTime) {
         Game game = gameRepository.findById(outOfTime.getGameId());
+        game.setGameStatus(GameStatus.CLOSED);
 
         if(outOfTime.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.A);
@@ -149,6 +152,7 @@ public class GameService {
 
     public Game updateGameWinners(Disconnect disconnect) {
         Game game = gameRepository.findById(disconnect.getGameId());
+        game.setGameStatus(GameStatus.CLOSED);
 
         if(disconnect.getTeam().equals(Team.A)) {
             game.setWinnerTeam(WinnerTeam.B);

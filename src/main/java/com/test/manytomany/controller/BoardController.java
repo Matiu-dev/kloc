@@ -45,30 +45,16 @@ public class BoardController {
     @CrossOrigin
     @PostMapping("/create")
     public ConnectResponse createAndAddPlayerToBoard(@RequestBody CreateGameRequest request) {
-//            String json = httpEntity.getBody();
-//            Gson gson = new Gson();
-//            CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
-
         log.info("create" + request);
 
         Player player = playerService.findPlayerByLogin(request.getLogin());
-//        String json = httpEntity.getBody();
-//        Gson gson = new Gson();
-//        CreateGameRequest request = gson.fromJson(json, CreateGameRequest.class);
-//
-//        log.info("create" + request);
 
-//        return ResponseEntity.ok(boardService.saveBoard(request, game));
         return boardService.createAndAddPlayerToBoard(request, player);
     }
 
     @CrossOrigin
     @PostMapping("/connect")
     public ConnectResponse connect(@RequestBody ConnectRequest request) throws InvalidParamException, InvalidGameException {
-
-//        String json = httpEntity.getBody();
-//        Gson gson = new Gson();
-//        ConnectRequest request = gson.fromJson(json, ConnectRequest.class);
         log.info("connect" + request);
 
         ConnectResponse connectResponse = boardService.connectToGame(request);
@@ -79,16 +65,6 @@ public class BoardController {
     @CrossOrigin
     @PostMapping("/gameplay")
     public Object makeMove(HttpEntity<String> httpEntity) throws Exception {//requestbody
-
-//        Player player = null;
-//        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        if (user instanceof UserDetails) {
-//            player = playerService.findPlayerByLogin(((UserDetails) user).getUsername());
-//        } else {
-//
-//        }
-
 
         String json = httpEntity.getBody();
         Gson gson = new Gson();
@@ -123,10 +99,6 @@ public class BoardController {
         //jesli koniec czasu
         if (o.getType().equals("time")) {
             OutOfTime request = gson.fromJson(json, OutOfTime.class);
-
-//            System.out.println(request.getTeam());
-//            System.out.println(request.getGameResult());
-//            System.out.println(request.getGameId());
 
             log.info("OutOFTIme: ", request);
 

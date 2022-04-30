@@ -7,6 +7,7 @@ import com.test.manytomany.model.connect.*;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.game.Game;
+import com.test.manytomany.model.game.GameStatus;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.BoardRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,7 @@ public class BoardService {
         game.setGameType(createGameRequest.getGameType());
         game.setGameTime(createGameRequest.getGameTime());
         game.setAdditionalTime(createGameRequest.getAdditionalTime());
+        game.setGameStatus(GameStatus.OPEN);
         gameService.createGame(game);
 
         //tworzy , dodaje gracza i zapisuje plansze
@@ -117,6 +119,13 @@ public class BoardService {
 
         Game game = gameService.findGameById(request.getGameId());
 //        Player player = playerService.findPlayerById(request.getPlayerId());
+
+        if(game.getGameStatus().equals(GameStatus.CLOSED)) {
+            connectResponse.setGameStatus(GameStatus.CLOSED);
+            return connectResponse;
+        }else {
+            connectResponse.setGameStatus(GameStatus.OPEN);
+        }
 
         connectResponse.setGameId(game.getId());
         connectResponse.setPlayerId(player.getId());
