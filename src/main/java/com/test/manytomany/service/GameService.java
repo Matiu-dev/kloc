@@ -96,73 +96,82 @@ public class GameService {
 
     public Game updateGameWinners(OutOfTime outOfTime) {
         Game game = gameRepository.findById(outOfTime.getGameId());
-        game.setGameStatus(GameStatus.CLOSED);
 
-        if(outOfTime.getTeam().equals(Team.A)) {
-            game.setWinnerTeam(WinnerTeam.A);
-        }
+        if(game.getGameStatus().equals(GameStatus.OPEN)) {
+            game.setGameStatus(GameStatus.CLOSED);
 
-        if(outOfTime.getTeam().equals(Team.B)) {
-            game.setWinnerTeam(WinnerTeam.B);
-        }
+            if (outOfTime.getTeam().equals(Team.A)) {
+                game.setWinnerTeam(WinnerTeam.A);
+            }
 
-        Set<Board> listBoards = game.getBoards();
+            if (outOfTime.getTeam().equals(Team.B)) {
+                game.setWinnerTeam(WinnerTeam.B);
+            }
+
+            Set<Board> listBoards = game.getBoards();
 //        System.out.println(listBoards.size());
 
-        Player player;
+            Player player;
 
-        if(game.getGameType().equals("4")) {
-            for(Board b: listBoards) {
-                for(PlayerBoard pb: b.getPlayers()) {
+            if (game.getGameType().equals("4")) {
+                for (Board b : listBoards) {
+                    for (PlayerBoard pb : b.getPlayers()) {
+                        player = pb.getPlayer();
+                        if (pb.getTeam().equals(outOfTime.getTeam())) {
+                            System.out.println("wygrana gracza o id " + player.getId());
+                            player.setWins(pb.getPlayer().getWins() + 1);
+                            playerService.savePlayer(player);
+                        } else {
+                            System.out.println("przegrana gracza o id " + player.getId());
+                            player.setLoses(pb.getPlayer().getLoses() + 1);
+                            playerService.savePlayer(player);
+                        }
+
+                    }
+                }
+            }
+
+            if (game.getGameType().equals("2")) {
+                Board board = listBoards.stream().findFirst().get();
+                for (PlayerBoard pb : board.getPlayers()) {
                     player = pb.getPlayer();
-                    if(pb.getTeam().equals(outOfTime.getTeam())){
+
+                    if (pb.getTeam().equals(outOfTime.getTeam())) {
                         System.out.println("wygrana gracza o id " + player.getId());
-                        player.setWins(pb.getPlayer().getWins()+1);
+                        player.setWins(pb.getPlayer().getWins() + 1);
                         playerService.savePlayer(player);
-                    } else{
+                    } else {
                         System.out.println("przegrana gracza o id " + player.getId());
-                        player.setLoses(pb.getPlayer().getLoses()+1);
+                        player.setLoses(pb.getPlayer().getLoses() + 1);
                         playerService.savePlayer(player);
                     }
-
                 }
             }
+
+            createGame(game);
         }
-
-        if(game.getGameType().equals("2")) {
-            Board board = listBoards.stream().findFirst().get();
-            for(PlayerBoard pb: board.getPlayers()){
-                player = pb.getPlayer();
-
-                if(pb.getTeam().equals(outOfTime.getTeam())){
-                    System.out.println("wygrana gracza o id " + player.getId());
-                    player.setWins(pb.getPlayer().getWins()+1);
-                    playerService.savePlayer(player);
-                } else{
-                    System.out.println("przegrana gracza o id " + player.getId());
-                    player.setLoses(pb.getPlayer().getLoses()+1);
-                    playerService.savePlayer(player);
-                }
-            }
-        }
-
-        createGame(game);
         return game;
     }
 
     public Game updateGameWinners(Disconnect disconnect) {
         Game game = gameRepository.findById(disconnect.getGameId());
-        game.setGameStatus(GameStatus.CLOSED);
 
-        if(disconnect.getTeam().equals(Team.A)) {
-            game.setWinnerTeam(WinnerTeam.B);
+
+        if(game.getGameStatus().equals(GameStatus.OPEN)){
+
+            game.setGameStatus(GameStatus.CLOSED);
+
+            if(disconnect.getTeam().equals(Team.A)) {
+                game.setWinnerTeam(WinnerTeam.B);
+            }
+
+            if(disconnect.getTeam().equals(Team.B)) {
+                game.setWinnerTeam(WinnerTeam.A);
+            }
+
+            createGame(game);
         }
 
-        if(disconnect.getTeam().equals(Team.B)) {
-            game.setWinnerTeam(WinnerTeam.A);
-        }
-
-        createGame(game);
         return game;
     }
 

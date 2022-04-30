@@ -32,12 +32,4 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app").enableSimpleBroker("/topic");
     }
-
-//    @EventListener
-//    public void onDisconnectEvent(SessionDisconnectEvent event) {
-//        log.info("Client with username {} disconnected", event.getUser());
-//
-//    }
-
-
 }

@@ -94,12 +94,11 @@ function runMe(position) {
         //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
         //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
 
-        // if (color === nextMoveColor) {
         if (gameResult !== "CHECKMATE") {
             if (figureNameOld === "" 
             && outside.contains(inside) 
             && checkColor(inside.innerHTML.toString()) === color
-            ) {// && color === nextMoveColor//po kliknieciu 1
+            && color === nextMoveColor) {// && color === nextMoveColor//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -110,7 +109,9 @@ function runMe(position) {
                 oldInside = inside;
                 inside.style.background = "#FF8C00";
 
-            } else if (figureNameOld !== "" && outside.contains(inside) ) {//po kliknieciu 2 && color === nextMoveColor
+            } else if (figureNameOld !== "" 
+            && outside.contains(inside)
+            && color === nextMoveColor ) {//po kliknieciu 2 && color === nextMoveColor
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
                 makeAMove(boardId, promoFigure);
@@ -123,10 +124,6 @@ function runMe(position) {
         } else {
             console.log("koniec gry");
         }
-        // }
-        // else {
-        //     console.log("to nie twoja kolej na ruch");
-        // }
     }
 
     if (gameType === "2") {
@@ -138,12 +135,12 @@ function runMe(position) {
         //tu jest sprawdzane czy kliknieto na odpowiednia szachownice
         //sprawdzane czy kliknieto odpowiedni kolor przypisany do gracza
 
-        // if (color === nextMoveColor) {
         if (gameResult !== "CHECKMATE") {
             //do 1 planszy
             if (figureNameOld === "" &&
               outside.contains(inside) &&
-              checkColor(inside.innerHTML.toString()) === color ) {//po kliknieciu 1 && color === nextMoveColor
+              checkColor(inside.innerHTML.toString()) === color &&
+              color === nextMoveColor) {//po kliknieciu 1 && color === nextMoveColor
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -156,7 +153,8 @@ function runMe(position) {
             } else if (figureNameOld !== "" 
             && outside.contains(inside) 
             && boardName === "A" 
-            && coordinateOld !== position.substring(1)) {//po kliknieciu 2 && color === nextMoveColor
+            && coordinateOld !== position.substring(1)
+            && color === nextMoveColor) {//po kliknieciu 2 && color === nextMoveColor
                 //nie mozna kliknac 2 raz na to samo pole todo
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
@@ -175,7 +173,8 @@ function runMe(position) {
             //do 2 planszy
             if (figureNameOld === "" 
             && outsideTwo.contains(inside) 
-            && checkColor(inside.innerHTML.toString()) === colorSecond) {//&& colorSecond === nextMoveColorSecond
+            && checkColor(inside.innerHTML.toString()) === colorSecond
+            && colorSecond === nextMoveColorSecond) {//&& colorSecond === nextMoveColorSecond
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -188,7 +187,8 @@ function runMe(position) {
             } else if (figureNameOld !== "" 
             && outsideTwo.contains(inside) 
             && boardName === "B"
-            && coordinateOld !== position.substring(1)) {//&& colorSecond === nextMoveColorSecond
+            && coordinateOld !== position.substring(1)
+            && colorSecond === nextMoveColorSecond) {//&& colorSecond === nextMoveColorSecond
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
 
@@ -206,10 +206,6 @@ function runMe(position) {
         } else {
             console.log("koniec gry");
         }
-        // }
-        // else {
-        //     console.log("to nie twoja kolej na ruch");
-        // }
     }
 }
 
@@ -218,7 +214,7 @@ function runMeTwo(position) {
         var outside = document.getElementById(boardId);
         var inside = document.getElementById(position);
 
-        //  if(color===nextMoveColor){
+        if(color===nextMoveColor){
         if (gameResult !== "CHECKMATE") {
             if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
@@ -234,10 +230,10 @@ function runMeTwo(position) {
         } else {
             console.log("koniec gry");
         }
-        // }
-        // else {
-        //     console.log("to nie twoja kolej na ruch");
-        //  }
+        }
+        else {
+            console.log("to nie twoja kolej na ruch");
+         }
     }
 
     if (gameType === "2") {
@@ -248,7 +244,7 @@ function runMeTwo(position) {
 
         var inside = document.getElementById(position);
 
-        //  if(color===nextMoveColor){
+
         if (gameResult !== "CHECKMATE") {
             if (figureNameOld === "" 
             && outside.contains(inside) 
@@ -268,12 +264,7 @@ function runMeTwo(position) {
         } else {
             console.log("koniec gry");
         }
-        // }
-        // else {
-        //     console.log("to nie twoja kolej na ruch");
-        //  }
 
-        //  if(color===nextMoveColor){
         if (gameResult !== "CHECKMATE") {
             if (figureNameOld === "" 
             && outsideTwo.contains(inside) 
@@ -293,10 +284,7 @@ function runMeTwo(position) {
         } else {
             console.log("koniec gry");
         }
-        // }
-        // else {
-        //     console.log("to nie twoja kolej na ruch");
-        //  }
+
     }
 }
 

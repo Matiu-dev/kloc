@@ -5,6 +5,8 @@ import com.test.manytomany.model.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.MoveType;
 import com.test.manytomany.model.Pieces;
+import com.test.manytomany.model.PlayerBoard.Color;
+import org.springframework.security.core.parameters.P;
 
 public class MainRules {
 
@@ -17,6 +19,15 @@ public class MainRules {
                 gamePlay.setMoveStatus(MoveStatus.OK);
                 gamePlay.setFigureNameNew(gamePlay.getFigureNameOld());
                 gamePlay.setFigureNameOld("");
+
+                if(gamePlay.getNextMoveColor().equals(Color.BLACK)) {
+                    gamePlay.setNextMoveColor(Color.WHITE);
+                }
+
+                if(gamePlay.getNextMoveColor().equals(Color.WHITE)) {
+                    gamePlay.setNextMoveColor(Color.BLACK);
+                }
+
                 return gamePlay;
             }
         }
