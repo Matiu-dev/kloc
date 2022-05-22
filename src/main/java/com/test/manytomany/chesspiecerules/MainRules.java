@@ -1,12 +1,11 @@
 package com.test.manytomany.chesspiecerules;
 
 import com.test.manytomany.chesspiecerules.ChessMoves.*;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.MoveType;
 import com.test.manytomany.model.Pieces;
 import com.test.manytomany.model.PlayerBoard.Color;
-import org.springframework.security.core.parameters.P;
 
 public class MainRules {
 
@@ -15,7 +14,51 @@ public class MainRules {
 
         //dodanie figury z pola dodatkowego - do rozbudowania TODO
         if(gamePlay.getMoveType().equals(MoveType.RESERVE)){
+
             if(gamePlay.getFigureNameNew().equals("")){
+
+                //zakaz wstawiania pionka w ostatnim wierszu
+                if(gamePlay.getCoordinateNew().toCharArray()[1] == '8' &&
+                        gamePlay.getFigureNameOld().equals(Pieces.WHITEPAWN.getPiece()) ||
+                        gamePlay.getCoordinateNew().toCharArray()[1] == '1' &&
+                                gamePlay.getFigureNameOld().equals(Pieces.BLACKPAWN.getPiece())) {
+
+                    gamePlay.setMoveStatus(MoveStatus.BAD);
+
+                    return gamePlay;
+                }
+
+                String letter = "";
+
+                if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKING.getPiece())
+                || gamePlay.getFigureNameOld().equals(Pieces.WHITEKING.getPiece())) {
+                    letter = "K";
+                }
+
+                if(gamePlay.getFigureNameOld().equals(Pieces.BLACKQUEEN.getPiece())
+                        || gamePlay.getFigureNameOld().equals(Pieces.WHITEQUEEN.getPiece())) {
+                    letter = "H";
+                }
+
+                if(gamePlay.getFigureNameOld().equals(Pieces.BLACKBISHOP.getPiece())
+                        || gamePlay.getFigureNameOld().equals(Pieces.WHITEBISHOP.getPiece())) {
+                    letter = "G";
+                }
+
+                if(gamePlay.getFigureNameOld().equals(Pieces.BLACKKNIGHT.getPiece())
+                        || gamePlay.getFigureNameOld().equals(Pieces.WHITEKNIGHT.getPiece())) {
+                    letter = "S";
+                }
+
+                if(gamePlay.getFigureNameOld().equals(Pieces.BLACKROOK.getPiece())
+                        || gamePlay.getFigureNameOld().equals(Pieces.WHITEROOK.getPiece())) {
+                    letter = "W";
+                }
+
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() +
+                        letter +
+                        "@" + gamePlay.getCoordinateNew() +";");
+
                 gamePlay.setMoveStatus(MoveStatus.OK);
                 gamePlay.setFigureNameNew(gamePlay.getFigureNameOld());
                 gamePlay.setFigureNameOld("");
@@ -27,6 +70,8 @@ public class MainRules {
                 if(gamePlay.getNextMoveColor().equals(Color.WHITE)) {
                     gamePlay.setNextMoveColor(Color.BLACK);
                 }
+
+                gamePlay.setEnPassantCord("");//dodane
 
                 return gamePlay;
             }

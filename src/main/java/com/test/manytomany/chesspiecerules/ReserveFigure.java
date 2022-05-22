@@ -1,6 +1,6 @@
 package com.test.manytomany.chesspiecerules;
 
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 
 public class ReserveFigure {
 

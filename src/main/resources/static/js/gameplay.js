@@ -111,7 +111,7 @@ function runMe(position) {
 
             } else if (figureNameOld !== "" 
             && outside.contains(inside)
-            && color === nextMoveColor ) {//po kliknieciu 2 && color === nextMoveColor
+            && color === nextMoveColor) {//po kliknieciu 2 && color === nextMoveColor
                 figureNameNew = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateNew = position.substring(1); //usuwa 1 litere A lub B i pobiera koordynaty
                 makeAMove(boardId, promoFigure);
@@ -139,8 +139,8 @@ function runMe(position) {
             //do 1 planszy
             if (figureNameOld === "" &&
               outside.contains(inside) &&
-              checkColor(inside.innerHTML.toString()) === color &&
-              color === nextMoveColor) {//po kliknieciu 1 && color === nextMoveColor
+              checkColor(inside.innerHTML.toString()) === color 
+              && color === nextMoveColor) {//po kliknieciu 1 && color === nextMoveColor
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(1);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -216,7 +216,8 @@ function runMeTwo(position) {
 
         if(color===nextMoveColor){
         if (gameResult !== "CHECKMATE") {
-            if (figureNameOld === "" && outside.contains(inside) && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
+            if (figureNameOld === "" && outside.contains(inside) 
+            && checkColor(inside.innerHTML.toString()) === color) {//po kliknieciu 1
                 figureNameOld = document.getElementById(position).innerHTML;//pobiera nazwe figury
                 coordinateOld = position.substring(2);//usuwa 1 litere A lub B i pobiera koordynaty
                 boardName = position[0];
@@ -335,8 +336,9 @@ function makeAMove(bId, pf) {
                 "enPassantCord": enPassantCord,
                 "enPassantMove": false,
                 "promoFigure": pf,
-                "gameResult": gameResult
-    
+                "gameResult": gameResult,
+                "algebraicNotationFirst": algebraicNotationFirst,
+                "algebraicNotationSecond": algebraicNotationSecond
             }),
             success: function (data) {
                 //            gameOn = false;
@@ -396,8 +398,9 @@ function makeAMove(bId, pf) {
                     "enPassantCord": enPassantCord,
                     "enPassantMove": false,
                     "promoFigure": pf,
-                    "gameResult": gameResult
-        
+                    "gameResult": gameResult,
+                    "algebraicNotationFirst": algebraicNotationFirst,
+                    "algebraicNotationSecond": algebraicNotationSecond
                 }),
                 success: function (data) {
                     boardName = "";
@@ -451,8 +454,9 @@ function makeAMove(bId, pf) {
                     "enPassantCord": enPassantCordSecond,
                     "enPassantMove": false,
                     "promoFigure": pf,
-                    "gameResult": gameResult
-        
+                    "gameResult": gameResult,
+                    "algebraicNotationFirst": algebraicNotationSecond,
+                    "algebraicNotationSecond": algebraicNotationFirst
                 }),
                 success: function (data) {
                     boardName = "";
@@ -584,7 +588,7 @@ function displayResponseBasic(data) {
         }
 
         if (figure !== "" && data.castlingMove == false) {
-            console.log("jest bicie");
+            //console.log("jest bicie");
             // console.log(helpTwo);
             // console.log(checkColor(figure).charAt(0));
             // console.log(document.getElementById(helpTwo + checkColor(figure).charAt(0) + "0" + "0").innerHTML==="");
@@ -635,7 +639,7 @@ function displayResponseBasic(data) {
 
     // ustawianie szachownicy
     if (data.boardId == boardId && data.moveStatus === "OK") {
-        console.log("update pierwszej szachownicy");
+        //console.log("update pierwszej szachownicy");
         var help = "A";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;
@@ -691,7 +695,7 @@ function displayResponseBasic(data) {
     }
 
     if (data.boardId == boardIdAdditional && data.moveStatus === "OK") {
-        console.log("update drugiej szachownicy");
+        //console.log("update drugiej szachownicy");
         var help = "B";
         document.getElementById(help + data.coordinateNew).innerHTML = data.figureNameNew;
         document.getElementById(help + data.coordinateOld).innerHTML = data.figureNameOld;

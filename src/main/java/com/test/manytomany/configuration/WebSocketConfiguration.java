@@ -21,15 +21,16 @@ import java.util.List;
 @Slf4j
 public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer {
 
-    private List<String> connectedClientId = new ArrayList<String>();
-
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gameplay").addInterceptors(new HttpSessionHandshakeInterceptor()).setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/gameplay")
+                .addInterceptors(new HttpSessionHandshakeInterceptor())
+                .setAllowedOriginPatterns("*").withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/app").enableSimpleBroker("/topic");
+        registry.setApplicationDestinationPrefixes("/app")
+                .enableSimpleBroker("/topic");
     }
 }

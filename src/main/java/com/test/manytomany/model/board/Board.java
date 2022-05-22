@@ -41,6 +41,8 @@ public class Board {
     @JoinColumn(name = "game_id")
     private Game game;
 
+    private String moveHistory;
+
     public void addPlayer(Player player, Color color, Team team) {
         PlayerBoard playerBoard = new PlayerBoard(player, this);
         playerBoard.setColor(color);
@@ -52,6 +54,14 @@ public class Board {
     public void removePlayer(Player player) {
         this.players.remove(player);
         player.getBoards().remove(this);
+    }
+
+    public String getMoveHistory() {
+        return moveHistory;
+    }
+
+    public void setMoveHistory(String moveHistory) {
+        this.moveHistory = moveHistory;
     }
 
     public Game getGame() {

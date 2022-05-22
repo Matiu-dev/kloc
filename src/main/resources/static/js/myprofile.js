@@ -74,3 +74,7 @@ function deletePlayer() {
         }
     })
 }
+
+function checkGameHistory() {
+    
+}

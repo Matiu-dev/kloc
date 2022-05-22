@@ -1,7 +1,7 @@
 package com.test.manytomany.chesspiecerules.ChessMoves;
 
 import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +43,15 @@ public class Rook implements ChessMovesInterface {
                     gamePlay.setCastling(castling);
                 }
 
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
+
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -79,6 +88,14 @@ public class Rook implements ChessMovesInterface {
                     castling[1] = gamePlay.getCastling()[1];
                     castling[2] = false;
                     gamePlay.setCastling(castling);
+                }
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
                 }
 
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
@@ -122,6 +139,14 @@ public class Rook implements ChessMovesInterface {
                     gamePlay.setCastling(castling);
                 }
 
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -157,6 +182,14 @@ public class Rook implements ChessMovesInterface {
                     castling[1] = gamePlay.getCastling()[1];
                     castling[2] = false;
                     gamePlay.setCastling(castling);
+                }
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
                 }
 
                 gamePlay.setFigureNameNew(Pieces.WHITEROOK.getPiece());
@@ -206,6 +239,14 @@ public class Rook implements ChessMovesInterface {
                     gamePlay.setCastling(castling);
                 }
 
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
 
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
@@ -243,6 +284,14 @@ public class Rook implements ChessMovesInterface {
                     gamePlay.setCastling(castling);
                 }
 
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -278,6 +327,14 @@ public class Rook implements ChessMovesInterface {
                     gamePlay.setCastling(castling);
                 }
 
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -311,6 +368,14 @@ public class Rook implements ChessMovesInterface {
                     castling[1] = gamePlay.getCastling()[1];
                     castling[2] = false;
                     gamePlay.setCastling(castling);
+                }
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Wx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "W" +
+                            gamePlay.getCoordinateNew() + ";");
                 }
 
                 gamePlay.setFigureNameNew(Pieces.BLACKROOK.getPiece());

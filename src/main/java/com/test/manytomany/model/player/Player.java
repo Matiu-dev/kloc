@@ -2,28 +2,20 @@ package com.test.manytomany.model.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.test.manytomany.model.PlayerBoard.PlayerBoard;
-import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.chat.Chat;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.NaturalIdCache;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.transform.Source;
 import java.util.*;
 
 @Entity(name = "Player")
 @Table(name = "player")
 public class Player {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -38,8 +30,8 @@ public class Player {
     @NotNull(message = "Login nie może być pusty.")
     private String login;
 
-    @Size(min = 4,max = 15, message = "Hasło może mieć dlugość od 5 do 15 znaków")
-    @NotNull(message = "Hasło nie może być pusty.")
+    @Size(min = 4, message = "Hasło może mieć dlugość od 5 do 15 znaków")
+    @NotNull(message = "Hasło nie może być puste.")
     private String password;
 
     private String repeatPassword;
@@ -53,8 +45,6 @@ public class Player {
     private int wins;
 
     private int loses;
-
-    private String icon;
 
     @JsonIgnore
     @OneToMany(mappedBy = "player",
@@ -120,14 +110,6 @@ public class Player {
 
     public void setLoses(int loses) {
         this.loses = loses;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 
     public Set<PlayerBoard> getBoards() {

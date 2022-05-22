@@ -1,7 +1,7 @@
 package com.test.manytomany.chesspiecerules.ChessMoves;
 
 import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +29,15 @@ public class Queen implements ChessMovesInterface {
             //prawy gorny
             if(oldF[COLUMN] < newF[COLUMN] && oldF[ROW] < newF[ROW]){
                 if(checkSpaceBetween.checkPieceBetweenRightUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -45,6 +54,15 @@ public class Queen implements ChessMovesInterface {
 
             if(oldF[COLUMN] > newF[COLUMN] && oldF[ROW] > newF[ROW]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftDownCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -66,6 +84,15 @@ public class Queen implements ChessMovesInterface {
             //lewy gorny
             if(oldF[ROW] < newF[ROW] && oldF[COLUMN] > newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -85,6 +112,15 @@ public class Queen implements ChessMovesInterface {
             //prawy dolny
             if(oldF[ROW] > newF[ROW]  && oldF[COLUMN] < newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenRightBottomCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -104,6 +140,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] < newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenUp(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -125,6 +170,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] > newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenDown(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -142,6 +196,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[ROW] == newF[ROW] && oldF[COLUMN] < newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenRight(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -160,6 +223,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[ROW] == newF[ROW]  && oldF[COLUMN] > newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenLeft(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.WHITEQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -191,6 +263,15 @@ public class Queen implements ChessMovesInterface {
             //prawy gorny
             if(oldF[COLUMN] < newF[COLUMN] && oldF[ROW] < newF[ROW]){
                 if(checkSpaceBetween.checkPieceBetweenRightUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -207,6 +288,15 @@ public class Queen implements ChessMovesInterface {
 
             if(oldF[COLUMN] > newF[COLUMN] && oldF[ROW] > newF[ROW]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftDownCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -228,6 +318,15 @@ public class Queen implements ChessMovesInterface {
             //lewy gorny
             if(oldF[ROW] < newF[ROW] && oldF[COLUMN] > newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -245,6 +344,15 @@ public class Queen implements ChessMovesInterface {
             //prawy dolny
             if(oldF[ROW] > newF[ROW]  && oldF[COLUMN] < newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenRightBottomCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -264,6 +372,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] < newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenUp(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -281,6 +398,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[COLUMN] == newF[COLUMN] && oldF[ROW] > newF[ROW]) {
             if(checkSpaceBetween.checkPieceBetweenDown(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -299,6 +425,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[ROW] == newF[ROW] && oldF[COLUMN] < newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenRight(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -317,6 +452,15 @@ public class Queen implements ChessMovesInterface {
 
         if(oldF[ROW] == newF[ROW]  && oldF[COLUMN] > newF[COLUMN]) {
             if(checkSpaceBetween.checkPieceBetweenLeft(oldF, newF, gamePlay)){
+
+                if(!gamePlay.getFigureNameNew().equals("")) {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Hx" +
+                            gamePlay.getCoordinateNew() + ";");
+                } else {
+                    gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "H" +
+                            gamePlay.getCoordinateNew() + ";");
+                }
+
                 gamePlay.setFigureNameNew(Pieces.BLACKQUEEN.getPiece());
                 gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 

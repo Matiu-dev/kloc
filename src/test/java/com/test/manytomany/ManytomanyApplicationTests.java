@@ -2,7 +2,7 @@ package com.test.manytomany;
 
 import com.google.gson.GsonBuilder;
 import com.test.manytomany.controller.Foo;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveType;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.service.BoardService;

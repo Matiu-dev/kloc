@@ -1,4 +1,4 @@
-const url = 'https://klocuwb.herokuapp.com';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
+const url = 'http://localhost:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
 //loginy
 let login;
 //let loginTwo;
@@ -29,6 +29,9 @@ let BgameTimeSecond;
 let additionalTime;
 let gameType;
 
+let algebraicNotationFirst = "";
+let algebraicNotationSecond = "";
+
 function connectToSocket(gameId) {
 
     console.log("connecting to the game");
@@ -49,31 +52,9 @@ function connectToSocket(gameId) {
 
         stompClient.subscribe("/topic/game-progress/" + gameId, function (response) {
             let data = JSON.parse(response.body);
-            // console.log(data);
-            // console.log(AgameTimeFirst + " " + AgameTimeSecond + " " + BgameTimeFirst + " " + BgameTimeSecond);
-            // console.log(data.nextMoveColor)
-
-            // console.log(data.type === "gameplay" && data.moveStatus === "OK");
-
-            // if(data.type === "gameplay" && data.moveStatus === "BAD") {
-            //     boardName = "";
-            //     oldInside = "";
-            //     oldInsideStyle = "";
-
-            //     figureNameOld = "";
-            //     positionOld = "";
-            //     figureNameNew = "";
-            //     positionNew = "";
-            //     moveType = "";
-            // }
 
             if (data.type === "gameplay" && data.moveStatus === "OK") {
                 //ustawienie nastepnego ruchu dla odpowiedniej planszy
-
-                // console.log(data.boardId == boardId);
-                // console.log(data.boardId == boardIdSecond);
-                // console.log(data.nextMoveColor);
-
                 if (data.boardId == boardId) {
                     nextMoveColor = data.nextMoveColor;
                     enPassantCord = data.enPassantCord;
@@ -83,6 +64,20 @@ function connectToSocket(gameId) {
                     nextMoveColorSecond = data.nextMoveColor;
                     enPassantCordSecond = data.enPassantCord;
                 }
+
+                //ustawianie listy wszystkich ruchow
+
+                if(data.boardId == boardId){
+                    algebraicNotationFirst=data.algebraicNotationFirst;
+                }
+
+                if(data.boardId == boardIdAdditional){
+                    algebraicNotationSecond=data.algebraicNotationFirst;
+                }
+
+                console.log(algebraicNotationFirst);
+                console.log(algebraicNotationSecond);
+                
 
                 // console.log("nastepny ruch: " + nextMoveColor + " " + nextMoveColorSecond);
 

@@ -1,7 +1,7 @@
 package com.test.manytomany.chesspiecerules.ChessMoves;
 
 import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +29,15 @@ public class Bishop implements ChessMovesInterface {
             //prawy gorny
             if(oldF[COLUMN] < newF[COLUMN] && oldF[ROW] < newF[ROW]){
                 if(checkSpaceBetween.checkPieceBetweenRightUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -45,6 +54,15 @@ public class Bishop implements ChessMovesInterface {
 
             if(oldF[COLUMN] > newF[COLUMN] && oldF[ROW] > newF[ROW]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftDownCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -66,6 +84,15 @@ public class Bishop implements ChessMovesInterface {
             //lewy gorny
             if(oldF[ROW] < newF[ROW] && oldF[COLUMN] > newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -83,6 +110,15 @@ public class Bishop implements ChessMovesInterface {
             //prawy dolny
             if(oldF[ROW] > newF[ROW]  && oldF[COLUMN] < newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenRightBottomCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.WHITEBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -113,6 +149,15 @@ public class Bishop implements ChessMovesInterface {
             //prawy gorny
             if(oldF[COLUMN] < newF[COLUMN] && oldF[ROW] < newF[ROW]){
                 if(checkSpaceBetween.checkPieceBetweenRightUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -129,6 +174,15 @@ public class Bishop implements ChessMovesInterface {
 
             if(oldF[COLUMN] > newF[COLUMN] && oldF[ROW] > newF[ROW]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftDownCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -150,6 +204,15 @@ public class Bishop implements ChessMovesInterface {
             //lewy gorny
             if(oldF[ROW] < newF[ROW] && oldF[COLUMN] > newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenLeftUpCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 
@@ -167,6 +230,15 @@ public class Bishop implements ChessMovesInterface {
             //prawy dolny
             if(oldF[ROW] > newF[ROW]  && oldF[COLUMN] < newF[COLUMN]) {
                 if(checkSpaceBetween.checkPieceBetweenRightBottomCorner(oldF, newF, gamePlay)){
+
+                    if(!gamePlay.getFigureNameNew().equals("")) {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Gx" +
+                                gamePlay.getCoordinateNew() + ";");
+                    } else {
+                        gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "G" +
+                                gamePlay.getCoordinateNew() + ";");
+                    }
+
                     gamePlay.setFigureNameNew(Pieces.BLACKBISHOP.getPiece());
                     gamePlay.setFigureNameOld(Pieces.EMPTY.getPiece());
 

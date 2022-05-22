@@ -1,6 +1,6 @@
 package com.test.manytomany.chesspiecerules.ChessMoves;
 
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 
 public interface ChessMovesInterface {
 

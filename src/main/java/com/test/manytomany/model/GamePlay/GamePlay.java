@@ -1,5 +1,9 @@
-package com.test.manytomany.model;
+package com.test.manytomany.model.GamePlay;
 
+import com.test.manytomany.model.GameResult;
+import com.test.manytomany.model.MoveStatus;
+import com.test.manytomany.model.MoveType;
+import com.test.manytomany.model.Pieces;
 import com.test.manytomany.model.PlayerBoard.Color;
 import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.game.WinnerTeam;
@@ -65,6 +69,25 @@ public class GamePlay {
 
     //    do promocji pionka
     private String promoFigure;
+
+    private String algebraicNotationFirst;
+    private String algebraicNotationSecond;
+
+    public String getAlgebraicNotationFirst() {
+        return algebraicNotationFirst;
+    }
+
+    public void setAlgebraicNotationFirst(String algebraicNotationFirst) {
+        this.algebraicNotationFirst = algebraicNotationFirst;
+    }
+
+    public String getAlgebraicNotationSecond() {
+        return algebraicNotationSecond;
+    }
+
+    public void setAlgebraicNotationSecond(String algebraicNotationSecond) {
+        this.algebraicNotationSecond = algebraicNotationSecond;
+    }
 
     public String getPromoFigure() {
         return promoFigure;

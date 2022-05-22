@@ -2,6 +2,7 @@ package com.test.manytomany.service;
 
 import com.test.manytomany.chesspiecerules.*;
 import com.test.manytomany.model.*;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.connect.*;
 import com.test.manytomany.model.PlayerBoard.Color;
@@ -23,7 +24,7 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     public Board findBoardById(UUID boardId) {
-        return boardRepository.findByid(boardId);
+        return boardRepository.findById(boardId);
     }
 
     @Autowired
@@ -37,6 +38,10 @@ public class BoardService {
 
     @Autowired
     private ChatService chatService;
+
+    public void saveBoard(Board board) {
+        boardRepository.save(board);
+    }
 
     public ConnectResponse createAndAddPlayerToBoard(CreateGameRequest createGameRequest, Player player) {
 //        System.out.println(createGameRequest.getPlayerId());

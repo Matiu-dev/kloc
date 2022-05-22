@@ -1,11 +1,10 @@
 package com.test.manytomany.model.game;
 
-import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.board.Board;
 import org.hibernate.annotations.GenericGenerator;
 
+
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Set;
 import java.util.UUID;
 

@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/playerGameHistory").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/ranking").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/addPlayer").permitAll()
                 .antMatchers("/addGame").permitAll()
                 .antMatchers("/ranking").permitAll()

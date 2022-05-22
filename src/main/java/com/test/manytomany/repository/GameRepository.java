@@ -5,12 +5,14 @@ import com.test.manytomany.model.game.Game;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
-@Repository
 public interface GameRepository extends CrudRepository<Game, Long> {
 
     Game findById(UUID gameId);
+
+    List<Game> findAll();
 
 
 }

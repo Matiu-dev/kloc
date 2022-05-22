@@ -1,8 +1,7 @@
 package com.test.manytomany.chesspiecerules;
 
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.PlayerBoard.Color;
-import com.test.manytomany.model.game.Game;
 
 public class CheckSpaceBetween {
 

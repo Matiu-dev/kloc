@@ -1,7 +1,7 @@
 package com.test.manytomany.chesspiecerules.ChessMoves;
 
 import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +51,14 @@ public class King implements ChessMovesInterface {
 
         if (checkUp || checkDown || checkRight || checkLeft
         || checkUpRight || checkUpLeft || checkDownRight || checkDownLeft) {
+
+            if(!gamePlay.getFigureNameNew().equals("")) {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Kx" +
+                        gamePlay.getCoordinateNew() + ";");
+            } else {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "K" +
+                        gamePlay.getCoordinateNew() + ";");
+            }
 
             boolean[] castling = new boolean[3];
             castling[0] = false;
@@ -103,6 +111,14 @@ public class King implements ChessMovesInterface {
 
         if (checkUp || checkDown || checkRight || checkLeft
                 || checkUpRight || checkUpLeft || checkDownRight || checkDownLeft) {
+
+            if(!gamePlay.getFigureNameNew().equals("")) {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Kx" +
+                        gamePlay.getCoordinateNew() + ";");
+            } else {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "K" +
+                        gamePlay.getCoordinateNew() + ";");
+            }
 
             boolean[] castling = new boolean[3];
             castling[0] = false;

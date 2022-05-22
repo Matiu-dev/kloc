@@ -1,7 +1,7 @@
 package com.test.manytomany.chesspiecerules.ChessMoves;
 
 import com.test.manytomany.chesspiecerules.CheckSpaceBetween;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +43,14 @@ public class Knight implements ChessMovesInterface {
         //bicie
         if (checkUp || checkDown || checkRight || checkLeft) {
 
+            if(!gamePlay.getFigureNameNew().equals("")) {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Sx" +
+                        gamePlay.getCoordinateNew() + ";");
+            } else {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "S" +
+                        gamePlay.getCoordinateNew() + ";");
+            }
+
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move white knight");
             gamePlay.setMoveStatus(MoveStatus.OK);
@@ -79,6 +87,14 @@ public class Knight implements ChessMovesInterface {
 
 
         if (checkUp || checkDown || checkRight || checkLeft) {
+
+            if(!gamePlay.getFigureNameNew().equals("")) {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "Sx" +
+                        gamePlay.getCoordinateNew() + ";");
+            } else {
+                gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "S" +
+                        gamePlay.getCoordinateNew() + ";");
+            }
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black knight");

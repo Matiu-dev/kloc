@@ -1,7 +1,7 @@
 package com.test.manytomany.chesspiecerules;
 
 import com.test.manytomany.chesspiecerules.ChessMoves.*;
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import com.test.manytomany.model.PlayerBoard.Color;

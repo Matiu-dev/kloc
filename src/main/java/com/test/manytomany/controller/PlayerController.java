@@ -2,6 +2,7 @@ package com.test.manytomany.controller;
 
 import com.test.manytomany.model.DeletePlayer;
 import com.test.manytomany.model.UpdatePlayer;
+import com.test.manytomany.model.history.PlayerGameHistory;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.model.player.PlayerRole;
 import com.test.manytomany.model.player.PlayerStatus;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.UUID;
 
 //@RequestMapping("/player")
 @Slf4j
@@ -33,8 +36,31 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
 
+    @GetMapping("/playerGameHistory")
+    public String getPlayerGameHistory(Model model) {
+
+        Player player = null;
+        Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (user instanceof UserDetails) {
+            String login = ((UserDetails) user).getUsername();
+            UUID playerId = playerService.findPlayerByLogin(((UserDetails) user).getUsername()).getId();
+            model.addAttribute("username", login);
+            model.addAttribute("playerId", playerId);
+
+//            List<PlayerGameHistory> playerGameHistory =
+//                    playerService.getPlayerGameHistory(playerService.findPlayerById(playerId));
+
+            model.addAttribute("playerGameHistory", playerService.getPlayerGameHistory(playerService.findPlayerById(playerId)));
+        } else {
+            //To-Do
+        }
+
+        return "playerGameHistory";
+    }
+
     @PostMapping("/createPlayer")
-    public String createPlayer(@ModelAttribute Player player) {
+    public String createPlayer(@ModelAttribute Player player, Model model) {
 
 //        System.out.println(player.getRepeatPassword());
         player.setPlayerRole(PlayerRole.ROLE_USER);

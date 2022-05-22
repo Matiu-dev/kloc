@@ -2,15 +2,16 @@ package com.test.manytomany.repository;
 
 import com.test.manytomany.model.player.Player;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@org.springframework.stereotype.Repository
-public interface PlayerRepository extends Repository<Player, Long> {
+public interface PlayerRepository extends CrudRepository<Player, Long> {
 
     @Query(value = "SELECT * FROM player WHERE login = :login", nativeQuery = true)
     Optional<Player> findByLoginTwo(@Param("login") String login);
@@ -24,7 +25,4 @@ public interface PlayerRepository extends Repository<Player, Long> {
     List<Player> findAll();
 
     void deleteById(UUID playerId);
-
-    Long removeByLogin(String login);
-
 }

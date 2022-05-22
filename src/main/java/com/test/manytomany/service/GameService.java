@@ -1,8 +1,8 @@
 package com.test.manytomany.service;
 
 import com.test.manytomany.model.*;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.PlayerBoard.PlayerBoard;
-import com.test.manytomany.model.PlayerBoard.PlayerBoardId;
 import com.test.manytomany.model.PlayerBoard.Team;
 import com.test.manytomany.model.board.Board;
 import com.test.manytomany.model.game.Game;
@@ -11,7 +11,6 @@ import com.test.manytomany.model.game.WinnerTeam;
 import com.test.manytomany.model.player.Player;
 import com.test.manytomany.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +29,13 @@ public class GameService {
 
     @Autowired
     private PlayerService playerService;
+
+    public List<Game> findAll() {
+        List<Game> games = new ArrayList<>();
+        gameRepository.findAll().forEach(games::add);
+
+        return games;
+    }
 
     public void createGame(Game game) {
         gameRepository.save(game);
@@ -51,12 +57,25 @@ public class GameService {
         Set<Board> listBoards = game.getBoards();
 //        System.out.println(listBoards.size());
 
+        //zapis ruchów do tabeli board
+        int number = 0;
+        for(Board b: listBoards) {
+            if(number == 0){
+                b.setMoveHistory(gamePlay.getAlgebraicNotationFirst());
+                boardService.saveBoard(b);
+            }
+
+            if(number == 1) {
+                b.setMoveHistory(gamePlay.getAlgebraicNotationSecond());
+                boardService.saveBoard(b);
+            }
+            number++;
+        }
+
         Player player;
 
         if(game.getGameType().equals("4")) {
             for(Board b: listBoards) {
-
-
 
                 for(PlayerBoard pb: b.getPlayers()) {
                     player = pb.getPlayer();

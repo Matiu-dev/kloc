@@ -51,19 +51,14 @@ public class ChatController {
 //        return ResponseEntity.ok(boardService.connectToGame(request));
 //    }
 //
-    @CrossOrigin
-    @PostMapping("/message")
-    public ResponseEntity<ChatMessageRequest> makeMove(@RequestBody ChatMessageRequest request) throws Exception {
-
-        log.info("chatmessage: " + request);
-//        GamePlay gamePlay = boardService.makeAMove(request);
+//    @CrossOrigin
+//    @PostMapping("/message")
+//    public ResponseEntity<ChatMessageRequest> makeMove(@RequestBody ChatMessageRequest request) throws Exception {
 //
-//        if(gamePlay.getGameResult().equals(GameResult.CHECKMATE)){
-//            gameService.updateGameWinners(gamePlay);
-//        }
+//        log.info("chatmessage: " + request);
 //
-        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getLogin(), request);
-
-        return ResponseEntity.ok(request);
-    }
+//        simpMessagingTemplate.convertAndSend("/topic/game-progress/" + request.getLogin(), request);
+//
+//        return ResponseEntity.ok(request);
+//    }
 }

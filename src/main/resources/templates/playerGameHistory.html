@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <link rel="stylesheet" href="css/ranking.css">
+
+    <link rel="stylesheet" href="/css/playerGameHistory.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -19,6 +20,7 @@
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Kloc Online</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -34,7 +36,11 @@
                     <a class="nav-link" id="playerId" th:text="${playerId}"></a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" id="login" th:text="${username}" th:href="@{/player/{login}(login=${username})}">Login</a>
+                    <!--                    <form name="f" href="@{/searchPlayer}" method="get">-->
+                    <a class="nav-link" id="login" th:text="${username}"
+                        th:href="@{/player/{login}(login=${username})}">Login</a>
+                    <!--                        <button type="submit" class="btn" id="login" th:text="${username}"></button>-->
+                    <!--                    </form>-->
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/ranking">Ranking</a>
@@ -48,34 +54,71 @@
         </div>
     </nav>
 
-    <table class="table1" id="myTable" width="350">
+    <div class="table-responsive" >
+    <table class="table1" id="myTable">
         <tr>
-            <th width="200">
-                <a>Login</a>
+            <!-- <th scope="col">
+                <a>Id gry</a>
+            </th> -->
+            <th scope="col">
+                <a>Typ gry</a>
             </th>
-            <th width="100">
-                <a>Wygrane</a>
+            <th scope="col">
+                <a>Wygrana drużyna</a>
             </th>
-            <th witdth="100">
-                <a>Przegrane</a>
+            <th scope="col">
+                <a>Czas gry</a>
+            </th>
+            <th scope="col">
+                <a>Dodatkowy czas</a>
+            </th>
+            <th scope="col">
+                <a>Status gry</a>
+            </th>
+            <th scope="col">
+                <a>Historia ruchów 1</a>
+            </th>
+            <th scope="col">
+                <a>Historia ruchów 2</a>
             </th>
         </tr>
     
-        <tr th:each="listPlayers: ${listPlayers}">
+        <tr th:each="playerGameHistory: ${playerGameHistory}">
+
+            <!-- <td th:text="${playerGameHistory.gameId}">
     
-            <td width="200" th:text="${listPlayers.login}">
+            </td> -->
+    
+            <td th:text="${playerGameHistory.gameType}">
     
             </td>
     
-            <td width="100" th:text="${listPlayers.wins}">
+            <td th:text="${playerGameHistory.winnerTeam}">
     
             </td>
     
-            <td width="100" th:text="${listPlayers.loses}">
+            <td th:text="${playerGameHistory.gameTime}">
+                
+            </td>
+
+            <td th:text="${playerGameHistory.additionalTime}">
+                
+            </td>
+
+            <td th:text="${playerGameHistory.gameStatus}">
+                
+            </td>
+
+            <td th:text="${playerGameHistory.moveHistoryFirst}">
+                
+            </td>
+
+            <td th:text="${playerGameHistory.moveHistorySecond}">
                 
             </td>
         </tr>
     </table>
+</div>
 </body>
 
 </html>

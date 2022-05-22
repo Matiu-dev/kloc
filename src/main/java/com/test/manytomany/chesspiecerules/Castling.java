@@ -1,6 +1,6 @@
 package com.test.manytomany.chesspiecerules;
 
-import com.test.manytomany.model.GamePlay;
+import com.test.manytomany.model.GamePlay.GamePlay;
 import com.test.manytomany.model.MoveStatus;
 import com.test.manytomany.model.Pieces;
 import lombok.extern.slf4j.Slf4j;
@@ -139,6 +139,7 @@ public class Castling {
              //roszada lewo
              System.out.println("lewo roszada " + ruleOneLeft + " " + ruleTwo + " " + ruleThreeLeft + " " + ruleFourLeft);
 
+             gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "0-0-0" +";");
 
              gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move castling");
@@ -162,6 +163,7 @@ public class Castling {
              //roszada prawo
              System.out.println("prawo roszada " + ruleOneRight + " " + ruleTwo + " " + ruleThreeRight + " " + ruleFourRight);
 
+             gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "0-0" +";");
 
              gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move castling");
@@ -305,6 +307,7 @@ public class Castling {
             //roszada lewo
             System.out.println("lewo roszada " + ruleOneLeft + " " + ruleTwo + " " + ruleThreeLeft + " " + ruleFourLeft);
 
+            gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "0-0-0" +";");
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black castling");
@@ -328,6 +331,7 @@ public class Castling {
             //roszada prawo
             System.out.println("prawo roszada " + ruleOneRight + " " + ruleTwo + " " + ruleThreeRight + " " + ruleFourRight);
 
+            gamePlay.setAlgebraicNotationFirst(gamePlay.getAlgebraicNotationFirst() + "0-0" +";");
 
             gamePlay.setNextMoveColor(checkSpaceBetween.changeTextMoveColor(gamePlay));
             log.info("good move black castling");
