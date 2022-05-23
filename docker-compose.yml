@@ -8,9 +8,9 @@ services:
       - database.env
     ports:
       - "5432:5432"
-    volumes:
-      - $HOME/Programy/docker/PostgreSql-Snippets/infile:/infile
-      - pg_data:/var/lib/docker/volumes/pgdate/_data
+#    volumes:
+#      - $HOME/Programy/docker/PostgreSql-Snippets/infile:/infile
+#      - pg_data:/var/lib/docker/volumes/pgdate/_data
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
