@@ -85,10 +85,13 @@ public class PlayerService {
     }
 
     @Transactional
-    public void deleteByLogin(String login) {
+    public boolean deleteByLogin(String login) {
         Player player = findPlayerByLogin(login);
         player.setPlayerStatus(PlayerStatus.DISABLED);
-        savePlayer(player);
+//        savePlayer(player);
+        playerRepository.save(player);
+
+        return true;
     }
 
     public List<PlayerGameHistory> getPlayerGameHistory(Player player) {
@@ -159,7 +162,7 @@ public class PlayerService {
         updatePlayer.getNewpassword().equals(updatePlayer.getRepeatnewpassword())) {
             player.setPassword(updatePlayer.getNewpassword());
             player.setRepeatPassword(updatePlayer.getNewpassword());
-            savePlayer(player);
+            playerRepository.save(player);
             return true;
         }
 
