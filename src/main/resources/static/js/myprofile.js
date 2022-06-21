@@ -1,4 +1,4 @@
-const url = 'http://192.168.1.245:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
+const url = 'http://localhost:8080';// 'https://klocuwb.herokuapp.com''http://192.168.1.245:8080';
 
 function updateLogin() {
     var login = document.getElementById("login").innerHTML;
@@ -76,5 +76,5 @@ function deletePlayer() {
 }
 
 function checkGameHistory() {
-    
+
 }

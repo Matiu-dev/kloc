@@ -193,7 +193,9 @@ function timeLeft() {
             "type": "time",
             "gameId": gameId,
             "team": teamTime,
-            "gameResult": "CHECKMATE"
+            "gameResult": "CHECKMATE",
+            "algebraicNotationFirst": algebraicNotationFirst,
+            "algebraicNotationSecond": algebraicNotationSecond
         }),
         success: function (data) {
             //            gameOn = false;

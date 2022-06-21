@@ -17,6 +17,9 @@ public class OutOfTime {
     @Enumerated(EnumType.STRING)
     private Team team;
 
+    private String algebraicNotationFirst;
+    private String algebraicNotationSecond;
+
     public String getType() {
         return type;
     }
@@ -47,5 +50,21 @@ public class OutOfTime {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public String getAlgebraicNotationFirst() {
+        return algebraicNotationFirst;
+    }
+
+    public void setAlgebraicNotationFirst(String algebraicNotationFirst) {
+        this.algebraicNotationFirst = algebraicNotationFirst;
+    }
+
+    public String getAlgebraicNotationSecond() {
+        return algebraicNotationSecond;
+    }
+
+    public void setAlgebraicNotationSecond(String algebraicNotationSecond) {
+        this.algebraicNotationSecond = algebraicNotationSecond;
     }
 }

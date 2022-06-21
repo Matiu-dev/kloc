@@ -128,7 +128,21 @@ public class GameService {
             }
 
             Set<Board> listBoards = game.getBoards();
-//        System.out.println(listBoards.size());
+
+            //zapis ruchów do tabeli board
+            int number = 0;
+            for(Board b: listBoards) {
+                if(number == 0){
+                    b.setMoveHistory(outOfTime.getAlgebraicNotationFirst());
+                    boardService.saveBoard(b);
+                }
+
+                if(number == 1) {
+                    b.setMoveHistory(outOfTime.getAlgebraicNotationSecond());
+                    boardService.saveBoard(b);
+                }
+                number++;
+            }
 
             Player player;
 

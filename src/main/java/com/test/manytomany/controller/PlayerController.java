@@ -122,7 +122,11 @@ public class PlayerController {
     @ResponseBody
     public HttpStatus deletePlayer(@RequestBody DeletePlayer deletePlayer) {
 
-        playerService.deleteByLogin(deletePlayer.getLogin());
+        boolean check = playerService.deleteByLogin(deletePlayer.getLogin());
+
+        if (check) {
+            SecurityContextHolder.clearContext();
+        }
 
         return HttpStatus.OK;
     }
