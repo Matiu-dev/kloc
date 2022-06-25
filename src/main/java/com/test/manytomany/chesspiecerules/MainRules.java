@@ -65,10 +65,10 @@ public class MainRules {
 
                 if(gamePlay.getNextMoveColor().equals(Color.BLACK)) {
                     gamePlay.setNextMoveColor(Color.WHITE);
-                }
-
-                if(gamePlay.getNextMoveColor().equals(Color.WHITE)) {
+//                    System.out.println("Zmiana koloru na bialy");
+                }else if(gamePlay.getNextMoveColor().equals(Color.WHITE)) {
                     gamePlay.setNextMoveColor(Color.BLACK);
+//                    System.out.println("Zmiana koloru na czarny");
                 }
 
                 gamePlay.setEnPassantCord("");//dodane
