@@ -66,17 +66,14 @@ function connectToSocket(gameId) {
                 }
 
                 //ustawianie listy wszystkich ruchow
-
                 if(data.boardId == boardId){
                     algebraicNotationFirst=data.algebraicNotationFirst;
                 }
-
                 if(data.boardId == boardIdAdditional){
                     algebraicNotationSecond=data.algebraicNotationFirst;
                 }
-
-                console.log(algebraicNotationFirst);
-                console.log(algebraicNotationSecond);
+                //console.log(algebraicNotationFirst);
+                //console.log(algebraicNotationSecond);
                 
 
                 // console.log("nastepny ruch: " + nextMoveColor + " " + nextMoveColorSecond);
