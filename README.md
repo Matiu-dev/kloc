@@ -1,6 +1,6 @@
 # kloc
 
-##### Table of Contents  
+##### Table of Contents  #####
 [Headers](#headers)  
 [Emphasis](#emphasis)  
 ...snip...    
