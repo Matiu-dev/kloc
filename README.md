@@ -1,4 +1,4 @@
-# kloc
+# Bughouse
 
 1. [Basic informations](#basicInformations)
 2. [Using technologies](#usingTechnologies)
