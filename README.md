@@ -2,7 +2,7 @@
 
 1. [Basic informations](#basicInformations)
 2. [Using technologies](#usingTechnologies)
-3. [Screenshoty](#screenyAplikacji)
+3. [Screenshots](#screenShots)
 
 <a name="basicInformations"></a>
 ## 1. Basic informations
@@ -14,8 +14,8 @@ https://en.wikipedia.org/wiki/Bughouse_chess
 
 Java, Spring Boot, hibernate, docker compose, junit, Maven, STOMP, javascript, HTML, CSS, Thymeleaf, AJAX
 
-<a name="screenyAplikacji"></a>
-## 3. Screenshoty
+<a name="screenShots"></a>
+## 3. Screenshots
 
 ![rejestracja](https://user-images.githubusercontent.com/73337576/224272920-58702a12-5257-4d63-891b-115e2a266c11.png)
 
