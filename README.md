@@ -1,11 +1,11 @@
 # kloc
 
-1. [Ogólne informacje](#ogolneInformacje)
+1. [Basic information](#basicInformations)
 2. [Użyte technologie](#uzyteTechnologie)
 3. [Screenshoty](#screenyAplikacji)
 
-<a name="ogolneInformacje"></a>
-## 1. Ogólne informacje
+<a name="basicInformations"></a>
+## 1. Basic information
 
 https://en.wikipedia.org/wiki/Bughouse_chess
 
