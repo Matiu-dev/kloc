@@ -1,16 +1,16 @@
 # kloc
 
-1. [Basic information](#basicInformations)
-2. [Użyte technologie](#uzyteTechnologie)
+1. [Basic informations](#basicInformations)
+2. [Using technologies](#usingTechnologies)
 3. [Screenshoty](#screenyAplikacji)
 
 <a name="basicInformations"></a>
-## 1. Basic information
+## 1. Basic informations
 
 https://en.wikipedia.org/wiki/Bughouse_chess
 
-<a name="uzyteTechnologie"></a>
-## 2. Użyte technologie
+<a name="usingTechnologies"></a>
+## 2. Using technologies
 
 Java, Spring Boot, hibernate, docker compose, junit, Maven, STOMP, javascript, HTML, CSS, Thymeleaf, AJAX
 
